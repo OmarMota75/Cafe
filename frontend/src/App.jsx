@@ -29,6 +29,246 @@ const productsData = {
   }
 };
 
+const countryCodes = [
+  { code: 'AF', dial: '+93', name: 'Afganistán' },
+  { code: 'AL', dial: '+355', name: 'Albania' },
+  { code: 'DE', dial: '+49', name: 'Alemania' },
+  { code: 'AD', dial: '+376', name: 'Andorra' },
+  { code: 'AO', dial: '+244', name: 'Angola' },
+  { code: 'AI', dial: '+1264', name: 'Anguila' },
+  { code: 'AG', dial: '+1268', name: 'Antigua y Barbuda' },
+  { code: 'SA', dial: '+966', name: 'Arabia Saudita' },
+  { code: 'DZ', dial: '+213', name: 'Argelia' },
+  { code: 'AR', dial: '+54', name: 'Argentina' },
+  { code: 'AM', dial: '+374', name: 'Armenia' },
+  { code: 'AW', dial: '+297', name: 'Aruba' },
+  { code: 'AU', dial: '+61', name: 'Australia' },
+  { code: 'AT', dial: '+43', name: 'Austria' },
+  { code: 'AZ', dial: '+994', name: 'Azerbaiyán' },
+  { code: 'BS', dial: '+1242', name: 'Bahamas' },
+  { code: 'BD', dial: '+880', name: 'Bangladés' },
+  { code: 'BB', dial: '+1246', name: 'Barbados' },
+  { code: 'BH', dial: '+973', name: 'Bahréin' },
+  { code: 'BE', dial: '+32', name: 'Bélgica' },
+  { code: 'BZ', dial: '+501', name: 'Belice' },
+  { code: 'BJ', dial: '+229', name: 'Benín' },
+  { code: 'BM', dial: '+1441', name: 'Bermudas' },
+  { code: 'BY', dial: '+375', name: 'Bielorrusia' },
+  { code: 'BO', dial: '+591', name: 'Bolivia' },
+  { code: 'BA', dial: '+387', name: 'Bosnia y Herzegovina' },
+  { code: 'BW', dial: '+267', name: 'Botsuana' },
+  { code: 'BR', dial: '+55', name: 'Brasil' },
+  { code: 'BN', dial: '+673', name: 'Brunéi' },
+  { code: 'BG', dial: '+359', name: 'Bulgaria' },
+  { code: 'BF', dial: '+226', name: 'Burkina Faso' },
+  { code: 'BI', dial: '+257', name: 'Burundi' },
+  { code: 'BT', dial: '+975', name: 'Bután' },
+  { code: 'CV', dial: '+238', name: 'Cabo Verde' },
+  { code: 'KH', dial: '+855', name: 'Camboya' },
+  { code: 'CM', dial: '+237', name: 'Camerún' },
+  { code: 'CA', dial: '+1', name: 'Canadá' },
+  { code: 'QA', dial: '+974', name: 'Catar' },
+  { code: 'TD', dial: '+235', name: 'Chad' },
+  { code: 'CL', dial: '+56', name: 'Chile' },
+  { code: 'CN', dial: '+86', name: 'China' },
+  { code: 'CY', dial: '+357', name: 'Chipre' },
+  { code: 'CO', dial: '+57', name: 'Colombia' },
+  { code: 'KM', dial: '+269', name: 'Comoras' },
+  { code: 'CG', dial: '+242', name: 'Congo' },
+  { code: 'CD', dial: '+243', name: 'Congo (RDC)' },
+  { code: 'KR', dial: '+82', name: 'Corea del Sur' },
+  { code: 'KP', dial: '+850', name: 'Corea del Norte' },
+  { code: 'CI', dial: '+225', name: 'Costa de Marfil' },
+  { code: 'CR', dial: '+506', name: 'Costa Rica' },
+  { code: 'HR', dial: '+385', name: 'Croacia' },
+  { code: 'CU', dial: '+53', name: 'Cuba' },
+  { code: 'CW', dial: '+599', name: 'Curazao' },
+  { code: 'DK', dial: '+45', name: 'Dinamarca' },
+  { code: 'DM', dial: '+1767', name: 'Dominica' },
+  { code: 'EC', dial: '+593', name: 'Ecuador' },
+  { code: 'EG', dial: '+20', name: 'Egipto' },
+  { code: 'SV', dial: '+503', name: 'El Salvador' },
+  { code: 'AE', dial: '+971', name: 'Emiratos Árabes Unidos' },
+  { code: 'ER', dial: '+291', name: 'Eritrea' },
+  { code: 'SK', dial: '+421', name: 'Eslovaquia' },
+  { code: 'SI', dial: '+386', name: 'Eslovenia' },
+  { code: 'ES', dial: '+34', name: 'España' },
+  { code: 'US', dial: '+1', name: 'Estados Unidos' },
+  { code: 'EE', dial: '+372', name: 'Estonia' },
+  { code: 'ET', dial: '+251', name: 'Etiopía' },
+  { code: 'PH', dial: '+63', name: 'Filipinas' },
+  { code: 'FI', dial: '+358', name: 'Finlandia' },
+  { code: 'FJ', dial: '+679', name: 'Fiyi' },
+  { code: 'FR', dial: '+33', name: 'Francia' },
+  { code: 'GA', dial: '+241', name: 'Gabón' },
+  { code: 'GM', dial: '+220', name: 'Gambia' },
+  { code: 'GE', dial: '+995', name: 'Georgia' },
+  { code: 'GH', dial: '+233', name: 'Ghana' },
+  { code: 'GI', dial: '+350', name: 'Gibraltar' },
+  { code: 'GD', dial: '+1473', name: 'Granada' },
+  { code: 'GR', dial: '+30', name: 'Grecia' },
+  { code: 'GL', dial: '+299', name: 'Groenlandia' },
+  { code: 'GP', dial: '+590', name: 'Guadalupe' },
+  { code: 'GU', dial: '+1671', name: 'Guam' },
+  { code: 'GT', dial: '+502', name: 'Guatemala' },
+  { code: 'GF', dial: '+594', name: 'Guayana Francesa' },
+  { code: 'GN', dial: '+224', name: 'Guinea' },
+  { code: 'GQ', dial: '+240', name: 'Guinea Ecuatorial' },
+  { code: 'GW', dial: '+245', name: 'Guinea-Bisáu' },
+  { code: 'GY', dial: '+592', name: 'Guyana' },
+  { code: 'HT', dial: '+509', name: 'Haití' },
+  { code: 'HN', dial: '+504', name: 'Honduras' },
+  { code: 'HK', dial: '+852', name: 'Hong Kong' },
+  { code: 'HU', dial: '+36', name: 'Hungría' },
+  { code: 'IN', dial: '+91', name: 'India' },
+  { code: 'ID', dial: '+62', name: 'Indonesia' },
+  { code: 'IQ', dial: '+964', name: 'Irak' },
+  { code: 'IR', dial: '+98', name: 'Irán' },
+  { code: 'IE', dial: '+353', name: 'Irlanda' },
+  { code: 'IS', dial: '+354', name: 'Islandia' },
+  { code: 'IL', dial: '+972', name: 'Israel' },
+  { code: 'IT', dial: '+39', name: 'Italia' },
+  { code: 'JM', dial: '+1876', name: 'Jamaica' },
+  { code: 'JP', dial: '+81', name: 'Japón' },
+  { code: 'JO', dial: '+962', name: 'Jordania' },
+  { code: 'KZ', dial: '+7', name: 'Kazajistán' },
+  { code: 'KE', dial: '+254', name: 'Kenia' },
+  { code: 'KG', dial: '+996', name: 'Kirguistán' },
+  { code: 'KW', dial: '+965', name: 'Kuwait' },
+  { code: 'LA', dial: '+856', name: 'Laos' },
+  { code: 'LS', dial: '+266', name: 'Lesoto' },
+  { code: 'LV', dial: '+371', name: 'Letonia' },
+  { code: 'LB', dial: '+961', name: 'Líbano' },
+  { code: 'LR', dial: '+231', name: 'Liberia' },
+  { code: 'LY', dial: '+218', name: 'Libia' },
+  { code: 'LI', dial: '+423', name: 'Liechtenstein' },
+  { code: 'LT', dial: '+370', name: 'Lituania' },
+  { code: 'LU', dial: '+352', name: 'Luxemburgo' },
+  { code: 'MO', dial: '+853', name: 'Macao' },
+  { code: 'MK', dial: '+389', name: 'Macedonia del Norte' },
+  { code: 'MG', dial: '+261', name: 'Madagascar' },
+  { code: 'MY', dial: '+60', name: 'Malasia' },
+  { code: 'MW', dial: '+265', name: 'Malaui' },
+  { code: 'MV', dial: '+960', name: 'Maldivas' },
+  { code: 'ML', dial: '+223', name: 'Malí' },
+  { code: 'MT', dial: '+356', name: 'Malta' },
+  { code: 'MA', dial: '+212', name: 'Marruecos' },
+  { code: 'MQ', dial: '+596', name: 'Martinica' },
+  { code: 'MU', dial: '+230', name: 'Mauricio' },
+  { code: 'MR', dial: '+222', name: 'Mauritania' },
+  { code: 'MX', dial: '+52', name: 'México' },
+  { code: 'MD', dial: '+373', name: 'Moldavia' },
+  { code: 'MC', dial: '+377', name: 'Mónaco' },
+  { code: 'MN', dial: '+976', name: 'Mongolia' },
+  { code: 'ME', dial: '+382', name: 'Montenegro' },
+  { code: 'MZ', dial: '+258', name: 'Mozambique' },
+  { code: 'MM', dial: '+95', name: 'Myanmar' },
+  { code: 'NA', dial: '+264', name: 'Namibia' },
+  { code: 'NP', dial: '+977', name: 'Nepal' },
+  { code: 'NI', dial: '+505', name: 'Nicaragua' },
+  { code: 'NE', dial: '+227', name: 'Níger' },
+  { code: 'NG', dial: '+234', name: 'Nigeria' },
+  { code: 'NO', dial: '+47', name: 'Noruega' },
+  { code: 'NZ', dial: '+64', name: 'Nueva Zelanda' },
+  { code: 'OM', dial: '+968', name: 'Omán' },
+  { code: 'NL', dial: '+31', name: 'Países Bajos' },
+  { code: 'PK', dial: '+92', name: 'Pakistán' },
+  { code: 'PA', dial: '+507', name: 'Panamá' },
+  { code: 'PG', dial: '+675', name: 'Papúa Nueva Guinea' },
+  { code: 'PY', dial: '+595', name: 'Paraguay' },
+  { code: 'PE', dial: '+51', name: 'Perú' },
+  { code: 'PF', dial: '+689', name: 'Polinesia Francesa' },
+  { code: 'PL', dial: '+48', name: 'Polonia' },
+  { code: 'PT', dial: '+351', name: 'Portugal' },
+  { code: 'PR', dial: '+1787', name: 'Puerto Rico' },
+  { code: 'GB', dial: '+44', name: 'Reino Unido' },
+  { code: 'CF', dial: '+236', name: 'República Centroafricana' },
+  { code: 'CZ', dial: '+420', name: 'República Checa' },
+  { code: 'DO', dial: '+1809', name: 'República Dominicana' },
+  { code: 'RE', dial: '+262', name: 'Reunión' },
+  { code: 'RO', dial: '+40', name: 'Rumania' },
+  { code: 'RU', dial: '+7', name: 'Rusia' },
+  { code: 'WS', dial: '+685', name: 'Samoa' },
+  { code: 'SM', dial: '+378', name: 'San Marino' },
+  { code: 'SN', dial: '+221', name: 'Senegal' },
+  { code: 'RS', dial: '+381', name: 'Serbia' },
+  { code: 'SG', dial: '+65', name: 'Singapur' },
+  { code: 'SY', dial: '+963', name: 'Siria' },
+  { code: 'SO', dial: '+252', name: 'Somalia' },
+  { code: 'LK', dial: '+94', name: 'Sri Lanka' },
+  { code: 'ZA', dial: '+27', name: 'Sudáfrica' },
+  { code: 'SD', dial: '+249', name: 'Sudán' },
+  { code: 'SE', dial: '+46', name: 'Suecia' },
+  { code: 'CH', dial: '+41', name: 'Suiza' },
+  { code: 'SR', dial: '+597', name: 'Surinam' },
+  { code: 'TH', dial: '+66', name: 'Tailandia' },
+  { code: 'TW', dial: '+886', name: 'Taiwán' },
+  { code: 'TZ', dial: '+255', name: 'Tanzania' },
+  { code: 'TJ', dial: '+992', name: 'Tayikistán' },
+  { code: 'TL', dial: '+670', name: 'Timor Oriental' },
+  { code: 'TG', dial: '+228', name: 'Togo' },
+  { code: 'TN', dial: '+216', name: 'Túnez' },
+  { code: 'TM', dial: '+993', name: 'Turkmenistán' },
+  { code: 'TR', dial: '+90', name: 'Turquía' },
+  { code: 'UA', dial: '+380', name: 'Ucrania' },
+  { code: 'UG', dial: '+256', name: 'Uganda' },
+  { code: 'UY', dial: '+598', name: 'Uruguay' },
+  { code: 'UZ', dial: '+998', name: 'Uzbekistán' },
+  { code: 'VE', dial: '+58', name: 'Venezuela' },
+  { code: 'VN', dial: '+84', name: 'Vietnam' },
+  { code: 'YE', dial: '+967', name: 'Yemen' },
+  { code: 'DJ', dial: '+253', name: 'Yibuti' },
+  { code: 'ZM', dial: '+260', name: 'Zambia' },
+  { code: 'ZW', dial: '+263', name: 'Zimbabue' }
+];
+
+const faqList = [
+  {
+    q: '¿Para qué crear un programa de lealtad para mi negocio?',
+    a: 'Un programa de lealtad aumenta la frecuencia de visita de tus clientes habituales, incrementa el ticket medio de compra y reduce drásticamente el coste de adquisición al convertirlos en embajadores de tu marca.'
+  },
+  {
+    q: '¿Qué es una tarjeta de fidelización digital?',
+    a: 'Es la versión digital de las tradicionales tarjetas de papel o plástico. Se guardan directamente en Apple Wallet o Google Wallet en los smartphones de tus clientes, permitiéndoles acumular sellos, puntos y recompensas de forma cómoda y sin perder la tarjeta.'
+  },
+  {
+    q: '¿Es necesario descargar una app para instalar la tarjeta digital?',
+    a: 'No. Tus clientes no necesitan descargar ninguna aplicación adicional. Las tarjetas se instalan nativamente en Apple Wallet (iOS) o Google Wallet (Android) con solo escanear un código QR o hacer clic en un enlace.'
+  },
+  {
+    q: '¿Cómo puedo crear mi tarjeta de 2GetherRewards?',
+    a: 'Desde tu panel de control puedes seleccionar una plantilla, personalizar los colores, subir el logo de tu empresa y definir la regla de recompensa (ej. "1 sello por cada compra, a los 6 sellos 1 premio gratis") en menos de 5 minutos.'
+  },
+  {
+    q: '¿Qué datos me brinda la plataforma?',
+    a: 'Obtendrás analíticas en tiempo real sobre el número total de miembros, frecuencia promedio de visitas, horas con mayor afluencia, retorno de inversión (ROI), nivel de inactividad de los clientes y efectividad de tus notificaciones push.'
+  },
+  {
+    q: '¿Cómo integro 2GetherRewards con mi punto de venta?',
+    a: 'Puedes operar de forma 100% independiente usando nuestra web-app de escáner desde cualquier teléfono, tablet o PC, o bien conectarlo con tu sistema POS actual mediante nuestra API.'
+  },
+  {
+    q: '¿Cómo gestiono mi facturación con 2GetherRewards?',
+    a: 'Toda la facturación y los pagos de 2GetherRewards se procesan de forma 100% segura a través de Stripe. Desde tu panel de control puedes gestionar tus suscripciones, cambiar de plan, añadir sucursales y descargar tus facturas oficiales con IVA desglosado automáticamente.'
+  },
+  {
+    q: '¿Cómo se accede al scanner para asignar sellos?',
+    a: 'Tu personal accede al escáner de manera segura entrando al panel de control desde el navegador web de cualquier dispositivo móvil, tablet o PC con cámara, sin requerir hardware especial.'
+  },
+  {
+    q: '¿Cómo se asignan puntos/sellos a los clientes desde el scanner?',
+    a: 'El cliente muestra el código QR de su tarjeta en Apple/Google Wallet, el empleado escanea el código con la cámara del dispositivo y en un solo toque se asignan los sellos o el consumo correspondiente.'
+  },
+  {
+    q: '¿Cuántos códigos QR hay y para qué sirve cada uno?',
+    a: 'Contamos con dos tipos de QR principales: el QR de Registro/Alta (para que los clientes guarden su tarjeta en el móvil) y el QR Único del Cliente (que muestra cada cliente en su Wallet para ser escaneado en caja).'
+  },
+  {
+    q: '¿Cuánto dura la prueba gratis?',
+    a: 'Ofrecemos una prueba gratuita de 14 días con acceso completo a todas las funcionalidades del Plan START, sin compromiso y sin requerir tarjeta de crédito para comenzar.'
+  }
+];
+
 function App() {
   // ==========================================
   // STATE DEFINITIONS
@@ -37,6 +277,7 @@ function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeNav, setActiveNav] = useState('inicio');
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState(0);
 
   // Page view state: 'landing' or 'dashboard-trial'
   const [currentPage, setCurrentPage] = useState('landing');
@@ -1393,19 +1634,20 @@ function App() {
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Teléfono</label>
                   <div className="flex gap-2">
                     <select
-                      className="px-2 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-primary bg-white"
+                      className="w-36 shrink-0 px-2.5 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-primary bg-white truncate cursor-pointer"
                       value={regPhoneCode}
                       onChange={(e) => setRegPhoneCode(e.target.value)}
                     >
-                      <option value="+34">ES +34</option>
-                      <option value="+1">US +1</option>
-                      <option value="+52">MX +52</option>
-                      <option value="+54">AR +54</option>
+                      {countryCodes.map((country) => (
+                        <option key={`${country.code}-${country.dial}`} value={country.dial}>
+                          {country.code} {country.dial} ({country.name})
+                        </option>
+                      ))}
                     </select>
                     <input
                       type="tel"
                       required
-                      className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                      className="min-w-0 flex-1 px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                       placeholder="600 000 000"
                       value={regPhone}
                       onChange={(e) => setRegPhone(e.target.value)}
@@ -1501,7 +1743,7 @@ function App() {
           </a>
 
           <nav className={`lg:flex items-center gap-8 ${isMobileMenuOpen ? 'flex flex-col absolute top-full left-0 w-full bg-white border-b border-gray-100 py-6 px-8 shadow-lg gap-4' : 'hidden'}`} id="main-nav">
-            {['inicio', 'beneficios', 'menu', 'tarjetas', 'quiz', 'opiniones'].map((nav) => (
+            {['inicio', 'beneficios', 'menu', 'tarjetas', 'quiz', 'faq'].map((nav) => (
               <a
                 key={nav}
                 href={`#${nav}`}
@@ -1512,7 +1754,7 @@ function App() {
                   nav === 'beneficios' ? 'Beneficios' :
                     nav === 'menu' ? 'Planes' :
                       nav === 'tarjetas' ? 'Tarjetas' :
-                        nav === 'quiz' ? '¿Cuál es mi Plan?' : 'Casos de Éxito'}
+                        nav === 'quiz' ? '¿Cuál es mi Plan?' : 'Preguntas Frecuentes'}
               </a>
             ))}
             {isMobileMenuOpen && (
@@ -1616,31 +1858,35 @@ function App() {
       </section>
 
       {/* SECCIÓN BENEFICIOS (Features) */}
-      <section className="py-20 bg-white" id="beneficios">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-24 bg-gradient-to-br from-[#0F1A17] via-[#142620] to-[#0D1614] border-y border-emerald-900/40 relative overflow-hidden text-white" id="beneficios">
+        {/* Ambient brand glows */}
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 rounded-3xl border border-gray-100 bg-gray-50/50 text-left space-y-4 hover:shadow-xl hover:border-emerald-100 transition-all duration-300">
-              <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-primary flex items-center justify-center text-xl">
+            <div className="p-8 rounded-3xl border border-emerald-500/20 bg-[#162520]/80 backdrop-blur-md text-left space-y-4 shadow-xl hover:shadow-2xl hover:shadow-emerald-950/50 hover:border-emerald-400/60 hover:-translate-y-1.5 transition-all duration-300 group">
+              <div className="h-14 w-14 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-2xl border border-emerald-500/30 group-hover:scale-110 group-hover:bg-primary group-hover:text-emerald-950 group-hover:border-primary transition-all duration-300 shadow-md">
                 <i className="fa-solid fa-wallet"></i>
               </div>
-              <h3 className="font-heading font-black text-xl text-gray-900">Tarjetas Digitales</h3>
-              <p className="text-gray-600 text-[0.95rem] leading-relaxed">Tarjetas de sellos, cashback, regalo, descuento y membresías 100% digitales, sin apps. Compatible con Apple y Google Wallet.</p>
+              <h3 className="font-heading font-black text-xl text-white group-hover:text-primary transition-colors">Tarjetas Digitales</h3>
+              <p className="text-gray-300 text-[0.95rem] leading-relaxed">Tarjetas de sellos, cashback, regalo, descuento y membresías 100% digitales, sin apps. Compatible con Apple y Google Wallet.</p>
             </div>
 
-            <div className="p-8 rounded-3xl border border-gray-100 bg-gray-50/50 text-left space-y-4 hover:shadow-xl hover:border-emerald-100 transition-all duration-300">
-              <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-primary flex items-center justify-center text-xl">
+            <div className="p-8 rounded-3xl border border-emerald-500/20 bg-[#162520]/80 backdrop-blur-md text-left space-y-4 shadow-xl hover:shadow-2xl hover:shadow-emerald-950/50 hover:border-emerald-400/60 hover:-translate-y-1.5 transition-all duration-300 group">
+              <div className="h-14 w-14 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-2xl border border-emerald-500/30 group-hover:scale-110 group-hover:bg-primary group-hover:text-emerald-950 group-hover:border-primary transition-all duration-300 shadow-md">
                 <i className="fa-solid fa-bell"></i>
               </div>
-              <h3 className="font-heading font-black text-xl text-gray-900">Notificaciones Push</h3>
-              <p className="text-gray-600 text-[0.95rem] leading-relaxed">Envía alertas, ofertas, cupones y recordatorios directamente al móvil de tus clientes sin que tengan que abrir ninguna aplicación.</p>
+              <h3 className="font-heading font-black text-xl text-white group-hover:text-primary transition-colors">Notificaciones Push</h3>
+              <p className="text-gray-300 text-[0.95rem] leading-relaxed">Envía alertas, ofertas, cupones y recordatorios directamente al móvil de tus clientes sin que tengan que abrir ninguna aplicación.</p>
             </div>
 
-            <div className="p-8 rounded-3xl border border-gray-100 bg-gray-50/50 text-left space-y-4 hover:shadow-xl hover:border-emerald-100 transition-all duration-300">
-              <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-primary flex items-center justify-center text-xl">
+            <div className="p-8 rounded-3xl border border-emerald-500/20 bg-[#162520]/80 backdrop-blur-md text-left space-y-4 shadow-xl hover:shadow-2xl hover:shadow-emerald-950/50 hover:border-emerald-400/60 hover:-translate-y-1.5 transition-all duration-300 group">
+              <div className="h-14 w-14 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-2xl border border-emerald-500/30 group-hover:scale-110 group-hover:bg-primary group-hover:text-emerald-950 group-hover:border-primary transition-all duration-300 shadow-md">
                 <i className="fa-solid fa-chart-line"></i>
               </div>
-              <h3 className="font-heading font-black text-xl text-gray-900">Dashboard en Tiempo Real</h3>
-              <p className="text-gray-600 text-[0.95rem] leading-relaxed">Visualiza el comportamiento de compra, frecuencia de visitas y el retorno de cada cliente desde tu panel de control en vivo.</p>
+              <h3 className="font-heading font-black text-xl text-white group-hover:text-primary transition-colors">Dashboard en Tiempo Real</h3>
+              <p className="text-gray-300 text-[0.95rem] leading-relaxed">Visualiza el comportamiento de compra, frecuencia de visitas y el retorno de cada cliente desde tu panel de control en vivo.</p>
             </div>
           </div>
         </div>
@@ -1906,25 +2152,29 @@ function App() {
       </section>
 
       {/* SECCIÓN QUIZ */}
-      <section className="py-20 bg-gray-50 border-t border-b border-gray-100" id="quiz">
-        <div className="max-w-7xl mx-auto px-6 text-center space-y-16">
+      <section className="py-24 bg-gradient-to-br from-[#0F1A17] via-[#142620] to-[#0D1614] border-t border-b border-emerald-900/40 relative overflow-hidden text-white" id="quiz">
+        {/* Ambient brand glows */}
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div className="max-w-7xl mx-auto px-6 text-center space-y-16 relative z-10">
           <div className="max-w-2xl mx-auto space-y-3">
-            <h2 className="font-heading text-3xl sm:text-4xl font-black text-gray-900">¿Cuál es tu <span className="text-primary">Plan Ideal?</span></h2>
-            <p className="text-gray-600">Responde 3 preguntas rápidas y te recomendamos el plan 2GetherRewards perfecto para tu negocio.</p>
+            <h2 className="font-heading text-3xl sm:text-4xl font-black text-white">¿Cuál es tu <span className="text-primary">Plan Ideal?</span></h2>
+            <p className="text-gray-300">Responde 3 preguntas rápidas y te recomendamos el plan 2GetherRewards perfecto para tu negocio.</p>
           </div>
 
-          <div className="max-w-xl mx-auto bg-white rounded-3xl border border-gray-100 p-8 shadow-xl min-h-[300px] flex items-center justify-center">
+          <div className="max-w-xl mx-auto bg-[#162520]/90 backdrop-blur-md rounded-3xl border border-emerald-500/20 p-8 shadow-2xl min-h-[300px] flex items-center justify-center">
             {/* Pantalla Inicial */}
             {quizStep === 0 && (
               <div className="space-y-6 w-full text-center">
-                <div className="h-16 w-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-primary text-2xl mx-auto animate-pulse">
+                <div className="h-16 w-16 bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 rounded-2xl flex items-center justify-center text-2xl mx-auto animate-pulse">
                   <i className="fa-solid fa-wand-magic-sparkles"></i>
                 </div>
                 <div className="space-y-2">
-                  <h3 className="font-heading font-black text-xl text-gray-900">Encontremos tu plan perfecto</h3>
-                  <p className="text-gray-600 text-sm max-w-md mx-auto">Analizaremos tu tipo de negocio, volumen de clientes y tus objetivos para recomendarte la combinación idónea.</p>
+                  <h3 className="font-heading font-black text-xl text-white">Encontremos tu plan perfecto</h3>
+                  <p className="text-gray-300 text-sm max-w-md mx-auto">Analizaremos tu tipo de negocio, volumen de clientes y tus objetivos para recomendarte la combinación idónea.</p>
                 </div>
-                <button className="px-8 py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-md" onClick={startQuiz}>
+                <button className="px-8 py-3.5 bg-primary hover:bg-primary-hover text-emerald-950 font-extrabold rounded-full shadow-lg shadow-emerald-500/20 transition-all hover:scale-105" onClick={startQuiz}>
                   Comenzar
                 </button>
               </div>
@@ -1933,10 +2183,10 @@ function App() {
             {/* Pregunta 1 */}
             {quizStep === 1 && (
               <div className="w-full text-left space-y-6">
-                <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-primary h-full transition-all duration-300" style={{ width: '33%' }}></div>
+                <div className="w-full bg-emerald-950/60 border border-emerald-500/20 h-2 rounded-full overflow-hidden">
+                  <div className="bg-primary h-full transition-all duration-300 shadow-[0_0_10px_#69BFA1]" style={{ width: '33%' }}></div>
                 </div>
-                <h3 className="font-heading font-black text-lg text-gray-900">1. ¿Qué tipo de negocio tienes?</h3>
+                <h3 className="font-heading font-black text-lg text-white">1. ¿Qué tipo de negocio tienes?</h3>
                 <div className="space-y-3">
                   {[
                     { val: 'hot', icon: 'fa-utensils', label: 'Restauración y Hostelería', desc: 'Cafeterías, bares, restaurantes o catering.' },
@@ -1945,13 +2195,13 @@ function App() {
                   ].map((opt) => (
                     <div
                       key={opt.val}
-                      className={`p-4 rounded-2xl border cursor-pointer flex gap-4 items-center transition-all duration-200 ${quizAnswers.type === opt.val ? 'border-primary bg-emerald-50/20' : 'border-gray-100 hover:border-gray-300 bg-gray-50/20'}`}
+                      className={`p-4 rounded-2xl border cursor-pointer flex gap-4 items-center transition-all duration-200 ${quizAnswers.type === opt.val ? 'border-primary bg-emerald-500/20 shadow-md shadow-emerald-950/50' : 'border-emerald-500/20 hover:border-emerald-400/50 bg-emerald-950/30'}`}
                       onClick={() => selectQuizAnswer('type', opt.val)}
                     >
                       <i className={`fa-solid ${opt.icon} text-lg text-primary`}></i>
                       <div>
-                        <span className="block font-bold text-gray-900 text-sm">{opt.label}</span>
-                        <span className="block text-xs text-gray-500">{opt.desc}</span>
+                        <span className="block font-bold text-white text-sm">{opt.label}</span>
+                        <span className="block text-xs text-gray-300">{opt.desc}</span>
                       </div>
                     </div>
                   ))}
@@ -1962,10 +2212,10 @@ function App() {
             {/* Pregunta 2 */}
             {quizStep === 2 && (
               <div className="w-full text-left space-y-6">
-                <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-primary h-full transition-all duration-300" style={{ width: '66%' }}></div>
+                <div className="w-full bg-emerald-950/60 border border-emerald-500/20 h-2 rounded-full overflow-hidden">
+                  <div className="bg-primary h-full transition-all duration-300 shadow-[0_0_10px_#69BFA1]" style={{ width: '66%' }}></div>
                 </div>
-                <h3 className="font-heading font-black text-lg text-gray-900">2. ¿Cuántos clientes frecuentes tienes al mes?</h3>
+                <h3 className="font-heading font-black text-lg text-white">2. ¿Cuántos clientes frecuentes tienes al mes?</h3>
                 <div className="space-y-3">
                   {[
                     { val: 'sweet', icon: 'fa-users-line', label: 'Menos de 500', desc: 'Comercio de barrio o negocio en inicio.' },
@@ -1974,13 +2224,13 @@ function App() {
                   ].map((opt) => (
                     <div
                       key={opt.val}
-                      className={`p-4 rounded-2xl border cursor-pointer flex gap-4 items-center transition-all duration-200 ${quizAnswers.flavor === opt.val ? 'border-primary bg-emerald-50/20' : 'border-gray-100 hover:border-gray-300 bg-gray-50/20'}`}
+                      className={`p-4 rounded-2xl border cursor-pointer flex gap-4 items-center transition-all duration-200 ${quizAnswers.flavor === opt.val ? 'border-primary bg-emerald-500/20 shadow-md shadow-emerald-950/50' : 'border-emerald-500/20 hover:border-emerald-400/50 bg-emerald-950/30'}`}
                       onClick={() => selectQuizAnswer('flavor', opt.val)}
                     >
                       <i className={`fa-solid ${opt.icon} text-lg text-primary`}></i>
                       <div>
-                        <span className="block font-bold text-gray-900 text-sm">{opt.label}</span>
-                        <span className="block text-xs text-gray-500">{opt.desc}</span>
+                        <span className="block font-bold text-white text-sm">{opt.label}</span>
+                        <span className="block text-xs text-gray-300">{opt.desc}</span>
                       </div>
                     </div>
                   ))}
@@ -1991,10 +2241,10 @@ function App() {
             {/* Pregunta 3 */}
             {quizStep === 3 && (
               <div className="w-full text-left space-y-6">
-                <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-primary h-full transition-all duration-300" style={{ width: '100%' }}></div>
+                <div className="w-full bg-emerald-950/60 border border-emerald-500/20 h-2 rounded-full overflow-hidden">
+                  <div className="bg-primary h-full transition-all duration-300 shadow-[0_0_10px_#69BFA1]" style={{ width: '100%' }}></div>
                 </div>
-                <h3 className="font-heading font-black text-lg text-gray-900">3. ¿Cuál es tu prioridad principal?</h3>
+                <h3 className="font-heading font-black text-lg text-white">3. ¿Cuál es tu prioridad principal?</h3>
                 <div className="space-y-3">
                   {[
                     { val: 'pastry', icon: 'fa-arrows-spin', label: 'Hacer que vuelvan más seguido', desc: 'Retención y automatización de visitas.' },
@@ -2002,13 +2252,13 @@ function App() {
                   ].map((opt) => (
                     <div
                       key={opt.val}
-                      className={`p-4 rounded-2xl border cursor-pointer flex gap-4 items-center transition-all duration-200 ${quizAnswers.addons === opt.val ? 'border-primary bg-emerald-50/20' : 'border-gray-100 hover:border-gray-300 bg-gray-50/20'}`}
+                      className={`p-4 rounded-2xl border cursor-pointer flex gap-4 items-center transition-all duration-200 ${quizAnswers.addons === opt.val ? 'border-primary bg-emerald-500/20 shadow-md shadow-emerald-950/50' : 'border-emerald-500/20 hover:border-emerald-400/50 bg-emerald-950/30'}`}
                       onClick={() => selectQuizAnswer('addons', opt.val)}
                     >
                       <i className={`fa-solid ${opt.icon} text-lg text-primary`}></i>
                       <div>
-                        <span className="block font-bold text-gray-900 text-sm">{opt.label}</span>
-                        <span className="block text-xs text-gray-500">{opt.desc}</span>
+                        <span className="block font-bold text-white text-sm">{opt.label}</span>
+                        <span className="block text-xs text-gray-300">{opt.desc}</span>
                       </div>
                     </div>
                   ))}
@@ -2019,22 +2269,22 @@ function App() {
             {/* Resultados */}
             {quizStep === 4 && recommendedPlan && (
               <div className="w-full text-center space-y-6">
-                <h3 className="font-heading font-black text-xl text-gray-900">¡Recomendación Lista!</h3>
-                <div className="p-6 rounded-2xl border-2 border-emerald-100 bg-emerald-50/10 text-left space-y-4">
+                <h3 className="font-heading font-black text-xl text-white">¡Recomendación Lista!</h3>
+                <div className="p-6 rounded-2xl border-2 border-primary/40 bg-emerald-950/50 text-left space-y-4 shadow-xl backdrop-blur-md">
                   <div className="flex justify-between items-start">
                     <span className="text-xs uppercase font-extrabold tracking-widest text-primary">PLAN PERFECTO</span>
-                    <span className="text-xl font-black text-gray-900">${recommendedPlan.price}/mes</span>
+                    <span className="text-xl font-black text-white">${recommendedPlan.price}/mes</span>
                   </div>
-                  <h4 className="font-heading font-black text-lg text-gray-900">{recommendedPlan.name}</h4>
-                  <p className="text-gray-600 text-sm leading-relaxed">{recommendedPlan.desc}</p>
+                  <h4 className="font-heading font-black text-lg text-white">{recommendedPlan.name}</h4>
+                  <p className="text-gray-300 text-sm leading-relaxed">{recommendedPlan.desc}</p>
                   <button
-                    className="w-full py-3 bg-primary hover:bg-primary-hover text-white font-bold rounded-full text-sm"
+                    className="w-full py-3.5 bg-primary hover:bg-primary-hover text-emerald-950 font-extrabold rounded-full text-sm shadow-lg shadow-emerald-500/20 transition-all hover:scale-102"
                     onClick={() => { setRegPlan(recommendedPlan.name); setCurrentPage('dashboard-trial'); }}
                   >
                     Contratar este Plan
                   </button>
                 </div>
-                <button className="text-sm font-bold text-gray-400 hover:text-gray-600 flex items-center gap-1.5 mx-auto" onClick={restartQuiz}>
+                <button className="text-sm font-bold text-gray-400 hover:text-white flex items-center gap-1.5 mx-auto transition-colors" onClick={restartQuiz}>
                   <i className="fa-solid fa-rotate-left"></i> Repetir Quiz
                 </button>
               </div>
@@ -2078,49 +2328,63 @@ function App() {
         </div>
       </section>
 
-      {/* SECCIÓN TESTIMONIOS */}
-      <section className="py-20 bg-gray-50 border-t border-b border-gray-100" id="opiniones">
-        <div className="max-w-7xl mx-auto px-6 text-center space-y-16">
-          <div className="max-w-2xl mx-auto space-y-3">
-            <h2 className="font-heading text-3xl sm:text-4xl font-black text-gray-900">Casos de Éxito: <span className="text-primary">Clientes Reales</span></h2>
-            <p className="text-gray-600">Negocios como el tuyo ya están fidelizando clientes y aumentando sus ventas recurrentes con 2GetherRewards.</p>
+      {/* SECCIÓN PREGUNTAS FRECUENTES (FAQ) */}
+      <section className="py-20 bg-gray-50/70 border-t border-b border-gray-150 text-left" id="faq">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Left Column: Heading & CTAs */}
+          <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-32">
+            <span className="inline-block text-[0.7rem] uppercase tracking-widest font-black text-primary bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-100">
+              RESOLVEMOS TUS DUDAS
+            </span>
+            <h2 className="font-heading text-3xl sm:text-4xl font-black text-gray-900 leading-tight">
+              ¿Tienes alguna pregunta? <br />
+              <span className="text-primary">Consulta nuestras preguntas frecuentes</span>
+            </h2>
+            <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+              Encuentra todas las respuestas sobre la creación de tarjetas digitales, integración sin apps, asignación de sellos y prueba gratuita.
+            </p>
+            <div className="flex flex-wrap gap-3 pt-2">
+              <button
+                className="px-6 py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5 text-xs sm:text-sm"
+                onClick={() => { setRegPlan('Plan START - $49/mes'); setCurrentPage('dashboard-trial'); }}
+              >
+                Prueba GRATIS
+              </button>
+              <button
+                className="px-6 py-3.5 bg-accent hover:bg-accent/90 text-white font-bold rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5 text-xs sm:text-sm flex items-center gap-2"
+                onClick={() => alert('¡Agendador de reuniones! Nos pondremos en contacto contigo para una demostración personalizada.')}
+              >
+                <i className="fa-regular fa-calendar-check"></i> Agendar REUNIÓN
+              </button>
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-            <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6 flex flex-col justify-between">
-              <div className="space-y-4">
-                <div className="text-amber-400 text-sm">
-                  <i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i>
-                </div>
-                <p className="text-gray-600 italic text-[0.95rem] leading-relaxed">
-                  "Desde que implementamos el Plan GROWTH con las tarjetas de sellos digitales, nuestros clientes vuelven un 40% más seguido. Las notificaciones push marcan una diferencia enorme."
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150" alt="Cliente Sofía" className="h-11 w-11 rounded-full object-cover border border-gray-100" />
-                <div>
-                  <h4 className="font-bold text-gray-900 text-sm">Sofía Martínez</h4>
-                  <span className="text-xs text-gray-400">Dueña de Cafetería Origen</span>
-                </div>
-              </div>
-            </div>
 
-            <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6 flex flex-col justify-between">
-              <div className="space-y-4">
-                <div className="text-amber-400 text-sm">
-                  <i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i>
+          {/* Right Column: FAQ Accordion */}
+          <div className="lg:col-span-7 space-y-3">
+            {faqList.map((faq, idx) => {
+              const isOpen = openFaqIndex === idx;
+              return (
+                <div
+                  key={idx}
+                  className={`rounded-2xl border transition-all duration-200 overflow-hidden ${isOpen ? 'bg-white border-emerald-200 shadow-md' : 'bg-white/80 border-gray-200 hover:border-gray-300'}`}
+                >
+                  <button
+                    className="w-full p-5 text-left flex justify-between items-center gap-4 font-heading font-bold text-sm sm:text-base text-gray-900 cursor-pointer"
+                    onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                  >
+                    <span>{faq.q}</span>
+                    <span className={`h-8 w-8 rounded-full flex items-center justify-center shrink-0 transition-transform duration-200 ${isOpen ? 'bg-emerald-50 text-primary rotate-180' : 'bg-gray-100 text-gray-500'}`}>
+                      <i className="fa-solid fa-chevron-down text-xs"></i>
+                    </span>
+                  </button>
+                  {isOpen && (
+                    <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100/60">
+                      {faq.a}
+                    </div>
+                  )}
                 </div>
-                <p className="text-gray-600 italic text-[0.95rem] leading-relaxed">
-                  "Con el Plan ENTERPRISE manejamos 8 sucursales desde un solo panel. Las tarjetas de regalo digitales se han convertido en nuestro mejor producto de temporada navideña."
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150" alt="Cliente Alejandro" className="h-11 w-11 rounded-full object-cover border border-gray-100" />
-                <div>
-                  <h4 className="font-bold text-gray-900 text-sm">Alejandro Ruiz</h4>
-                  <span className="text-xs text-gray-400">Director de Gourmet Garden (8 sedes)</span>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -2149,7 +2413,7 @@ function App() {
                 <li><a href="#tarjetas" className="hover:text-white" onClick={() => setActiveNav('tarjetas')}>Tipos de Tarjeta</a></li>
                 <li><a href="#quiz" className="hover:text-white" onClick={() => { setActiveNav('quiz'); startQuiz(); }}>Encuentra tu Plan</a></li>
                 <li><a href="#nosotros" className="hover:text-white" onClick={() => setActiveNav('nosotros')}>Sobre Nosotros</a></li>
-                <li><a href="#opiniones" className="hover:text-white" onClick={() => setActiveNav('opiniones')}>Casos de Éxito</a></li>
+                <li><a href="#faq" className="hover:text-white" onClick={() => setActiveNav('faq')}>Preguntas Frecuentes</a></li>
               </ul>
             </div>
             <div className="lg:col-span-3 space-y-4">
