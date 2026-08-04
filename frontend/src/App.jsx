@@ -2403,7 +2403,7 @@ function App() {
               </p>
               <div className="flex gap-3">
                 <a href="https://www.facebook.com/people/2Gether-Rewards/61592264844889/#" target="_blank" rel="noopener noreferrer" className="h-9 w-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white text-sm" aria-label="Facebook 2Gether Rewards"><i className="fa-brands fa-facebook-f"></i></a>
-                <a href="#" className="h-9 w-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white text-sm"><i className="fa-brands fa-instagram"></i></a>
+                <a href="https://www.instagram.com/2getherrewards/" target="_blank" rel="noopener noreferrer" className="h-9 w-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white text-sm" aria-label="Instagram 2Gether Rewards"><i className="fa-brands fa-instagram"></i></a>
                 <a href="#" className="h-9 w-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white text-sm"><i className="fa-brands fa-linkedin-in"></i></a>
               </div>
             </div>
