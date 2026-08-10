@@ -322,9 +322,15 @@ function App() {
   const [regPassword, setRegPassword] = useState('');
   const [regPasswordConfirm, setRegPasswordConfirm] = useState('');
   const [regPlan, setRegPlan] = useState('Plan START - $49/mes');
+  const [regTerms, setRegTerms] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
 
   const handleRegistrationSubmit = async (e) => {
     e.preventDefault();
+    if (!regTerms) {
+      alert('Debes aceptar los Términos y Condiciones del Servicio para poder registrarte.');
+      return;
+    }
     if (regPassword !== regPasswordConfirm) {
       alert('Las contraseñas no coinciden.');
       return;
@@ -359,6 +365,7 @@ function App() {
         setRegPhone('');
         setRegPassword('');
         setRegPasswordConfirm('');
+        setRegTerms(false);
       } else {
         alert('Error al registrar: ' + (data.error || 'Intente de nuevo.'));
       }
@@ -1688,6 +1695,35 @@ function App() {
                     <option value="Plan ENTERPRISE - $99/mes">Plan ENTERPRISE - $99/mes</option>
                   </select>
                 </div>
+                <div className="flex items-start gap-2 text-left pt-1">
+                  <input
+                    type="checkbox"
+                    id="app-reg-terms"
+                    required
+                    checked={regTerms}
+                    onChange={(e) => setRegTerms(e.target.checked)}
+                    className="mt-0.5 w-4 h-4 rounded text-primary accent-[#69BFA1] cursor-pointer shrink-0"
+                  />
+                  <div className="text-xs text-gray-600 leading-tight">
+                    <label htmlFor="app-reg-terms" className="cursor-pointer">
+                      Acepto los{' '}
+                    </label>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setShowTermsModal(true);
+                      }}
+                      className="text-primary font-semibold underline hover:text-primary-hover inline p-0 bg-transparent border-none text-xs cursor-pointer focus:outline-none"
+                    >
+                      Términos y Condiciones del Servicio
+                    </button>
+                    <label htmlFor="app-reg-terms" className="cursor-pointer">
+                      {' '}para Comercios Afiliados.
+                    </label>
+                  </div>
+                </div>
                 <button type="submit" className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-lg mt-2 transition-all duration-200 active:scale-95 text-xs uppercase tracking-wider">
                   Registro
                 </button>
@@ -1723,6 +1759,273 @@ function App() {
             )}
           </div>
         </div>
+
+        {/* MODAL POPUP TÉRMINOS Y CONDICIONES */}
+        {showTermsModal && (
+          <div className="fixed inset-0 bg-black/60 z-[9999] flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setShowTermsModal(false)}>
+            <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[85vh] shadow-2xl border border-gray-100 flex flex-col overflow-hidden text-left animate-scaleUp" onClick={(e) => e.stopPropagation()}>
+              {/* Header */}
+              <div className="p-6 border-b border-gray-100 flex items-start justify-between bg-white sticky top-0 z-10">
+                <div>
+                  <h3 className="font-heading font-extrabold text-lg text-gray-900">
+                    TÉRMINOS Y CONDICIONES DEL SERVICIO
+                  </h3>
+                  <p className="text-xs font-semibold text-primary mt-1">
+                    Plataforma 2getherReward para Comercios Afiliados
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowTermsModal(false)}
+                  className="h-8 w-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 text-gray-500 transition-colors"
+                  aria-label="Cerrar ventana"
+                >
+                  <i className="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 overflow-y-auto p-6 space-y-4 text-xs text-gray-600 leading-relaxed">
+                <p className="font-medium text-gray-800 bg-emerald-50/60 p-3.5 rounded-xl border border-emerald-100">
+                  Al registrarse y contratar los servicios de 2getherReward, la empresa afiliada acepta los siguientes términos y condiciones:
+                </p>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">1. Aceptación</h4>
+                  <p>El registro y utilización de la plataforma implica la aceptación de los presentes términos y condiciones.</p>
+                  <p>La empresa declara que la información suministrada durante el proceso de registro es veraz, completa y actualizada.</p>
+                  <p>La empresa autoriza a 2getherReward a utilizar la información proporcionada para la administración de la cuenta, facturación, soporte técnico y comunicaciones relacionadas con el servicio.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">2. Objeto del Servicio</h4>
+                  <p>2getherReward proporciona una plataforma tecnológica para que la empresa pueda administrar programas digitales de fidelización mediante Apple Wallet y Google Wallet.</p>
+                  <p>La contratación del servicio no constituye una relación de franquicia, representación, sociedad o exclusividad entre las partes.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">3. Creación de la Cuenta</h4>
+                  <p>La empresa será responsable de:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Mantener actualizada su información.</li>
+                    <li>Administrar los usuarios autorizados.</li>
+                    <li>Custodiar sus credenciales de acceso.</li>
+                    <li>Notificar inmediatamente cualquier acceso no autorizado.</li>
+                  </ul>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">4. Planes y Facturación</h4>
+                  <p>El servicio será prestado conforme al plan contratado.</p>
+                  <p>Las tarifas podrán actualizarse notificándolo previamente.</p>
+                  <p>La suspensión del pago podrá ocasionar la suspensión temporal del servicio.</p>
+                  <p>Los impuestos aplicables serán responsabilidad de la empresa afiliada.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">5. Uso de la Plataforma</h4>
+                  <p>La empresa podrá utilizar la plataforma para:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Administrar programas de fidelización.</li>
+                    <li>Emitir tarjetas digitales.</li>
+                    <li>Gestionar tarjetas de regalo.</li>
+                    <li>Enviar campañas promocionales.</li>
+                    <li>Consultar reportes y estadísticas.</li>
+                    <li>Administrar sucursales y usuarios según el plan contratado.</li>
+                  </ul>
+                  <p>La empresa se compromete a utilizar la plataforma únicamente para fines lícitos.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">6. Administración del Programa de Fidelización</h4>
+                  <p>La empresa será la única responsable de definir:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Beneficios.</li>
+                    <li>Promociones.</li>
+                    <li>Sellos.</li>
+                    <li>Puntos.</li>
+                    <li>Cashback.</li>
+                    <li>Cupones.</li>
+                    <li>Tarjetas de regalo.</li>
+                    <li>Membresías.</li>
+                    <li>Políticas de vencimiento.</li>
+                    <li>Condiciones de canje.</li>
+                  </ul>
+                  <p>2getherReward no participa en la definición de dichas reglas comerciales.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">7. Responsabilidad sobre los Clientes</h4>
+                  <p>La empresa reconoce que es la responsable exclusiva de:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>La atención de sus clientes.</li>
+                    <li>La entrega de premios o beneficios.</li>
+                    <li>La administración del programa.</li>
+                    <li>La resolución de reclamos relacionados con promociones o recompensas.</li>
+                  </ul>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">8. Protección de Datos Personales</h4>
+                  <p>La empresa declara cumplir con la legislación vigente sobre protección de datos personales.</p>
+                  <p>Asimismo, garantiza que:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Obtendrá el consentimiento de sus clientes para el tratamiento de sus datos.</li>
+                    <li>Informará adecuadamente sobre el uso de la información.</li>
+                    <li>Utilizará los datos únicamente para fines comerciales autorizados.</li>
+                  </ul>
+                  <p>2getherReward actuará como proveedor tecnológico y procesará la información únicamente para prestar el servicio contratado.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">9. Comunicaciones Comerciales</h4>
+                  <p>La empresa será responsable de asegurarse de que sus clientes hayan autorizado recibir:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Correos electrónicos.</li>
+                    <li>Notificaciones Push.</li>
+                    <li>Promociones.</li>
+                    <li>Campañas publicitarias.</li>
+                    <li>Invitaciones.</li>
+                    <li>Descuentos.</li>
+                    <li>Información comercial.</li>
+                  </ul>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">10. Seguridad de la Información</h4>
+                  <p>2getherReward implementa medidas razonables de seguridad para proteger la información.</p>
+                  <p>No obstante, la empresa reconoce que ningún sistema informático puede garantizar seguridad absoluta frente a:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Ataques cibernéticos.</li>
+                    <li>Accesos no autorizados.</li>
+                    <li>Malware.</li>
+                    <li>Interrupciones de Internet.</li>
+                    <li>Fallas de terceros.</li>
+                  </ul>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">11. Fraude</h4>
+                  <p>La empresa será responsable del uso que realicen sus usuarios internos.</p>
+                  <p>2getherReward no será responsable por:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Creación fraudulenta de clientes.</li>
+                    <li>Manipulación indebida de sellos.</li>
+                    <li>Canjes autorizados incorrectamente por el personal del comercio.</li>
+                    <li>Uso indebido de credenciales.</li>
+                    <li>Fraudes internos cometidos por colaboradores de la empresa.</li>
+                  </ul>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">12. Disponibilidad del Servicio</h4>
+                  <p>2getherReward realizará esfuerzos razonables para mantener la plataforma disponible.</p>
+                  <p>Podrán existir interrupciones ocasionadas por:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Mantenimiento programado.</li>
+                    <li>Actualizaciones.</li>
+                    <li>Fallas de Internet.</li>
+                    <li>Servicios de terceros.</li>
+                    <li>Casos de fuerza mayor.</li>
+                  </ul>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">13. Integración con Apple Wallet y Google Wallet</h4>
+                  <p>La plataforma es compatible con Apple Wallet y Google Wallet.</p>
+                  <p>La disponibilidad dependerá de:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Compatibilidad del dispositivo del usuario.</li>
+                    <li>Sistemas operativos soportados.</li>
+                    <li>Políticas propias de Apple y Google.</li>
+                  </ul>
+                  <p>2getherReward no controla modificaciones realizadas por dichos proveedores.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">14. Propiedad Intelectual</h4>
+                  <p>Todo el software, diseño, logotipos, interfaces, documentación, imágenes, marca y tecnología pertenecen a 2getherReward.</p>
+                  <p>La contratación del servicio no concede derechos de propiedad intelectual sobre la plataforma.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">15. Confidencialidad</h4>
+                  <p>Ambas partes se comprometen a mantener confidencial toda la información técnica, comercial, financiera y estratégica intercambiada durante la relación comercial.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">16. Limitación de Responsabilidad</h4>
+                  <p>2getherReward será responsable únicamente por la prestación de la plataforma tecnológica.</p>
+                  <p>En ningún caso será responsable por:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Pérdidas de ventas.</li>
+                    <li>Lucro cesante.</li>
+                    <li>Daños indirectos.</li>
+                    <li>Reclamos de consumidores.</li>
+                    <li>Incumplimiento de promociones ofrecidas por la empresa.</li>
+                    <li>Decisiones comerciales tomadas por la empresa.</li>
+                  </ul>
+                  <p>La responsabilidad máxima de 2getherReward, cuando legalmente corresponda, se limitará al monto efectivamente pagado por la empresa durante los tres (3) meses anteriores al evento que origine la reclamación.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">17. Suspensión o Terminación</h4>
+                  <p>2getherReward podrá suspender o cancelar el servicio cuando:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Exista incumplimiento contractual.</li>
+                    <li>Se detecte fraude.</li>
+                    <li>Existan actividades ilícitas.</li>
+                    <li>Se incumplan estos términos.</li>
+                    <li>Existan atrasos reiterados en los pagos.</li>
+                  </ul>
+                  <p>La empresa podrá cancelar el servicio conforme a las condiciones del plan contratado.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">18. Actualización de la Plataforma</h4>
+                  <p>2getherReward podrá incorporar nuevas funcionalidades, mejoras o modificaciones técnicas para mantener la plataforma actualizada, sin afectar la continuidad del servicio.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">19. Modificación de los Términos</h4>
+                  <p>Estos términos podrán actualizarse periódicamente.</p>
+                  <p>Las modificaciones serán notificadas oportunamente y entrarán en vigor a partir de su publicación.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">20. Legislación Aplicable</h4>
+                  <p>Estos términos se regirán por la legislación vigente del país donde 2getherReward tenga establecida la prestación del servicio, salvo que las partes acuerden expresamente otra jurisdicción.</p>
+                </section>
+
+                <section className="space-y-1 pt-1 pb-2">
+                  <h4 className="font-bold text-gray-900 text-sm">21. Aceptación</h4>
+                  <p>Al registrarse en la plataforma, la empresa declara haber leído, comprendido y aceptado íntegramente estos términos y condiciones.</p>
+                </section>
+              </div>
+
+              {/* Footer */}
+              <div className="p-4 px-6 border-t border-gray-100 flex justify-between items-center bg-gray-50/50">
+                <button
+                  type="button"
+                  onClick={() => setShowTermsModal(false)}
+                  className="px-4 py-2 text-xs font-semibold text-gray-600 hover:text-gray-800 rounded-xl hover:bg-gray-200/50 transition-colors"
+                >
+                  Cerrar
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setRegTerms(true);
+                    setShowTermsModal(false);
+                  }}
+                  className="px-5 py-2.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl text-xs shadow-md transition-all active:scale-95"
+                >
+                  Entendido y Aceptar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -2429,7 +2732,7 @@ function App() {
             <p>&copy; 2026 2GetherRewards. Todos los derechos reservados.</p>
             <div className="flex gap-6">
               <a href="#" className="hover:text-white">Privacidad</a>
-              <a href="#" className="hover:text-white">Términos de Servicio</a>
+              <button type="button" onClick={() => setCurrentPage('dashboard-trial')} className="hover:text-white text-gray-500 bg-transparent border-none p-0 cursor-pointer">Términos de Servicio</button>
             </div>
           </div>
         </div>
