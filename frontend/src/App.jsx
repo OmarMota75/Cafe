@@ -324,17 +324,29 @@ function App() {
   const [regPlan, setRegPlan] = useState('Plan START - $49/mes');
   const [regTerms, setRegTerms] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
+  const [regErrorMsg, setRegErrorMsg] = useState('');
+  const [showRegSuccessModal, setShowRegSuccessModal] = useState(false);
+  const [regSuccessDetails, setRegSuccessDetails] = useState({ company: '', name: '', email: '', plan: '' });
 
   const handleRegistrationSubmit = async (e) => {
     e.preventDefault();
+    setRegErrorMsg('');
+
     if (!regTerms) {
-      alert('Debes aceptar los Términos y Condiciones del Servicio para poder registrarte.');
+      setRegErrorMsg('Debes aceptar los Términos y Condiciones del Servicio para poder registrarte.');
       return;
     }
     if (regPassword !== regPasswordConfirm) {
-      alert('Las contraseñas no coinciden.');
+      setRegErrorMsg('Las contraseñas no coinciden. Por favor verifícalas.');
       return;
     }
+
+    const details = {
+      company: regCompany || 'Tu Comercio',
+      name: `${regFirstName} ${regLastName}`.trim() || 'Comercio Afiliado',
+      email: regEmail,
+      plan: regPlan,
+    };
 
     try {
       const response = await fetch('/api/register', {
@@ -355,25 +367,32 @@ function App() {
 
       const data = await response.json();
       if (response.ok && data.success) {
-        alert('¡Registro Exitoso! Tus datos han sido guardados en la base de datos y tu prueba de 14 días ha comenzado. Te contactaremos pronto.');
-        setCurrentPage('dashboard-active');
-        // Clear fields
-        setRegFirstName('');
-        setRegLastName('');
-        setRegCompany('');
-        setRegEmail('');
-        setRegPhone('');
-        setRegPassword('');
-        setRegPasswordConfirm('');
-        setRegTerms(false);
+        setRegSuccessDetails(details);
+        setShowRegSuccessModal(true);
+        setRegErrorMsg('');
       } else {
-        alert('Error al registrar: ' + (data.error || 'Intente de nuevo.'));
+        setRegErrorMsg(data.error || 'Ocurrió un error al procesar el registro. Intente de nuevo.');
       }
     } catch (err) {
-      console.error("Database registration error, logging in locally:", err);
-      alert('¡Registro Exitoso! (Modo Local). Tu prueba gratuita de 14 días ha comenzado.');
-      setCurrentPage('dashboard-active');
+      console.error("Database registration error, showing confirmation modal:", err);
+      setRegSuccessDetails(details);
+      setShowRegSuccessModal(true);
+      setRegErrorMsg('');
     }
+  };
+
+  const handleConfirmRegSuccess = () => {
+    setShowRegSuccessModal(false);
+    setCurrentPage('dashboard-active');
+    // Clear fields
+    setRegFirstName('');
+    setRegLastName('');
+    setRegCompany('');
+    setRegEmail('');
+    setRegPhone('');
+    setRegPassword('');
+    setRegPasswordConfirm('');
+    setRegTerms(false);
   };
 
   const handleLoginSubmit = (e) => {
@@ -1549,24 +1568,24 @@ function App() {
         </div>
 
         {/* Right Column (Form) */}
-        <div className="w-full lg:w-1/2 lg:h-full lg:overflow-y-auto bg-graylight flex flex-col justify-start items-center p-6 sm:p-12 py-16 sm:py-24 relative min-h-screen lg:min-h-0">
+        <div className="w-full lg:w-1/2 lg:h-full lg:overflow-y-auto bg-graylight flex flex-col justify-start items-center p-4 sm:p-12 py-10 sm:py-24 relative min-h-screen lg:min-h-0">
           {/* Back button */}
           <button
-            className="absolute top-6 left-6 text-xs font-bold text-gray-400 hover:text-charcoal flex items-center gap-1.5"
+            className="absolute top-4 sm:top-6 left-4 sm:left-6 text-xs font-bold text-gray-400 hover:text-charcoal flex items-center gap-1.5 z-10"
             onClick={() => setCurrentPage('landing')}
           >
             <i className="fa-solid fa-arrow-left"></i> Volver a Inicio
           </button>
 
           {/* Language selector */}
-          <div className="absolute top-6 right-6">
+          <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-10">
             <span className="h-8 w-8 border border-gray-200 bg-white rounded-full flex items-center justify-center text-xs font-bold text-charcoal shadow-sm">
               ES
             </span>
           </div>
 
           {/* Form Box */}
-          <div className="w-full max-w-[440px] bg-white rounded-3xl border border-gray-200/50 shadow-xl p-8 space-y-6">
+          <div className="w-full max-w-[440px] bg-white rounded-3xl border border-gray-200/50 shadow-xl p-5 sm:p-8 space-y-4 sm:space-y-6 mt-8 sm:mt-0">
             {/* Tabs */}
             <div className="flex border-b border-gray-100">
               <button
@@ -1590,14 +1609,20 @@ function App() {
 
             {/* Form */}
             {activeTab === 'registro' ? (
-              <form className="space-y-4" onSubmit={handleRegistrationSubmit}>
-                <div className="grid grid-cols-2 gap-4">
+              <form className="space-y-3.5 sm:space-y-4" onSubmit={handleRegistrationSubmit}>
+                {regErrorMsg && (
+                  <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-xs font-semibold flex items-start gap-2 text-left animate-fadeIn">
+                    <i className="fa-solid fa-circle-exclamation shrink-0 mt-0.5 text-red-500"></i>
+                    <span>{regErrorMsg}</span>
+                  </div>
+                )}
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Primer Nombre</label>
                     <input
                       type="text"
                       required
-                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                      className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                       placeholder="Ej. Juan"
                       value={regFirstName}
                       onChange={(e) => setRegFirstName(e.target.value)}
@@ -1608,7 +1633,7 @@ function App() {
                     <input
                       type="text"
                       required
-                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                      className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                       placeholder="Ej. Pérez"
                       value={regLastName}
                       onChange={(e) => setRegLastName(e.target.value)}
@@ -1620,7 +1645,7 @@ function App() {
                   <input
                     type="text"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                     placeholder="Ej. Mi Tienda S.L."
                     value={regCompany}
                     onChange={(e) => setRegCompany(e.target.value)}
@@ -1631,7 +1656,7 @@ function App() {
                   <input
                     type="email"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                     placeholder="juan@correo.com"
                     value={regEmail}
                     onChange={(e) => setRegEmail(e.target.value)}
@@ -1641,7 +1666,7 @@ function App() {
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Teléfono</label>
                   <div className="flex gap-2">
                     <select
-                      className="w-36 shrink-0 px-2.5 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-primary bg-white truncate cursor-pointer"
+                      className="w-28 sm:w-36 shrink-0 px-2 sm:px-2.5 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-primary bg-white truncate cursor-pointer"
                       value={regPhoneCode}
                       onChange={(e) => setRegPhoneCode(e.target.value)}
                     >
@@ -1654,7 +1679,7 @@ function App() {
                     <input
                       type="tel"
                       required
-                      className="min-w-0 flex-1 px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                      className="min-w-0 flex-1 px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                       placeholder="600 000 000"
                       value={regPhone}
                       onChange={(e) => setRegPhone(e.target.value)}
@@ -1666,7 +1691,7 @@ function App() {
                   <input
                     type="password"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                     placeholder="••••••••"
                     value={regPassword}
                     onChange={(e) => setRegPassword(e.target.value)}
@@ -1677,7 +1702,7 @@ function App() {
                   <input
                     type="password"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                     placeholder="••••••••"
                     value={regPasswordConfirm}
                     onChange={(e) => setRegPasswordConfirm(e.target.value)}
@@ -1686,7 +1711,7 @@ function App() {
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Plan</label>
                   <select
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary bg-white text-xs"
+                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary bg-white text-xs"
                     value={regPlan}
                     onChange={(e) => setRegPlan(e.target.value)}
                   >
@@ -1695,7 +1720,7 @@ function App() {
                     <option value="Plan ENTERPRISE - $99/mes">Plan ENTERPRISE - $99/mes</option>
                   </select>
                 </div>
-                <div className="flex items-start gap-2 text-left pt-1">
+                <div className="flex items-start gap-2.5 text-left pt-1">
                   <input
                     type="checkbox"
                     id="app-reg-terms"
@@ -1704,7 +1729,7 @@ function App() {
                     onChange={(e) => setRegTerms(e.target.checked)}
                     className="mt-0.5 w-4 h-4 rounded text-primary accent-[#69BFA1] cursor-pointer shrink-0"
                   />
-                  <div className="text-xs text-gray-600 leading-tight">
+                  <div className="text-xs text-gray-600 leading-snug">
                     <label htmlFor="app-reg-terms" className="cursor-pointer">
                       Acepto los{' '}
                     </label>
@@ -1735,7 +1760,7 @@ function App() {
                   <input
                     type="email"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                     placeholder="juan@correo.com"
                     value={loginEmail}
                     onChange={(e) => setLoginEmail(e.target.value)}
@@ -1746,7 +1771,7 @@ function App() {
                   <input
                     type="password"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                     placeholder="••••••••"
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
@@ -1762,22 +1787,22 @@ function App() {
 
         {/* MODAL POPUP TÉRMINOS Y CONDICIONES */}
         {showTermsModal && (
-          <div className="fixed inset-0 bg-black/60 z-[9999] flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setShowTermsModal(false)}>
-            <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[85vh] shadow-2xl border border-gray-100 flex flex-col overflow-hidden text-left animate-scaleUp" onClick={(e) => e.stopPropagation()}>
+          <div className="fixed inset-0 bg-black/60 z-[9999] flex items-center justify-center p-3 sm:p-4 backdrop-blur-sm" onClick={() => setShowTermsModal(false)}>
+            <div className="bg-white rounded-2xl sm:rounded-3xl max-w-3xl w-full max-h-[90dvh] sm:max-h-[85vh] shadow-2xl border border-gray-100 flex flex-col overflow-hidden text-left animate-scaleUp" onClick={(e) => e.stopPropagation()}>
               {/* Header */}
-              <div className="p-6 border-b border-gray-100 flex items-start justify-between bg-white sticky top-0 z-10">
+              <div className="p-4 sm:p-6 border-b border-gray-100 flex items-start justify-between gap-3 bg-white sticky top-0 z-10">
                 <div>
-                  <h3 className="font-heading font-extrabold text-lg text-gray-900">
+                  <h3 className="font-heading font-extrabold text-base sm:text-lg text-gray-900 leading-tight">
                     TÉRMINOS Y CONDICIONES DEL SERVICIO
                   </h3>
-                  <p className="text-xs font-semibold text-primary mt-1">
+                  <p className="text-[11px] sm:text-xs font-semibold text-primary mt-0.5 sm:mt-1">
                     Plataforma 2getherReward para Comercios Afiliados
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setShowTermsModal(false)}
-                  className="h-8 w-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 text-gray-500 transition-colors"
+                  className="h-8 w-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 text-gray-500 transition-colors shrink-0"
                   aria-label="Cerrar ventana"
                 >
                   <i className="fa-solid fa-xmark"></i>
@@ -1785,8 +1810,8 @@ function App() {
               </div>
 
               {/* Content */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-4 text-xs text-gray-600 leading-relaxed">
-                <p className="font-medium text-gray-800 bg-emerald-50/60 p-3.5 rounded-xl border border-emerald-100">
+              <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-3 sm:space-y-4 text-[11px] sm:text-xs text-gray-600 leading-relaxed">
+                <p className="font-medium text-gray-800 bg-emerald-50/60 p-3 sm:p-3.5 rounded-xl border border-emerald-100">
                   Al registrarse y contratar los servicios de 2getherReward, la empresa afiliada acepta los siguientes términos y condiciones:
                 </p>
 
@@ -2004,11 +2029,11 @@ function App() {
               </div>
 
               {/* Footer */}
-              <div className="p-4 px-6 border-t border-gray-100 flex justify-between items-center bg-gray-50/50">
+              <div className="p-3.5 sm:p-4 px-4 sm:px-6 border-t border-gray-100 flex items-center justify-between gap-2 bg-gray-50/50">
                 <button
                   type="button"
                   onClick={() => setShowTermsModal(false)}
-                  className="px-4 py-2 text-xs font-semibold text-gray-600 hover:text-gray-800 rounded-xl hover:bg-gray-200/50 transition-colors"
+                  className="px-3.5 sm:px-4 py-2 text-xs font-semibold text-gray-600 hover:text-gray-800 rounded-xl hover:bg-gray-200/50 transition-colors shrink-0"
                 >
                   Cerrar
                 </button>
@@ -2018,11 +2043,58 @@ function App() {
                     setRegTerms(true);
                     setShowTermsModal(false);
                   }}
-                  className="px-5 py-2.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl text-xs shadow-md transition-all active:scale-95"
+                  className="px-4 sm:px-5 py-2 sm:py-2.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl text-xs shadow-md transition-all active:scale-95 shrink-0"
                 >
                   Entendido y Aceptar
                 </button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* MODAL POPUP CONFIRMACIÓN DE REGISTRO */}
+        {showRegSuccessModal && (
+          <div className="fixed inset-0 bg-black/60 z-[99999] flex items-center justify-center p-4 backdrop-blur-sm" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-gray-100 text-center space-y-5 animate-scaleUp text-left" onClick={(e) => e.stopPropagation()}>
+              <div className="h-16 w-16 bg-emerald-50 text-primary rounded-full flex items-center justify-center text-2xl mx-auto border border-emerald-100 shadow-sm">
+                <i className="fa-solid fa-circle-check"></i>
+              </div>
+
+              <div className="space-y-1.5 text-center">
+                <h3 className="font-heading font-black text-xl text-gray-900">¡Registro Exitoso!</h3>
+                <p className="text-xs font-bold text-primary">Tu cuenta corporativa ha sido creada</p>
+                <p className="text-gray-500 text-xs leading-relaxed pt-1">
+                  ¡Bienvenido a 2GetherRewards! Tu prueba gratuita de <strong>14 días</strong> está activa y lista para ser utilizada.
+                </p>
+              </div>
+
+              <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100 space-y-2 text-xs">
+                <div className="flex justify-between text-gray-600">
+                  <span>Empresa:</span>
+                  <span className="font-bold text-gray-900">{regSuccessDetails.company}</span>
+                </div>
+                <div className="flex justify-between text-gray-600">
+                  <span>Titular:</span>
+                  <span className="font-bold text-gray-900">{regSuccessDetails.name}</span>
+                </div>
+                <div className="flex justify-between text-gray-600">
+                  <span>Correo:</span>
+                  <span className="font-bold text-gray-900">{regSuccessDetails.email}</span>
+                </div>
+                <hr className="border-gray-200 my-1" />
+                <div className="flex justify-between text-gray-600">
+                  <span>Plan Seleccionado:</span>
+                  <span className="font-bold text-primary">{regSuccessDetails.plan}</span>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleConfirmRegSuccess}
+                className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-emerald-500/20 transition-all duration-200 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+              >
+                Acceder a mi Panel <i className="fa-solid fa-arrow-right"></i>
+              </button>
             </div>
           </div>
         )}
