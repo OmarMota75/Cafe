@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -20,14 +21,25 @@ app.use(express.static(frontendDistPath));
 
 // Configure Email Transporter
 const createMailTransporter = () => {
-    const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
-    const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
     const smtpUser = process.env.SMTP_USER || process.env.EMAIL_USER;
     const smtpPass = process.env.SMTP_PASS || process.env.EMAIL_PASS || process.env.GMAIL_APP_PASSWORD;
 
     if (!smtpUser || !smtpPass) {
-        console.log("ℹ️ Correo SMTP no configurado completamente (SMTP_USER/SMTP_PASS). Los correos se registrarán en la consola.");
+        console.log("ℹ️ [AVISO]: Correo SMTP no configurado (falta SMTP_USER y SMTP_PASS en backend/.env). Los correos se simularán en la consola.");
         return null;
+    }
+
+    const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
+    const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
+
+    if (smtpHost === 'smtp.gmail.com' || process.env.SMTP_SERVICE === 'gmail') {
+        return nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: smtpUser,
+                pass: smtpPass,
+            },
+        });
     }
 
     return nodemailer.createTransport({
