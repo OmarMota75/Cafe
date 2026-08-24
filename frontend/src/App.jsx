@@ -322,6 +322,10 @@ function App() {
   const [regPassword, setRegPassword] = useState('');
   const [regPasswordConfirm, setRegPasswordConfirm] = useState('');
   const [regPlan, setRegPlan] = useState('Plan START - $49/mes');
+  const [regTerms, setRegTerms] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
+  const [regErrorMsg, setRegErrorMsg] = useState('');
+  const [isSubmittingReg, setIsSubmittingReg] = useState(false);
 
   const handleRegistrationSubmit = async (e) => {
     e.preventDefault();
@@ -336,6 +340,7 @@ function App() {
       return;
     }
 
+    setIsSubmittingReg(true);
     try {
       const response = await fetch('/api/register', {
         method: 'POST',
@@ -356,7 +361,7 @@ function App() {
 
       const data = await response.json();
       if (response.ok && data.success) {
-        alert('¡Registro Exitoso! Tus datos han sido guardados en la base de datos y tu prueba de 14 días ha comenzado. Te contactaremos pronto.');
+        alert('¡Registro Exitoso! Tus datos han sido guardados, tu prueba de 14 días ha comenzado y te hemos enviado un correo de bienvenida con la confirmación de los Términos y Condiciones aceptados.');
         setCurrentPage('dashboard-active');
         // Clear fields
         setRegFirstName('');
@@ -366,13 +371,16 @@ function App() {
         setRegPhone('');
         setRegPassword('');
         setRegPasswordConfirm('');
+        setRegTerms(false);
       } else {
-        alert('Error al registrar: ' + (data.error || 'Intente de nuevo.'));
+        setRegErrorMsg(data.error || 'Error al registrar. Intente de nuevo.');
       }
     } catch (err) {
       console.error("Database registration error, logging in locally:", err);
       alert('¡Registro Exitoso! (Modo Local). Tu prueba gratuita de 14 días ha comenzado.');
       setCurrentPage('dashboard-active');
+    } finally {
+      setIsSubmittingReg(false);
     }
   };
 
@@ -1701,8 +1709,43 @@ function App() {
                     <option value="Plan ENTERPRISE - $99/mes">Plan ENTERPRISE - $99/mes</option>
                   </select>
                 </div>
-                <button type="submit" className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-lg mt-2 transition-all duration-200 active:scale-95 text-xs uppercase tracking-wider">
-                  Registro
+
+                {/* Checkbox Términos y Condiciones */}
+                <div className="flex items-start gap-2.5 text-left pt-1">
+                  <input
+                    type="checkbox"
+                    id="app-reg-terms"
+                    required
+                    checked={regTerms}
+                    onChange={(e) => setRegTerms(e.target.checked)}
+                    className="mt-0.5 w-4 h-4 rounded text-primary accent-primary cursor-pointer shrink-0"
+                  />
+                  <div className="text-xs text-gray-600 leading-snug">
+                    <label htmlFor="app-reg-terms" className="cursor-pointer">
+                      He leído y acepto los{' '}
+                    </label>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setShowTermsModal(true);
+                      }}
+                      className="text-primary font-bold underline hover:text-primary-hover inline p-0 bg-transparent border-none text-xs cursor-pointer focus:outline-none"
+                    >
+                      Términos y Condiciones del Servicio
+                    </button>
+                    <label htmlFor="app-reg-terms" className="cursor-pointer">
+                      {' '}para Comercios Afiliados.
+                    </label>
+                  </div>
+                </div>
+
+                <button 
+                  type="submit" 
+                  disabled={isSubmittingReg || !regTerms}
+                  className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-lg mt-2 transition-all duration-200 active:scale-95 text-xs uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                >
+                  {isSubmittingReg ? 'Registrando...' : 'Registro'}
                 </button>
               </form>
             ) : (
@@ -2857,129 +2900,6 @@ function App() {
             <button className="w-full py-4.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-full text-sm" onClick={() => setIsSuccessModalOpen(false)}>
               Acceder a mi Panel
             </button>
-          </div>
-        </div>
-      )}
-
-      {/* MODAL TÉRMINOS Y CONDICIONES / POLÍTICA DE PRIVACIDAD */}
-      {isTermsModalOpen && (
-        <div className="fixed inset-0 bg-black/60 z-[999] flex items-center justify-center p-4 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-white rounded-3xl max-w-2xl w-full shadow-2xl border border-gray-100 flex flex-col max-h-[85vh] overflow-hidden animate-scaleUp">
-            {/* Modal Header */}
-            <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-orange-100 text-primary flex items-center justify-center text-lg">
-                  <i className="fa-solid fa-file-contract"></i>
-                </div>
-                <div>
-                  <h3 className="font-heading font-black text-lg text-gray-900 leading-tight">
-                    {termsModalTab === 'terms' ? 'Términos y Condiciones de Uso' : 'Política de Privacidad'}
-                  </h3>
-                  <p className="text-gray-400 text-xs">2GetherRewards Loyalty Platform</p>
-                </div>
-              </div>
-              <button 
-                onClick={() => setIsTermsModalOpen(false)}
-                className="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 flex items-center justify-center transition"
-                aria-label="Cerrar modal"
-              >
-                <i className="fa-solid fa-xmark"></i>
-              </button>
-            </div>
-
-            {/* Modal Tabs */}
-            <div className="flex border-b border-gray-200 px-6 pt-3 bg-white text-xs font-bold gap-6">
-              <button
-                onClick={() => setTermsModalTab('terms')}
-                className={`pb-3 border-b-2 transition ${termsModalTab === 'terms' ? 'border-primary text-primary' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
-              >
-                1. Términos y Condiciones
-              </button>
-              <button
-                onClick={() => setTermsModalTab('privacy')}
-                className={`pb-3 border-b-2 transition ${termsModalTab === 'privacy' ? 'border-primary text-primary' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
-              >
-                2. Política de Privacidad
-              </button>
-            </div>
-
-            {/* Modal Content Scrollable */}
-            <div className="p-6 overflow-y-auto space-y-4 text-xs text-gray-600 leading-relaxed text-left">
-              {termsModalTab === 'terms' ? (
-                <>
-                  <div className="bg-orange-50/70 border border-orange-200 rounded-xl p-3.5 text-orange-900 text-xs">
-                    <strong>Resumen clave:</strong> Al registrarte en 2GetherRewards, obtienes acceso a una prueba gratuita de 14 días sin permanencia para digitalizar la fidelización de tus clientes.
-                  </div>
-
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-sm mb-1">1. Objeto del Servicio</h4>
-                    <p>2GetherRewards proporciona una plataforma integral basada en software como servicio (SaaS) para la gestión y creación de programas de fidelización, cupones digitales, tarjetas de sellos y pases para Apple Wallet y Google Wallet.</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-sm mb-1">2. Prueba Gratuita y Facturación</h4>
-                    <p>El registro otorga acceso a un período de prueba gratuito de catorce (14) días. Durante este período, el usuario podrá evaluar las funcionalidades sin cargos obligatorios. Al expirar la prueba, el usuario podrá elegir suscribirse formalmente al plan seleccionado (Plan START, GROWTH o ENTERPRISE).</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-sm mb-1">3. Responsabilidad sobre los Datos y Contenidos</h4>
-                    <p>El cliente es el único responsable de la exactitud de los datos de su empresa y de las promociones o recompensas otorgadas a sus usuarios finales a través de la plataforma.</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-sm mb-1">4. Modificaciones y Cancelación</h4>
-                    <p>2GetherRewards se reserva el derecho de actualizar periódicamente las condiciones del servicio. Los usuarios pueden cancelar su suscripción en cualquier momento sin penalizaciones.</p>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 text-emerald-900 text-xs">
-                    <strong>Compromiso con tu Privacidad:</strong> Tus datos personales y los de tus clientes están cifrados y protegidos bajo el Reglamento General de Protección de Datos (RGPD).
-                  </div>
-
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-sm mb-1">1. Responsable del Tratamiento</h4>
-                    <p>2GetherRewards Inc., con dirección de contacto en <span className="font-medium text-gray-800">soporte@2getherrewards.com</span>, es el responsable del tratamiento de los datos proporcionados durante el registro.</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-sm mb-1">2. Finalidad del Tratamiento</h4>
-                    <p>Los datos recopilados (nombre, apellido, empresa, email, teléfono) se utilizan exclusivamente para gestionar tu cuenta de prueba, habilitar el acceso al panel, enviarte correos operativos y asistirte en la configuración de tus programas de fidelización.</p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-bold text-gray-900 text-sm mb-1">3. Derechos del Usuario</h4>
-                    <p>Tienes derecho a acceder, rectificar, suprimir o limitar el tratamiento de tus datos en cualquier momento enviando un correo electrónico a nuestro equipo de soporte.</p>
-                  </div>
-                </>
-              )}
-            </div>
-
-            {/* Modal Footer */}
-            <div className="p-5 border-t border-gray-100 bg-gray-50 flex items-center justify-between gap-4">
-              <span className="text-[0.7rem] text-gray-400">
-                Última actualización: Agosto 2026
-              </span>
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsTermsModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-gray-600 hover:bg-gray-200 transition"
-                >
-                  Cerrar
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setRegAcceptTerms(true);
-                    setIsTermsModalOpen(false);
-                  }}
-                  className="px-5 py-2.5 bg-primary hover:bg-primary-hover text-white rounded-xl text-xs font-bold shadow-md transition"
-                >
-                  Aceptar y Cerrar
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       )}
