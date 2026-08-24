@@ -125,7 +125,7 @@ const sendWelcomeEmail = async ({ firstName, lastName, companyName, email, plan,
 
                     <!-- Aclaración de la Prueba de Exploración de 14 Días -->
                     <div class="demo-badge">
-                        <strong>🔍 Acceso de Exploración y Demostración (14 días):</strong><br>
+                        <strong>Acceso de Exploración y Demostración (14 días):</strong><br>
                         Esta prueba gratuita te permite ingresar al panel para <strong>conocer la plataforma por dentro</strong>, explorar cómo diseñar tarjetas para Apple & Google Wallet, probar el escáner y revisar los módulos de fidelización. 
                         <div style="margin-top: 6px; font-size: 12px; color: #15803d;">
                             <em>Nota: La emisión real y operativa de tarjetas activas para tus clientes finales se activará en cuanto decidas contratar y suscribirte formalmente a tu plan.</em>
