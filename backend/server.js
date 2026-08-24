@@ -25,12 +25,12 @@ const createMailTransporter = () => {
     const smtpPass = process.env.SMTP_PASS || process.env.EMAIL_PASS || process.env.GMAIL_APP_PASSWORD;
 
     if (!smtpUser || !smtpPass) {
-        console.log("ℹ️ [AVISO]: Correo SMTP no configurado (falta SMTP_USER y SMTP_PASS en backend/.env). Los correos se simularán en la consola.");
+        console.log("ℹ️ [AVISO]: Correo SMTP no configurado (falta SMTP_USER y SMTP_PASS en variables de entorno). Los correos se simularán en la consola.");
         return null;
     }
 
-    const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
-    const smtpPort = parseInt(process.env.SMTP_PORT || '587', 10);
+    const smtpHost = process.env.SMTP_HOST || 'smtp.resend.com';
+    const smtpPort = parseInt(process.env.SMTP_PORT || '465', 10);
 
     if (smtpHost === 'smtp.gmail.com' || process.env.SMTP_SERVICE === 'gmail') {
         return nodemailer.createTransport({

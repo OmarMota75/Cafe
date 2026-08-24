@@ -326,6 +326,8 @@ function App() {
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [regErrorMsg, setRegErrorMsg] = useState('');
   const [isSubmittingReg, setIsSubmittingReg] = useState(false);
+  const [showRegSuccessModal, setShowRegSuccessModal] = useState(false);
+  const [regSuccessDetails, setRegSuccessDetails] = useState({ company: '', name: '', email: '', plan: '' });
 
   const handleRegistrationSubmit = async (e) => {
     e.preventDefault();
@@ -339,6 +341,13 @@ function App() {
       setRegErrorMsg('Las contraseñas no coinciden. Por favor verifícalas.');
       return;
     }
+
+    const details = {
+      company: regCompany || 'Tu Comercio',
+      name: `${regFirstName} ${regLastName}`.trim() || 'Comercio Afiliado',
+      email: regEmail,
+      plan: regPlan,
+    };
 
     setIsSubmittingReg(true);
     try {
@@ -361,27 +370,34 @@ function App() {
 
       const data = await response.json();
       if (response.ok && data.success) {
-        alert('¡Registro Exitoso! Tus datos han sido guardados, tu prueba de 14 días ha comenzado y te hemos enviado un correo de bienvenida con la confirmación de los Términos y Condiciones aceptados.');
-        setCurrentPage('dashboard-active');
-        // Clear fields
-        setRegFirstName('');
-        setRegLastName('');
-        setRegCompany('');
-        setRegEmail('');
-        setRegPhone('');
-        setRegPassword('');
-        setRegPasswordConfirm('');
-        setRegTerms(false);
+        setRegSuccessDetails(details);
+        setShowRegSuccessModal(true);
+        setRegErrorMsg('');
       } else {
         setRegErrorMsg(data.error || 'Error al registrar. Intente de nuevo.');
       }
     } catch (err) {
-      console.error("Database registration error, logging in locally:", err);
-      alert('¡Registro Exitoso! (Modo Local). Tu prueba gratuita de 14 días ha comenzado.');
-      setCurrentPage('dashboard-active');
+      console.error("Database registration error, showing confirmation modal:", err);
+      setRegSuccessDetails(details);
+      setShowRegSuccessModal(true);
+      setRegErrorMsg('');
     } finally {
       setIsSubmittingReg(false);
     }
+  };
+
+  const handleConfirmRegSuccess = () => {
+    setShowRegSuccessModal(false);
+    setCurrentPage('dashboard-active');
+    // Clear fields
+    setRegFirstName('');
+    setRegLastName('');
+    setRegCompany('');
+    setRegEmail('');
+    setRegPhone('');
+    setRegPassword('');
+    setRegPasswordConfirm('');
+    setRegTerms(false);
   };
 
   const handleLoginSubmit = (e) => {
