@@ -29,6 +29,246 @@ const productsData = {
   }
 };
 
+const countryCodes = [
+  { code: 'AF', dial: '+93', name: 'Afganistán' },
+  { code: 'AL', dial: '+355', name: 'Albania' },
+  { code: 'DE', dial: '+49', name: 'Alemania' },
+  { code: 'AD', dial: '+376', name: 'Andorra' },
+  { code: 'AO', dial: '+244', name: 'Angola' },
+  { code: 'AI', dial: '+1264', name: 'Anguila' },
+  { code: 'AG', dial: '+1268', name: 'Antigua y Barbuda' },
+  { code: 'SA', dial: '+966', name: 'Arabia Saudita' },
+  { code: 'DZ', dial: '+213', name: 'Argelia' },
+  { code: 'AR', dial: '+54', name: 'Argentina' },
+  { code: 'AM', dial: '+374', name: 'Armenia' },
+  { code: 'AW', dial: '+297', name: 'Aruba' },
+  { code: 'AU', dial: '+61', name: 'Australia' },
+  { code: 'AT', dial: '+43', name: 'Austria' },
+  { code: 'AZ', dial: '+994', name: 'Azerbaiyán' },
+  { code: 'BS', dial: '+1242', name: 'Bahamas' },
+  { code: 'BD', dial: '+880', name: 'Bangladés' },
+  { code: 'BB', dial: '+1246', name: 'Barbados' },
+  { code: 'BH', dial: '+973', name: 'Bahréin' },
+  { code: 'BE', dial: '+32', name: 'Bélgica' },
+  { code: 'BZ', dial: '+501', name: 'Belice' },
+  { code: 'BJ', dial: '+229', name: 'Benín' },
+  { code: 'BM', dial: '+1441', name: 'Bermudas' },
+  { code: 'BY', dial: '+375', name: 'Bielorrusia' },
+  { code: 'BO', dial: '+591', name: 'Bolivia' },
+  { code: 'BA', dial: '+387', name: 'Bosnia y Herzegovina' },
+  { code: 'BW', dial: '+267', name: 'Botsuana' },
+  { code: 'BR', dial: '+55', name: 'Brasil' },
+  { code: 'BN', dial: '+673', name: 'Brunéi' },
+  { code: 'BG', dial: '+359', name: 'Bulgaria' },
+  { code: 'BF', dial: '+226', name: 'Burkina Faso' },
+  { code: 'BI', dial: '+257', name: 'Burundi' },
+  { code: 'BT', dial: '+975', name: 'Bután' },
+  { code: 'CV', dial: '+238', name: 'Cabo Verde' },
+  { code: 'KH', dial: '+855', name: 'Camboya' },
+  { code: 'CM', dial: '+237', name: 'Camerún' },
+  { code: 'CA', dial: '+1', name: 'Canadá' },
+  { code: 'QA', dial: '+974', name: 'Catar' },
+  { code: 'TD', dial: '+235', name: 'Chad' },
+  { code: 'CL', dial: '+56', name: 'Chile' },
+  { code: 'CN', dial: '+86', name: 'China' },
+  { code: 'CY', dial: '+357', name: 'Chipre' },
+  { code: 'CO', dial: '+57', name: 'Colombia' },
+  { code: 'KM', dial: '+269', name: 'Comoras' },
+  { code: 'CG', dial: '+242', name: 'Congo' },
+  { code: 'CD', dial: '+243', name: 'Congo (RDC)' },
+  { code: 'KR', dial: '+82', name: 'Corea del Sur' },
+  { code: 'KP', dial: '+850', name: 'Corea del Norte' },
+  { code: 'CI', dial: '+225', name: 'Costa de Marfil' },
+  { code: 'CR', dial: '+506', name: 'Costa Rica' },
+  { code: 'HR', dial: '+385', name: 'Croacia' },
+  { code: 'CU', dial: '+53', name: 'Cuba' },
+  { code: 'CW', dial: '+599', name: 'Curazao' },
+  { code: 'DK', dial: '+45', name: 'Dinamarca' },
+  { code: 'DM', dial: '+1767', name: 'Dominica' },
+  { code: 'EC', dial: '+593', name: 'Ecuador' },
+  { code: 'EG', dial: '+20', name: 'Egipto' },
+  { code: 'SV', dial: '+503', name: 'El Salvador' },
+  { code: 'AE', dial: '+971', name: 'Emiratos Árabes Unidos' },
+  { code: 'ER', dial: '+291', name: 'Eritrea' },
+  { code: 'SK', dial: '+421', name: 'Eslovaquia' },
+  { code: 'SI', dial: '+386', name: 'Eslovenia' },
+  { code: 'ES', dial: '+34', name: 'España' },
+  { code: 'US', dial: '+1', name: 'Estados Unidos' },
+  { code: 'EE', dial: '+372', name: 'Estonia' },
+  { code: 'ET', dial: '+251', name: 'Etiopía' },
+  { code: 'PH', dial: '+63', name: 'Filipinas' },
+  { code: 'FI', dial: '+358', name: 'Finlandia' },
+  { code: 'FJ', dial: '+679', name: 'Fiyi' },
+  { code: 'FR', dial: '+33', name: 'Francia' },
+  { code: 'GA', dial: '+241', name: 'Gabón' },
+  { code: 'GM', dial: '+220', name: 'Gambia' },
+  { code: 'GE', dial: '+995', name: 'Georgia' },
+  { code: 'GH', dial: '+233', name: 'Ghana' },
+  { code: 'GI', dial: '+350', name: 'Gibraltar' },
+  { code: 'GD', dial: '+1473', name: 'Granada' },
+  { code: 'GR', dial: '+30', name: 'Grecia' },
+  { code: 'GL', dial: '+299', name: 'Groenlandia' },
+  { code: 'GP', dial: '+590', name: 'Guadalupe' },
+  { code: 'GU', dial: '+1671', name: 'Guam' },
+  { code: 'GT', dial: '+502', name: 'Guatemala' },
+  { code: 'GF', dial: '+594', name: 'Guayana Francesa' },
+  { code: 'GN', dial: '+224', name: 'Guinea' },
+  { code: 'GQ', dial: '+240', name: 'Guinea Ecuatorial' },
+  { code: 'GW', dial: '+245', name: 'Guinea-Bisáu' },
+  { code: 'GY', dial: '+592', name: 'Guyana' },
+  { code: 'HT', dial: '+509', name: 'Haití' },
+  { code: 'HN', dial: '+504', name: 'Honduras' },
+  { code: 'HK', dial: '+852', name: 'Hong Kong' },
+  { code: 'HU', dial: '+36', name: 'Hungría' },
+  { code: 'IN', dial: '+91', name: 'India' },
+  { code: 'ID', dial: '+62', name: 'Indonesia' },
+  { code: 'IQ', dial: '+964', name: 'Irak' },
+  { code: 'IR', dial: '+98', name: 'Irán' },
+  { code: 'IE', dial: '+353', name: 'Irlanda' },
+  { code: 'IS', dial: '+354', name: 'Islandia' },
+  { code: 'IL', dial: '+972', name: 'Israel' },
+  { code: 'IT', dial: '+39', name: 'Italia' },
+  { code: 'JM', dial: '+1876', name: 'Jamaica' },
+  { code: 'JP', dial: '+81', name: 'Japón' },
+  { code: 'JO', dial: '+962', name: 'Jordania' },
+  { code: 'KZ', dial: '+7', name: 'Kazajistán' },
+  { code: 'KE', dial: '+254', name: 'Kenia' },
+  { code: 'KG', dial: '+996', name: 'Kirguistán' },
+  { code: 'KW', dial: '+965', name: 'Kuwait' },
+  { code: 'LA', dial: '+856', name: 'Laos' },
+  { code: 'LS', dial: '+266', name: 'Lesoto' },
+  { code: 'LV', dial: '+371', name: 'Letonia' },
+  { code: 'LB', dial: '+961', name: 'Líbano' },
+  { code: 'LR', dial: '+231', name: 'Liberia' },
+  { code: 'LY', dial: '+218', name: 'Libia' },
+  { code: 'LI', dial: '+423', name: 'Liechtenstein' },
+  { code: 'LT', dial: '+370', name: 'Lituania' },
+  { code: 'LU', dial: '+352', name: 'Luxemburgo' },
+  { code: 'MO', dial: '+853', name: 'Macao' },
+  { code: 'MK', dial: '+389', name: 'Macedonia del Norte' },
+  { code: 'MG', dial: '+261', name: 'Madagascar' },
+  { code: 'MY', dial: '+60', name: 'Malasia' },
+  { code: 'MW', dial: '+265', name: 'Malaui' },
+  { code: 'MV', dial: '+960', name: 'Maldivas' },
+  { code: 'ML', dial: '+223', name: 'Malí' },
+  { code: 'MT', dial: '+356', name: 'Malta' },
+  { code: 'MA', dial: '+212', name: 'Marruecos' },
+  { code: 'MQ', dial: '+596', name: 'Martinica' },
+  { code: 'MU', dial: '+230', name: 'Mauricio' },
+  { code: 'MR', dial: '+222', name: 'Mauritania' },
+  { code: 'MX', dial: '+52', name: 'México' },
+  { code: 'MD', dial: '+373', name: 'Moldavia' },
+  { code: 'MC', dial: '+377', name: 'Mónaco' },
+  { code: 'MN', dial: '+976', name: 'Mongolia' },
+  { code: 'ME', dial: '+382', name: 'Montenegro' },
+  { code: 'MZ', dial: '+258', name: 'Mozambique' },
+  { code: 'MM', dial: '+95', name: 'Myanmar' },
+  { code: 'NA', dial: '+264', name: 'Namibia' },
+  { code: 'NP', dial: '+977', name: 'Nepal' },
+  { code: 'NI', dial: '+505', name: 'Nicaragua' },
+  { code: 'NE', dial: '+227', name: 'Níger' },
+  { code: 'NG', dial: '+234', name: 'Nigeria' },
+  { code: 'NO', dial: '+47', name: 'Noruega' },
+  { code: 'NZ', dial: '+64', name: 'Nueva Zelanda' },
+  { code: 'OM', dial: '+968', name: 'Omán' },
+  { code: 'NL', dial: '+31', name: 'Países Bajos' },
+  { code: 'PK', dial: '+92', name: 'Pakistán' },
+  { code: 'PA', dial: '+507', name: 'Panamá' },
+  { code: 'PG', dial: '+675', name: 'Papúa Nueva Guinea' },
+  { code: 'PY', dial: '+595', name: 'Paraguay' },
+  { code: 'PE', dial: '+51', name: 'Perú' },
+  { code: 'PF', dial: '+689', name: 'Polinesia Francesa' },
+  { code: 'PL', dial: '+48', name: 'Polonia' },
+  { code: 'PT', dial: '+351', name: 'Portugal' },
+  { code: 'PR', dial: '+1787', name: 'Puerto Rico' },
+  { code: 'GB', dial: '+44', name: 'Reino Unido' },
+  { code: 'CF', dial: '+236', name: 'República Centroafricana' },
+  { code: 'CZ', dial: '+420', name: 'República Checa' },
+  { code: 'DO', dial: '+1809', name: 'República Dominicana' },
+  { code: 'RE', dial: '+262', name: 'Reunión' },
+  { code: 'RO', dial: '+40', name: 'Rumania' },
+  { code: 'RU', dial: '+7', name: 'Rusia' },
+  { code: 'WS', dial: '+685', name: 'Samoa' },
+  { code: 'SM', dial: '+378', name: 'San Marino' },
+  { code: 'SN', dial: '+221', name: 'Senegal' },
+  { code: 'RS', dial: '+381', name: 'Serbia' },
+  { code: 'SG', dial: '+65', name: 'Singapur' },
+  { code: 'SY', dial: '+963', name: 'Siria' },
+  { code: 'SO', dial: '+252', name: 'Somalia' },
+  { code: 'LK', dial: '+94', name: 'Sri Lanka' },
+  { code: 'ZA', dial: '+27', name: 'Sudáfrica' },
+  { code: 'SD', dial: '+249', name: 'Sudán' },
+  { code: 'SE', dial: '+46', name: 'Suecia' },
+  { code: 'CH', dial: '+41', name: 'Suiza' },
+  { code: 'SR', dial: '+597', name: 'Surinam' },
+  { code: 'TH', dial: '+66', name: 'Tailandia' },
+  { code: 'TW', dial: '+886', name: 'Taiwán' },
+  { code: 'TZ', dial: '+255', name: 'Tanzania' },
+  { code: 'TJ', dial: '+992', name: 'Tayikistán' },
+  { code: 'TL', dial: '+670', name: 'Timor Oriental' },
+  { code: 'TG', dial: '+228', name: 'Togo' },
+  { code: 'TN', dial: '+216', name: 'Túnez' },
+  { code: 'TM', dial: '+993', name: 'Turkmenistán' },
+  { code: 'TR', dial: '+90', name: 'Turquía' },
+  { code: 'UA', dial: '+380', name: 'Ucrania' },
+  { code: 'UG', dial: '+256', name: 'Uganda' },
+  { code: 'UY', dial: '+598', name: 'Uruguay' },
+  { code: 'UZ', dial: '+998', name: 'Uzbekistán' },
+  { code: 'VE', dial: '+58', name: 'Venezuela' },
+  { code: 'VN', dial: '+84', name: 'Vietnam' },
+  { code: 'YE', dial: '+967', name: 'Yemen' },
+  { code: 'DJ', dial: '+253', name: 'Yibuti' },
+  { code: 'ZM', dial: '+260', name: 'Zambia' },
+  { code: 'ZW', dial: '+263', name: 'Zimbabue' }
+];
+
+const faqList = [
+  {
+    q: '¿Para qué crear un programa de lealtad para mi negocio?',
+    a: 'Un programa de lealtad aumenta la frecuencia de visita de tus clientes habituales, incrementa el ticket medio de compra y reduce drásticamente el coste de adquisición al convertirlos en embajadores de tu marca.'
+  },
+  {
+    q: '¿Qué es una tarjeta de fidelización digital?',
+    a: 'Es la versión digital de las tradicionales tarjetas de papel o plástico. Se guardan directamente en Apple Wallet o Google Wallet en los smartphones de tus clientes, permitiéndoles acumular sellos, puntos y recompensas de forma cómoda y sin perder la tarjeta.'
+  },
+  {
+    q: '¿Es necesario descargar una app para instalar la tarjeta digital?',
+    a: 'No. Tus clientes no necesitan descargar ninguna aplicación adicional. Las tarjetas se instalan nativamente en Apple Wallet (iOS) o Google Wallet (Android) con solo escanear un código QR o hacer clic en un enlace.'
+  },
+  {
+    q: '¿Cómo puedo crear mi tarjeta de 2GetherRewards?',
+    a: 'Desde tu panel de control puedes seleccionar una plantilla, personalizar los colores, subir el logo de tu empresa y definir la regla de recompensa (ej. "1 sello por cada compra, a los 6 sellos 1 premio gratis") en menos de 5 minutos.'
+  },
+  {
+    q: '¿Qué datos me brinda la plataforma?',
+    a: 'Obtendrás analíticas en tiempo real sobre el número total de miembros, frecuencia promedio de visitas, horas con mayor afluencia, retorno de inversión (ROI), nivel de inactividad de los clientes y efectividad de tus notificaciones push.'
+  },
+  {
+    q: '¿Cómo integro 2GetherRewards con mi punto de venta?',
+    a: 'Puedes operar de forma 100% independiente usando nuestra web-app de escáner desde cualquier teléfono, tablet o PC, o bien conectarlo con tu sistema POS actual mediante nuestra API.'
+  },
+  {
+    q: '¿Cómo gestiono mi facturación con 2GetherRewards?',
+    a: 'Toda la facturación y los pagos de 2GetherRewards se procesan de forma 100% segura a través de Stripe. Desde tu panel de control puedes gestionar tus suscripciones, cambiar de plan, añadir sucursales y descargar tus facturas oficiales con IVA desglosado automáticamente.'
+  },
+  {
+    q: '¿Cómo se accede al scanner para asignar sellos?',
+    a: 'Tu personal accede al escáner de manera segura entrando al panel de control desde el navegador web de cualquier dispositivo móvil, tablet o PC con cámara, sin requerir hardware especial.'
+  },
+  {
+    q: '¿Cómo se asignan puntos/sellos a los clientes desde el scanner?',
+    a: 'El cliente muestra el código QR de su tarjeta en Apple/Google Wallet, el empleado escanea el código con la cámara del dispositivo y en un solo toque se asignan los sellos o el consumo correspondiente.'
+  },
+  {
+    q: '¿Cuántos códigos QR hay y para qué sirve cada uno?',
+    a: 'Contamos con dos tipos de QR principales: el QR de Registro/Alta (para que los clientes guarden su tarjeta en el móvil) y el QR Único del Cliente (que muestra cada cliente en su Wallet para ser escaneado en caja).'
+  },
+  {
+    q: '¿Cuánto dura la prueba gratis?',
+    a: 'Ofrecemos una prueba gratuita de 14 días con acceso completo a todas las funcionalidades del Plan START, sin compromiso y sin requerir tarjeta de crédito para comenzar.'
+  }
+];
+
 function App() {
   // ==========================================
   // STATE DEFINITIONS
@@ -37,6 +277,7 @@ function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeNav, setActiveNav] = useState('inicio');
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState(0);
 
   // Page view state: 'landing' or 'dashboard-trial'
   const [currentPage, setCurrentPage] = useState('landing');
@@ -81,19 +322,17 @@ function App() {
   const [regPassword, setRegPassword] = useState('');
   const [regPasswordConfirm, setRegPasswordConfirm] = useState('');
   const [regPlan, setRegPlan] = useState('Plan START - $49/mes');
-  const [regAcceptTerms, setRegAcceptTerms] = useState(false);
-  const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
-  const [termsModalTab, setTermsModalTab] = useState('terms'); // 'terms' or 'privacy'
 
   const handleRegistrationSubmit = async (e) => {
     e.preventDefault();
-    if (regPassword !== regPasswordConfirm) {
-      alert('Las contraseñas no coinciden.');
+    setRegErrorMsg('');
+
+    if (!regTerms) {
+      setRegErrorMsg('Debes aceptar los Términos y Condiciones del Servicio para poder registrarte.');
       return;
     }
-
-    if (!regAcceptTerms) {
-      alert('Debes aceptar los Términos y Condiciones y la Política de Privacidad para continuar.');
+    if (regPassword !== regPasswordConfirm) {
+      setRegErrorMsg('Las contraseñas no coinciden. Por favor verifícalas.');
       return;
     }
 
@@ -117,7 +356,7 @@ function App() {
 
       const data = await response.json();
       if (response.ok && data.success) {
-        alert('¡Registro Exitoso! Tus datos han sido guardados, tu prueba de 14 días ha comenzado y te hemos enviado un correo de bienvenida con los detalles de tu cuenta y la confirmación de los Términos y Condiciones aceptados.');
+        alert('¡Registro Exitoso! Tus datos han sido guardados en la base de datos y tu prueba de 14 días ha comenzado. Te contactaremos pronto.');
         setCurrentPage('dashboard-active');
         // Clear fields
         setRegFirstName('');
@@ -127,13 +366,12 @@ function App() {
         setRegPhone('');
         setRegPassword('');
         setRegPasswordConfirm('');
-        setRegAcceptTerms(false);
       } else {
         alert('Error al registrar: ' + (data.error || 'Intente de nuevo.'));
       }
     } catch (err) {
       console.error("Database registration error, logging in locally:", err);
-      alert('¡Registro Exitoso! (Modo Local). Tu prueba gratuita de 14 días ha comenzado y se ha registrado tu consentimiento de Términos y Condiciones.');
+      alert('¡Registro Exitoso! (Modo Local). Tu prueba gratuita de 14 días ha comenzado.');
       setCurrentPage('dashboard-active');
     }
   };
@@ -1311,24 +1549,24 @@ function App() {
         </div>
 
         {/* Right Column (Form) */}
-        <div className="w-full lg:w-1/2 lg:h-full lg:overflow-y-auto bg-graylight flex flex-col justify-start items-center p-6 sm:p-12 py-16 sm:py-24 relative min-h-screen lg:min-h-0">
+        <div className="w-full lg:w-1/2 lg:h-full lg:overflow-y-auto bg-graylight flex flex-col justify-start items-center p-4 sm:p-12 py-10 sm:py-24 relative min-h-screen lg:min-h-0">
           {/* Back button */}
           <button
-            className="absolute top-6 left-6 text-xs font-bold text-gray-400 hover:text-charcoal flex items-center gap-1.5"
+            className="absolute top-4 sm:top-6 left-4 sm:left-6 text-xs font-bold text-gray-400 hover:text-charcoal flex items-center gap-1.5 z-10"
             onClick={() => setCurrentPage('landing')}
           >
             <i className="fa-solid fa-arrow-left"></i> Volver a Inicio
           </button>
 
           {/* Language selector */}
-          <div className="absolute top-6 right-6">
+          <div className="absolute top-4 sm:top-6 right-4 sm:right-6 z-10">
             <span className="h-8 w-8 border border-gray-200 bg-white rounded-full flex items-center justify-center text-xs font-bold text-charcoal shadow-sm">
               ES
             </span>
           </div>
 
           {/* Form Box */}
-          <div className="w-full max-w-[440px] bg-white rounded-3xl border border-gray-200/50 shadow-xl p-8 space-y-6">
+          <div className="w-full max-w-[440px] bg-white rounded-3xl border border-gray-200/50 shadow-xl p-5 sm:p-8 space-y-4 sm:space-y-6 mt-8 sm:mt-0">
             {/* Tabs */}
             <div className="flex border-b border-gray-100">
               <button
@@ -1352,14 +1590,20 @@ function App() {
 
             {/* Form */}
             {activeTab === 'registro' ? (
-              <form className="space-y-4" onSubmit={handleRegistrationSubmit}>
-                <div className="grid grid-cols-2 gap-4">
+              <form className="space-y-3.5 sm:space-y-4" onSubmit={handleRegistrationSubmit}>
+                {regErrorMsg && (
+                  <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-xs font-semibold flex items-start gap-2 text-left animate-fadeIn">
+                    <i className="fa-solid fa-circle-exclamation shrink-0 mt-0.5 text-red-500"></i>
+                    <span>{regErrorMsg}</span>
+                  </div>
+                )}
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Primer Nombre</label>
                     <input
                       type="text"
                       required
-                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                      className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                       placeholder="Ej. Juan"
                       value={regFirstName}
                       onChange={(e) => setRegFirstName(e.target.value)}
@@ -1370,7 +1614,7 @@ function App() {
                     <input
                       type="text"
                       required
-                      className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                      className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                       placeholder="Ej. Pérez"
                       value={regLastName}
                       onChange={(e) => setRegLastName(e.target.value)}
@@ -1382,7 +1626,7 @@ function App() {
                   <input
                     type="text"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                     placeholder="Ej. Mi Tienda S.L."
                     value={regCompany}
                     onChange={(e) => setRegCompany(e.target.value)}
@@ -1393,7 +1637,7 @@ function App() {
                   <input
                     type="email"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                     placeholder="juan@correo.com"
                     value={regEmail}
                     onChange={(e) => setRegEmail(e.target.value)}
@@ -1403,19 +1647,20 @@ function App() {
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Teléfono</label>
                   <div className="flex gap-2">
                     <select
-                      className="px-2 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-primary bg-white"
+                      className="w-28 sm:w-36 shrink-0 px-2 sm:px-2.5 py-2.5 rounded-xl border border-gray-200 text-xs focus:outline-none focus:border-primary bg-white truncate cursor-pointer"
                       value={regPhoneCode}
                       onChange={(e) => setRegPhoneCode(e.target.value)}
                     >
-                      <option value="+34">ES +34</option>
-                      <option value="+1">US +1</option>
-                      <option value="+52">MX +52</option>
-                      <option value="+54">AR +54</option>
+                      {countryCodes.map((country) => (
+                        <option key={`${country.code}-${country.dial}`} value={country.dial}>
+                          {country.code} {country.dial} ({country.name})
+                        </option>
+                      ))}
                     </select>
                     <input
                       type="tel"
                       required
-                      className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                      className="min-w-0 flex-1 px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                       placeholder="600 000 000"
                       value={regPhone}
                       onChange={(e) => setRegPhone(e.target.value)}
@@ -1427,7 +1672,7 @@ function App() {
                   <input
                     type="password"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                     placeholder="••••••••"
                     value={regPassword}
                     onChange={(e) => setRegPassword(e.target.value)}
@@ -1438,7 +1683,7 @@ function App() {
                   <input
                     type="password"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                     placeholder="••••••••"
                     value={regPasswordConfirm}
                     onChange={(e) => setRegPasswordConfirm(e.target.value)}
@@ -1447,7 +1692,7 @@ function App() {
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Plan</label>
                   <select
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary bg-white text-xs"
+                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary bg-white text-xs"
                     value={regPlan}
                     onChange={(e) => setRegPlan(e.target.value)}
                   >
@@ -1456,52 +1701,7 @@ function App() {
                     <option value="Plan ENTERPRISE - $99/mes">Plan ENTERPRISE - $99/mes</option>
                   </select>
                 </div>
-
-                {/* Checkbox Términos y Condiciones */}
-                <div className="pt-1 text-left">
-                  <label className="flex items-start gap-2.5 cursor-pointer select-none group">
-                    <input
-                      type="checkbox"
-                      required
-                      checked={regAcceptTerms}
-                      onChange={(e) => setRegAcceptTerms(e.target.checked)}
-                      className="mt-0.5 w-4 h-4 rounded text-primary focus:ring-primary border-gray-300 transition cursor-pointer accent-orange-600"
-                    />
-                    <span className="text-[0.72rem] text-gray-500 leading-tight">
-                      He leído y acepto los{' '}
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setTermsModalTab('terms');
-                          setIsTermsModalOpen(true);
-                        }}
-                        className="text-primary font-bold hover:underline inline p-0 bg-transparent border-none text-[0.72rem] cursor-pointer"
-                      >
-                        Términos y Condiciones
-                      </button>{' '}
-                      y la{' '}
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setTermsModalTab('privacy');
-                          setIsTermsModalOpen(true);
-                        }}
-                        className="text-primary font-bold hover:underline inline p-0 bg-transparent border-none text-[0.72rem] cursor-pointer"
-                      >
-                        Política de Privacidad
-                      </button>
-                      .
-                    </span>
-                  </label>
-                </div>
-
-                <button 
-                  type="submit" 
-                  disabled={!regAcceptTerms}
-                  className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-lg mt-2 transition-all duration-200 active:scale-95 text-xs uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                >
+                <button type="submit" className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-lg mt-2 transition-all duration-200 active:scale-95 text-xs uppercase tracking-wider">
                   Registro
                 </button>
               </form>
@@ -1512,7 +1712,7 @@ function App() {
                   <input
                     type="email"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                     placeholder="juan@correo.com"
                     value={loginEmail}
                     onChange={(e) => setLoginEmail(e.target.value)}
@@ -1523,7 +1723,7 @@ function App() {
                   <input
                     type="password"
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
+                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                     placeholder="••••••••"
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
@@ -1536,6 +1736,320 @@ function App() {
             )}
           </div>
         </div>
+
+        {/* MODAL POPUP TÉRMINOS Y CONDICIONES */}
+        {showTermsModal && (
+          <div className="fixed inset-0 bg-black/60 z-[9999] flex items-center justify-center p-3 sm:p-4 backdrop-blur-sm" onClick={() => setShowTermsModal(false)}>
+            <div className="bg-white rounded-2xl sm:rounded-3xl max-w-3xl w-full max-h-[90dvh] sm:max-h-[85vh] shadow-2xl border border-gray-100 flex flex-col overflow-hidden text-left animate-scaleUp" onClick={(e) => e.stopPropagation()}>
+              {/* Header */}
+              <div className="p-4 sm:p-6 border-b border-gray-100 flex items-start justify-between gap-3 bg-white sticky top-0 z-10">
+                <div>
+                  <h3 className="font-heading font-extrabold text-base sm:text-lg text-gray-900 leading-tight">
+                    TÉRMINOS Y CONDICIONES DEL SERVICIO
+                  </h3>
+                  <p className="text-[11px] sm:text-xs font-semibold text-primary mt-0.5 sm:mt-1">
+                    Plataforma 2getherReward para Comercios Afiliados
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowTermsModal(false)}
+                  className="h-8 w-8 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-100 text-gray-500 transition-colors shrink-0"
+                  aria-label="Cerrar ventana"
+                >
+                  <i className="fa-solid fa-xmark"></i>
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-3 sm:space-y-4 text-[11px] sm:text-xs text-gray-600 leading-relaxed">
+                <p className="font-medium text-gray-800 bg-emerald-50/60 p-3 sm:p-3.5 rounded-xl border border-emerald-100">
+                  Al registrarse y contratar los servicios de 2getherReward, la empresa afiliada acepta los siguientes términos y condiciones:
+                </p>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">1. Aceptación</h4>
+                  <p>El registro y utilización de la plataforma implica la aceptación de los presentes términos y condiciones.</p>
+                  <p>La empresa declara que la información suministrada durante el proceso de registro es veraz, completa y actualizada.</p>
+                  <p>La empresa autoriza a 2getherReward a utilizar la información proporcionada para la administración de la cuenta, facturación, soporte técnico y comunicaciones relacionadas con el servicio.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">2. Objeto del Servicio</h4>
+                  <p>2getherReward proporciona una plataforma tecnológica para que la empresa pueda administrar programas digitales de fidelización mediante Apple Wallet y Google Wallet.</p>
+                  <p>La contratación del servicio no constituye una relación de franquicia, representación, sociedad o exclusividad entre las partes.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">3. Creación de la Cuenta</h4>
+                  <p>La empresa será responsable de:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Mantener actualizada su información.</li>
+                    <li>Administrar los usuarios autorizados.</li>
+                    <li>Custodiar sus credenciales de acceso.</li>
+                    <li>Notificar inmediatamente cualquier acceso no autorizado.</li>
+                  </ul>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">4. Planes y Facturación</h4>
+                  <p>El servicio será prestado conforme al plan contratado.</p>
+                  <p>Las tarifas podrán actualizarse notificándolo previamente.</p>
+                  <p>La suspensión del pago podrá ocasionar la suspensión temporal del servicio.</p>
+                  <p>Los impuestos aplicables serán responsabilidad de la empresa afiliada.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">5. Uso de la Plataforma</h4>
+                  <p>La empresa podrá utilizar la plataforma para:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Administrar programas de fidelización.</li>
+                    <li>Emitir tarjetas digitales.</li>
+                    <li>Gestionar tarjetas de regalo.</li>
+                    <li>Enviar campañas promocionales.</li>
+                    <li>Consultar reportes y estadísticas.</li>
+                    <li>Administrar sucursales y usuarios según el plan contratado.</li>
+                  </ul>
+                  <p>La empresa se compromete a utilizar la plataforma únicamente para fines lícitos.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">6. Administración del Programa de Fidelización</h4>
+                  <p>La empresa será la única responsable de definir:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Beneficios.</li>
+                    <li>Promociones.</li>
+                    <li>Sellos.</li>
+                    <li>Puntos.</li>
+                    <li>Cashback.</li>
+                    <li>Cupones.</li>
+                    <li>Tarjetas de regalo.</li>
+                    <li>Membresías.</li>
+                    <li>Políticas de vencimiento.</li>
+                    <li>Condiciones de canje.</li>
+                  </ul>
+                  <p>2getherReward no participa en la definición de dichas reglas comerciales.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">7. Responsabilidad sobre los Clientes</h4>
+                  <p>La empresa reconoce que es la responsable exclusiva de:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>La atención de sus clientes.</li>
+                    <li>La entrega de premios o beneficios.</li>
+                    <li>La administración del programa.</li>
+                    <li>La resolución de reclamos relacionados con promociones o recompensas.</li>
+                  </ul>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">8. Protección de Datos Personales</h4>
+                  <p>La empresa declara cumplir con la legislación vigente sobre protección de datos personales.</p>
+                  <p>Asimismo, garantiza que:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Obtendrá el consentimiento de sus clientes para el tratamiento de sus datos.</li>
+                    <li>Informará adecuadamente sobre el uso de la información.</li>
+                    <li>Utilizará los datos únicamente para fines comerciales autorizados.</li>
+                  </ul>
+                  <p>2getherReward actuará como proveedor tecnológico y procesará la información únicamente para prestar el servicio contratado.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">9. Comunicaciones Comerciales</h4>
+                  <p>La empresa será responsable de asegurarse de que sus clientes hayan autorizado recibir:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Correos electrónicos.</li>
+                    <li>Notificaciones Push.</li>
+                    <li>Promociones.</li>
+                    <li>Campañas publicitarias.</li>
+                    <li>Invitaciones.</li>
+                    <li>Descuentos.</li>
+                    <li>Información comercial.</li>
+                  </ul>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">10. Seguridad de la Información</h4>
+                  <p>2getherReward implementa medidas razonables de seguridad para proteger la información.</p>
+                  <p>No obstante, la empresa reconoce que ningún sistema informático puede garantizar seguridad absoluta frente a:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Ataques cibernéticos.</li>
+                    <li>Accesos no autorizados.</li>
+                    <li>Malware.</li>
+                    <li>Interrupciones de Internet.</li>
+                    <li>Fallas de terceros.</li>
+                  </ul>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">11. Fraude</h4>
+                  <p>La empresa será responsable del uso que realicen sus usuarios internos.</p>
+                  <p>2getherReward no será responsable por:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Creación fraudulenta de clientes.</li>
+                    <li>Manipulación indebida de sellos.</li>
+                    <li>Canjes autorizados incorrectamente por el personal del comercio.</li>
+                    <li>Uso indebido de credenciales.</li>
+                    <li>Fraudes internos cometidos por colaboradores de la empresa.</li>
+                  </ul>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">12. Disponibilidad del Servicio</h4>
+                  <p>2getherReward realizará esfuerzos razonables para mantener la plataforma disponible.</p>
+                  <p>Podrán existir interrupciones ocasionadas por:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Mantenimiento programado.</li>
+                    <li>Actualizaciones.</li>
+                    <li>Fallas de Internet.</li>
+                    <li>Servicios de terceros.</li>
+                    <li>Casos de fuerza mayor.</li>
+                  </ul>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">13. Integración con Apple Wallet y Google Wallet</h4>
+                  <p>La plataforma es compatible con Apple Wallet y Google Wallet.</p>
+                  <p>La disponibilidad dependerá de:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Compatibilidad del dispositivo del usuario.</li>
+                    <li>Sistemas operativos soportados.</li>
+                    <li>Políticas propias de Apple y Google.</li>
+                  </ul>
+                  <p>2getherReward no controla modificaciones realizadas por dichos proveedores.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">14. Propiedad Intelectual</h4>
+                  <p>Todo el software, diseño, logotipos, interfaces, documentación, imágenes, marca y tecnología pertenecen a 2getherReward.</p>
+                  <p>La contratación del servicio no concede derechos de propiedad intelectual sobre la plataforma.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">15. Confidencialidad</h4>
+                  <p>Ambas partes se comprometen a mantener confidencial toda la información técnica, comercial, financiera y estratégica intercambiada durante la relación comercial.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">16. Limitación de Responsabilidad</h4>
+                  <p>2getherReward será responsable únicamente por la prestación de la plataforma tecnológica.</p>
+                  <p>En ningún caso será responsable por:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Pérdidas de ventas.</li>
+                    <li>Lucro cesante.</li>
+                    <li>Daños indirectos.</li>
+                    <li>Reclamos de consumidores.</li>
+                    <li>Incumplimiento de promociones ofrecidas por la empresa.</li>
+                    <li>Decisiones comerciales tomadas por la empresa.</li>
+                  </ul>
+                  <p>La responsabilidad máxima de 2getherReward, cuando legalmente corresponda, se limitará al monto efectivamente pagado por la empresa durante los tres (3) meses anteriores al evento que origine la reclamación.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">17. Suspensión o Terminación</h4>
+                  <p>2getherReward podrá suspender o cancelar el servicio cuando:</p>
+                  <ul className="list-disc pl-5 space-y-0.5">
+                    <li>Exista incumplimiento contractual.</li>
+                    <li>Se detecte fraude.</li>
+                    <li>Existan actividades ilícitas.</li>
+                    <li>Se incumplan estos términos.</li>
+                    <li>Existan atrasos reiterados en los pagos.</li>
+                  </ul>
+                  <p>La empresa podrá cancelar el servicio conforme a las condiciones del plan contratado.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">18. Actualización de la Plataforma</h4>
+                  <p>2getherReward podrá incorporar nuevas funcionalidades, mejoras o modificaciones técnicas para mantener la plataforma actualizada, sin afectar la continuidad del servicio.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">19. Modificación de los Términos</h4>
+                  <p>Estos términos podrán actualizarse periódicamente.</p>
+                  <p>Las modificaciones serán notificadas oportunamente y entrarán en vigor a partir de su publicación.</p>
+                </section>
+
+                <section className="space-y-1 pt-1">
+                  <h4 className="font-bold text-gray-900 text-sm">20. Legislación Aplicable</h4>
+                  <p>Estos términos se regirán por la legislación vigente del país donde 2getherReward tenga establecida la prestación del servicio, salvo que las partes acuerden expresamente otra jurisdicción.</p>
+                </section>
+
+                <section className="space-y-1 pt-1 pb-2">
+                  <h4 className="font-bold text-gray-900 text-sm">21. Aceptación</h4>
+                  <p>Al registrarse en la plataforma, la empresa declara haber leído, comprendido y aceptado íntegramente estos términos y condiciones.</p>
+                </section>
+              </div>
+
+              {/* Footer */}
+              <div className="p-3.5 sm:p-4 px-4 sm:px-6 border-t border-gray-100 flex items-center justify-between gap-2 bg-gray-50/50">
+                <button
+                  type="button"
+                  onClick={() => setShowTermsModal(false)}
+                  className="px-3.5 sm:px-4 py-2 text-xs font-semibold text-gray-600 hover:text-gray-800 rounded-xl hover:bg-gray-200/50 transition-colors shrink-0"
+                >
+                  Cerrar
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setRegTerms(true);
+                    setShowTermsModal(false);
+                  }}
+                  className="px-4 sm:px-5 py-2 sm:py-2.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl text-xs shadow-md transition-all active:scale-95 shrink-0"
+                >
+                  Entendido y Aceptar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* MODAL POPUP CONFIRMACIÓN DE REGISTRO */}
+        {showRegSuccessModal && (
+          <div className="fixed inset-0 bg-black/60 z-[99999] flex items-center justify-center p-4 backdrop-blur-sm" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-gray-100 text-center space-y-5 animate-scaleUp text-left" onClick={(e) => e.stopPropagation()}>
+              <div className="h-16 w-16 bg-emerald-50 text-primary rounded-full flex items-center justify-center text-2xl mx-auto border border-emerald-100 shadow-sm">
+                <i className="fa-solid fa-circle-check"></i>
+              </div>
+
+              <div className="space-y-1.5 text-center">
+                <h3 className="font-heading font-black text-xl text-gray-900">¡Registro Exitoso!</h3>
+                <p className="text-xs font-bold text-primary">Tu cuenta corporativa ha sido creada</p>
+                <p className="text-gray-500 text-xs leading-relaxed pt-1">
+                  ¡Bienvenido a 2GetherRewards! Tu prueba gratuita de <strong>14 días</strong> está activa y lista para ser utilizada.
+                </p>
+              </div>
+
+              <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100 space-y-2 text-xs">
+                <div className="flex justify-between text-gray-600">
+                  <span>Empresa:</span>
+                  <span className="font-bold text-gray-900">{regSuccessDetails.company}</span>
+                </div>
+                <div className="flex justify-between text-gray-600">
+                  <span>Titular:</span>
+                  <span className="font-bold text-gray-900">{regSuccessDetails.name}</span>
+                </div>
+                <div className="flex justify-between text-gray-600">
+                  <span>Correo:</span>
+                  <span className="font-bold text-gray-900">{regSuccessDetails.email}</span>
+                </div>
+                <hr className="border-gray-200 my-1" />
+                <div className="flex justify-between text-gray-600">
+                  <span>Plan Seleccionado:</span>
+                  <span className="font-bold text-primary">{regSuccessDetails.plan}</span>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleConfirmRegSuccess}
+                className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-emerald-500/20 transition-all duration-200 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+              >
+                Acceder a mi Panel <i className="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -1556,7 +2070,7 @@ function App() {
           </a>
 
           <nav className={`lg:flex items-center gap-8 ${isMobileMenuOpen ? 'flex flex-col absolute top-full left-0 w-full bg-white border-b border-gray-100 py-6 px-8 shadow-lg gap-4' : 'hidden'}`} id="main-nav">
-            {['inicio', 'beneficios', 'menu', 'tarjetas', 'quiz', 'opiniones'].map((nav) => (
+            {['inicio', 'beneficios', 'menu', 'tarjetas', 'quiz', 'faq'].map((nav) => (
               <a
                 key={nav}
                 href={`#${nav}`}
@@ -1567,7 +2081,7 @@ function App() {
                   nav === 'beneficios' ? 'Beneficios' :
                     nav === 'menu' ? 'Planes' :
                       nav === 'tarjetas' ? 'Tarjetas' :
-                        nav === 'quiz' ? '¿Cuál es mi Plan?' : 'Casos de Éxito'}
+                        nav === 'quiz' ? '¿Cuál es mi Plan?' : 'Preguntas Frecuentes'}
               </a>
             ))}
             {isMobileMenuOpen && (
@@ -1671,31 +2185,35 @@ function App() {
       </section>
 
       {/* SECCIÓN BENEFICIOS (Features) */}
-      <section className="py-20 bg-white" id="beneficios">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="py-24 bg-gradient-to-br from-[#0F1A17] via-[#142620] to-[#0D1614] border-y border-emerald-900/40 relative overflow-hidden text-white" id="beneficios">
+        {/* Ambient brand glows */}
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 rounded-3xl border border-gray-100 bg-gray-50/50 text-left space-y-4 hover:shadow-xl hover:border-emerald-100 transition-all duration-300">
-              <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-primary flex items-center justify-center text-xl">
+            <div className="p-8 rounded-3xl border border-emerald-500/20 bg-[#162520]/80 backdrop-blur-md text-left space-y-4 shadow-xl hover:shadow-2xl hover:shadow-emerald-950/50 hover:border-emerald-400/60 hover:-translate-y-1.5 transition-all duration-300 group">
+              <div className="h-14 w-14 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-2xl border border-emerald-500/30 group-hover:scale-110 group-hover:bg-primary group-hover:text-emerald-950 group-hover:border-primary transition-all duration-300 shadow-md">
                 <i className="fa-solid fa-wallet"></i>
               </div>
-              <h3 className="font-heading font-black text-xl text-gray-900">Tarjetas Digitales</h3>
-              <p className="text-gray-600 text-[0.95rem] leading-relaxed">Tarjetas de sellos, cashback, regalo, descuento y membresías 100% digitales, sin apps. Compatible con Apple y Google Wallet.</p>
+              <h3 className="font-heading font-black text-xl text-white group-hover:text-primary transition-colors">Tarjetas Digitales</h3>
+              <p className="text-gray-300 text-[0.95rem] leading-relaxed">Tarjetas de sellos, cashback, regalo, descuento y membresías 100% digitales, sin apps. Compatible con Apple y Google Wallet.</p>
             </div>
 
-            <div className="p-8 rounded-3xl border border-gray-100 bg-gray-50/50 text-left space-y-4 hover:shadow-xl hover:border-emerald-100 transition-all duration-300">
-              <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-primary flex items-center justify-center text-xl">
+            <div className="p-8 rounded-3xl border border-emerald-500/20 bg-[#162520]/80 backdrop-blur-md text-left space-y-4 shadow-xl hover:shadow-2xl hover:shadow-emerald-950/50 hover:border-emerald-400/60 hover:-translate-y-1.5 transition-all duration-300 group">
+              <div className="h-14 w-14 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-2xl border border-emerald-500/30 group-hover:scale-110 group-hover:bg-primary group-hover:text-emerald-950 group-hover:border-primary transition-all duration-300 shadow-md">
                 <i className="fa-solid fa-bell"></i>
               </div>
-              <h3 className="font-heading font-black text-xl text-gray-900">Notificaciones Push</h3>
-              <p className="text-gray-600 text-[0.95rem] leading-relaxed">Envía alertas, ofertas, cupones y recordatorios directamente al móvil de tus clientes sin que tengan que abrir ninguna aplicación.</p>
+              <h3 className="font-heading font-black text-xl text-white group-hover:text-primary transition-colors">Notificaciones Push</h3>
+              <p className="text-gray-300 text-[0.95rem] leading-relaxed">Envía alertas, ofertas, cupones y recordatorios directamente al móvil de tus clientes sin que tengan que abrir ninguna aplicación.</p>
             </div>
 
-            <div className="p-8 rounded-3xl border border-gray-100 bg-gray-50/50 text-left space-y-4 hover:shadow-xl hover:border-emerald-100 transition-all duration-300">
-              <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-primary flex items-center justify-center text-xl">
+            <div className="p-8 rounded-3xl border border-emerald-500/20 bg-[#162520]/80 backdrop-blur-md text-left space-y-4 shadow-xl hover:shadow-2xl hover:shadow-emerald-950/50 hover:border-emerald-400/60 hover:-translate-y-1.5 transition-all duration-300 group">
+              <div className="h-14 w-14 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-2xl border border-emerald-500/30 group-hover:scale-110 group-hover:bg-primary group-hover:text-emerald-950 group-hover:border-primary transition-all duration-300 shadow-md">
                 <i className="fa-solid fa-chart-line"></i>
               </div>
-              <h3 className="font-heading font-black text-xl text-gray-900">Dashboard en Tiempo Real</h3>
-              <p className="text-gray-600 text-[0.95rem] leading-relaxed">Visualiza el comportamiento de compra, frecuencia de visitas y el retorno de cada cliente desde tu panel de control en vivo.</p>
+              <h3 className="font-heading font-black text-xl text-white group-hover:text-primary transition-colors">Dashboard en Tiempo Real</h3>
+              <p className="text-gray-300 text-[0.95rem] leading-relaxed">Visualiza el comportamiento de compra, frecuencia de visitas y el retorno de cada cliente desde tu panel de control en vivo.</p>
             </div>
           </div>
         </div>
@@ -1961,25 +2479,29 @@ function App() {
       </section>
 
       {/* SECCIÓN QUIZ */}
-      <section className="py-20 bg-gray-50 border-t border-b border-gray-100" id="quiz">
-        <div className="max-w-7xl mx-auto px-6 text-center space-y-16">
+      <section className="py-24 bg-gradient-to-br from-[#0F1A17] via-[#142620] to-[#0D1614] border-t border-b border-emerald-900/40 relative overflow-hidden text-white" id="quiz">
+        {/* Ambient brand glows */}
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div className="max-w-7xl mx-auto px-6 text-center space-y-16 relative z-10">
           <div className="max-w-2xl mx-auto space-y-3">
-            <h2 className="font-heading text-3xl sm:text-4xl font-black text-gray-900">¿Cuál es tu <span className="text-primary">Plan Ideal?</span></h2>
-            <p className="text-gray-600">Responde 3 preguntas rápidas y te recomendamos el plan 2GetherRewards perfecto para tu negocio.</p>
+            <h2 className="font-heading text-3xl sm:text-4xl font-black text-white">¿Cuál es tu <span className="text-primary">Plan Ideal?</span></h2>
+            <p className="text-gray-300">Responde 3 preguntas rápidas y te recomendamos el plan 2GetherRewards perfecto para tu negocio.</p>
           </div>
 
-          <div className="max-w-xl mx-auto bg-white rounded-3xl border border-gray-100 p-8 shadow-xl min-h-[300px] flex items-center justify-center">
+          <div className="max-w-xl mx-auto bg-[#162520]/90 backdrop-blur-md rounded-3xl border border-emerald-500/20 p-8 shadow-2xl min-h-[300px] flex items-center justify-center">
             {/* Pantalla Inicial */}
             {quizStep === 0 && (
               <div className="space-y-6 w-full text-center">
-                <div className="h-16 w-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-primary text-2xl mx-auto animate-pulse">
+                <div className="h-16 w-16 bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 rounded-2xl flex items-center justify-center text-2xl mx-auto animate-pulse">
                   <i className="fa-solid fa-wand-magic-sparkles"></i>
                 </div>
                 <div className="space-y-2">
-                  <h3 className="font-heading font-black text-xl text-gray-900">Encontremos tu plan perfecto</h3>
-                  <p className="text-gray-600 text-sm max-w-md mx-auto">Analizaremos tu tipo de negocio, volumen de clientes y tus objetivos para recomendarte la combinación idónea.</p>
+                  <h3 className="font-heading font-black text-xl text-white">Encontremos tu plan perfecto</h3>
+                  <p className="text-gray-300 text-sm max-w-md mx-auto">Analizaremos tu tipo de negocio, volumen de clientes y tus objetivos para recomendarte la combinación idónea.</p>
                 </div>
-                <button className="px-8 py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-md" onClick={startQuiz}>
+                <button className="px-8 py-3.5 bg-primary hover:bg-primary-hover text-emerald-950 font-extrabold rounded-full shadow-lg shadow-emerald-500/20 transition-all hover:scale-105" onClick={startQuiz}>
                   Comenzar
                 </button>
               </div>
@@ -1988,10 +2510,10 @@ function App() {
             {/* Pregunta 1 */}
             {quizStep === 1 && (
               <div className="w-full text-left space-y-6">
-                <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-primary h-full transition-all duration-300" style={{ width: '33%' }}></div>
+                <div className="w-full bg-emerald-950/60 border border-emerald-500/20 h-2 rounded-full overflow-hidden">
+                  <div className="bg-primary h-full transition-all duration-300 shadow-[0_0_10px_#69BFA1]" style={{ width: '33%' }}></div>
                 </div>
-                <h3 className="font-heading font-black text-lg text-gray-900">1. ¿Qué tipo de negocio tienes?</h3>
+                <h3 className="font-heading font-black text-lg text-white">1. ¿Qué tipo de negocio tienes?</h3>
                 <div className="space-y-3">
                   {[
                     { val: 'hot', icon: 'fa-utensils', label: 'Restauración y Hostelería', desc: 'Cafeterías, bares, restaurantes o catering.' },
@@ -2000,13 +2522,13 @@ function App() {
                   ].map((opt) => (
                     <div
                       key={opt.val}
-                      className={`p-4 rounded-2xl border cursor-pointer flex gap-4 items-center transition-all duration-200 ${quizAnswers.type === opt.val ? 'border-primary bg-emerald-50/20' : 'border-gray-100 hover:border-gray-300 bg-gray-50/20'}`}
+                      className={`p-4 rounded-2xl border cursor-pointer flex gap-4 items-center transition-all duration-200 ${quizAnswers.type === opt.val ? 'border-primary bg-emerald-500/20 shadow-md shadow-emerald-950/50' : 'border-emerald-500/20 hover:border-emerald-400/50 bg-emerald-950/30'}`}
                       onClick={() => selectQuizAnswer('type', opt.val)}
                     >
                       <i className={`fa-solid ${opt.icon} text-lg text-primary`}></i>
                       <div>
-                        <span className="block font-bold text-gray-900 text-sm">{opt.label}</span>
-                        <span className="block text-xs text-gray-500">{opt.desc}</span>
+                        <span className="block font-bold text-white text-sm">{opt.label}</span>
+                        <span className="block text-xs text-gray-300">{opt.desc}</span>
                       </div>
                     </div>
                   ))}
@@ -2017,10 +2539,10 @@ function App() {
             {/* Pregunta 2 */}
             {quizStep === 2 && (
               <div className="w-full text-left space-y-6">
-                <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-primary h-full transition-all duration-300" style={{ width: '66%' }}></div>
+                <div className="w-full bg-emerald-950/60 border border-emerald-500/20 h-2 rounded-full overflow-hidden">
+                  <div className="bg-primary h-full transition-all duration-300 shadow-[0_0_10px_#69BFA1]" style={{ width: '66%' }}></div>
                 </div>
-                <h3 className="font-heading font-black text-lg text-gray-900">2. ¿Cuántos clientes frecuentes tienes al mes?</h3>
+                <h3 className="font-heading font-black text-lg text-white">2. ¿Cuántos clientes frecuentes tienes al mes?</h3>
                 <div className="space-y-3">
                   {[
                     { val: 'sweet', icon: 'fa-users-line', label: 'Menos de 500', desc: 'Comercio de barrio o negocio en inicio.' },
@@ -2029,13 +2551,13 @@ function App() {
                   ].map((opt) => (
                     <div
                       key={opt.val}
-                      className={`p-4 rounded-2xl border cursor-pointer flex gap-4 items-center transition-all duration-200 ${quizAnswers.flavor === opt.val ? 'border-primary bg-emerald-50/20' : 'border-gray-100 hover:border-gray-300 bg-gray-50/20'}`}
+                      className={`p-4 rounded-2xl border cursor-pointer flex gap-4 items-center transition-all duration-200 ${quizAnswers.flavor === opt.val ? 'border-primary bg-emerald-500/20 shadow-md shadow-emerald-950/50' : 'border-emerald-500/20 hover:border-emerald-400/50 bg-emerald-950/30'}`}
                       onClick={() => selectQuizAnswer('flavor', opt.val)}
                     >
                       <i className={`fa-solid ${opt.icon} text-lg text-primary`}></i>
                       <div>
-                        <span className="block font-bold text-gray-900 text-sm">{opt.label}</span>
-                        <span className="block text-xs text-gray-500">{opt.desc}</span>
+                        <span className="block font-bold text-white text-sm">{opt.label}</span>
+                        <span className="block text-xs text-gray-300">{opt.desc}</span>
                       </div>
                     </div>
                   ))}
@@ -2046,10 +2568,10 @@ function App() {
             {/* Pregunta 3 */}
             {quizStep === 3 && (
               <div className="w-full text-left space-y-6">
-                <div className="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-primary h-full transition-all duration-300" style={{ width: '100%' }}></div>
+                <div className="w-full bg-emerald-950/60 border border-emerald-500/20 h-2 rounded-full overflow-hidden">
+                  <div className="bg-primary h-full transition-all duration-300 shadow-[0_0_10px_#69BFA1]" style={{ width: '100%' }}></div>
                 </div>
-                <h3 className="font-heading font-black text-lg text-gray-900">3. ¿Cuál es tu prioridad principal?</h3>
+                <h3 className="font-heading font-black text-lg text-white">3. ¿Cuál es tu prioridad principal?</h3>
                 <div className="space-y-3">
                   {[
                     { val: 'pastry', icon: 'fa-arrows-spin', label: 'Hacer que vuelvan más seguido', desc: 'Retención y automatización de visitas.' },
@@ -2057,13 +2579,13 @@ function App() {
                   ].map((opt) => (
                     <div
                       key={opt.val}
-                      className={`p-4 rounded-2xl border cursor-pointer flex gap-4 items-center transition-all duration-200 ${quizAnswers.addons === opt.val ? 'border-primary bg-emerald-50/20' : 'border-gray-100 hover:border-gray-300 bg-gray-50/20'}`}
+                      className={`p-4 rounded-2xl border cursor-pointer flex gap-4 items-center transition-all duration-200 ${quizAnswers.addons === opt.val ? 'border-primary bg-emerald-500/20 shadow-md shadow-emerald-950/50' : 'border-emerald-500/20 hover:border-emerald-400/50 bg-emerald-950/30'}`}
                       onClick={() => selectQuizAnswer('addons', opt.val)}
                     >
                       <i className={`fa-solid ${opt.icon} text-lg text-primary`}></i>
                       <div>
-                        <span className="block font-bold text-gray-900 text-sm">{opt.label}</span>
-                        <span className="block text-xs text-gray-500">{opt.desc}</span>
+                        <span className="block font-bold text-white text-sm">{opt.label}</span>
+                        <span className="block text-xs text-gray-300">{opt.desc}</span>
                       </div>
                     </div>
                   ))}
@@ -2074,22 +2596,22 @@ function App() {
             {/* Resultados */}
             {quizStep === 4 && recommendedPlan && (
               <div className="w-full text-center space-y-6">
-                <h3 className="font-heading font-black text-xl text-gray-900">¡Recomendación Lista!</h3>
-                <div className="p-6 rounded-2xl border-2 border-emerald-100 bg-emerald-50/10 text-left space-y-4">
+                <h3 className="font-heading font-black text-xl text-white">¡Recomendación Lista!</h3>
+                <div className="p-6 rounded-2xl border-2 border-primary/40 bg-emerald-950/50 text-left space-y-4 shadow-xl backdrop-blur-md">
                   <div className="flex justify-between items-start">
                     <span className="text-xs uppercase font-extrabold tracking-widest text-primary">PLAN PERFECTO</span>
-                    <span className="text-xl font-black text-gray-900">${recommendedPlan.price}/mes</span>
+                    <span className="text-xl font-black text-white">${recommendedPlan.price}/mes</span>
                   </div>
-                  <h4 className="font-heading font-black text-lg text-gray-900">{recommendedPlan.name}</h4>
-                  <p className="text-gray-600 text-sm leading-relaxed">{recommendedPlan.desc}</p>
+                  <h4 className="font-heading font-black text-lg text-white">{recommendedPlan.name}</h4>
+                  <p className="text-gray-300 text-sm leading-relaxed">{recommendedPlan.desc}</p>
                   <button
-                    className="w-full py-3 bg-primary hover:bg-primary-hover text-white font-bold rounded-full text-sm"
+                    className="w-full py-3.5 bg-primary hover:bg-primary-hover text-emerald-950 font-extrabold rounded-full text-sm shadow-lg shadow-emerald-500/20 transition-all hover:scale-102"
                     onClick={() => { setRegPlan(recommendedPlan.name); setCurrentPage('dashboard-trial'); }}
                   >
                     Contratar este Plan
                   </button>
                 </div>
-                <button className="text-sm font-bold text-gray-400 hover:text-gray-600 flex items-center gap-1.5 mx-auto" onClick={restartQuiz}>
+                <button className="text-sm font-bold text-gray-400 hover:text-white flex items-center gap-1.5 mx-auto transition-colors" onClick={restartQuiz}>
                   <i className="fa-solid fa-rotate-left"></i> Repetir Quiz
                 </button>
               </div>
@@ -2133,49 +2655,63 @@ function App() {
         </div>
       </section>
 
-      {/* SECCIÓN TESTIMONIOS */}
-      <section className="py-20 bg-gray-50 border-t border-b border-gray-100" id="opiniones">
-        <div className="max-w-7xl mx-auto px-6 text-center space-y-16">
-          <div className="max-w-2xl mx-auto space-y-3">
-            <h2 className="font-heading text-3xl sm:text-4xl font-black text-gray-900">Casos de Éxito: <span className="text-primary">Clientes Reales</span></h2>
-            <p className="text-gray-600">Negocios como el tuyo ya están fidelizando clientes y aumentando sus ventas recurrentes con 2GetherRewards.</p>
+      {/* SECCIÓN PREGUNTAS FRECUENTES (FAQ) */}
+      <section className="py-20 bg-gray-50/70 border-t border-b border-gray-150 text-left" id="faq">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Left Column: Heading & CTAs */}
+          <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-32">
+            <span className="inline-block text-[0.7rem] uppercase tracking-widest font-black text-primary bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-100">
+              RESOLVEMOS TUS DUDAS
+            </span>
+            <h2 className="font-heading text-3xl sm:text-4xl font-black text-gray-900 leading-tight">
+              ¿Tienes alguna pregunta? <br />
+              <span className="text-primary">Consulta nuestras preguntas frecuentes</span>
+            </h2>
+            <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+              Encuentra todas las respuestas sobre la creación de tarjetas digitales, integración sin apps, asignación de sellos y prueba gratuita.
+            </p>
+            <div className="flex flex-wrap gap-3 pt-2">
+              <button
+                className="px-6 py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5 text-xs sm:text-sm"
+                onClick={() => { setRegPlan('Plan START - $49/mes'); setCurrentPage('dashboard-trial'); }}
+              >
+                Prueba GRATIS
+              </button>
+              <button
+                className="px-6 py-3.5 bg-accent hover:bg-accent/90 text-white font-bold rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5 text-xs sm:text-sm flex items-center gap-2"
+                onClick={() => alert('¡Agendador de reuniones! Nos pondremos en contacto contigo para una demostración personalizada.')}
+              >
+                <i className="fa-regular fa-calendar-check"></i> Agendar REUNIÓN
+              </button>
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-            <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6 flex flex-col justify-between">
-              <div className="space-y-4">
-                <div className="text-amber-400 text-sm">
-                  <i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i>
-                </div>
-                <p className="text-gray-600 italic text-[0.95rem] leading-relaxed">
-                  "Desde que implementamos el Plan GROWTH con las tarjetas de sellos digitales, nuestros clientes vuelven un 40% más seguido. Las notificaciones push marcan una diferencia enorme."
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150" alt="Cliente Sofía" className="h-11 w-11 rounded-full object-cover border border-gray-100" />
-                <div>
-                  <h4 className="font-bold text-gray-900 text-sm">Sofía Martínez</h4>
-                  <span className="text-xs text-gray-400">Dueña de Cafetería Origen</span>
-                </div>
-              </div>
-            </div>
 
-            <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm space-y-6 flex flex-col justify-between">
-              <div className="space-y-4">
-                <div className="text-amber-400 text-sm">
-                  <i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i><i className="fa-solid fa-star"></i>
+          {/* Right Column: FAQ Accordion */}
+          <div className="lg:col-span-7 space-y-3">
+            {faqList.map((faq, idx) => {
+              const isOpen = openFaqIndex === idx;
+              return (
+                <div
+                  key={idx}
+                  className={`rounded-2xl border transition-all duration-200 overflow-hidden ${isOpen ? 'bg-white border-emerald-200 shadow-md' : 'bg-white/80 border-gray-200 hover:border-gray-300'}`}
+                >
+                  <button
+                    className="w-full p-5 text-left flex justify-between items-center gap-4 font-heading font-bold text-sm sm:text-base text-gray-900 cursor-pointer"
+                    onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                  >
+                    <span>{faq.q}</span>
+                    <span className={`h-8 w-8 rounded-full flex items-center justify-center shrink-0 transition-transform duration-200 ${isOpen ? 'bg-emerald-50 text-primary rotate-180' : 'bg-gray-100 text-gray-500'}`}>
+                      <i className="fa-solid fa-chevron-down text-xs"></i>
+                    </span>
+                  </button>
+                  {isOpen && (
+                    <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100/60">
+                      {faq.a}
+                    </div>
+                  )}
                 </div>
-                <p className="text-gray-600 italic text-[0.95rem] leading-relaxed">
-                  "Con el Plan ENTERPRISE manejamos 8 sucursales desde un solo panel. Las tarjetas de regalo digitales se han convertido en nuestro mejor producto de temporada navideña."
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150" alt="Cliente Alejandro" className="h-11 w-11 rounded-full object-cover border border-gray-100" />
-                <div>
-                  <h4 className="font-bold text-gray-900 text-sm">Alejandro Ruiz</h4>
-                  <span className="text-xs text-gray-400">Director de Gourmet Garden (8 sedes)</span>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -2193,8 +2729,8 @@ function App() {
                 Fideliza. Conecta. Haz crecer tu negocio. La plataforma de fidelización digital más completa del mercado, sin apps y compatible con Apple y Google Wallet.
               </p>
               <div className="flex gap-3">
-                <a href="#" className="h-9 w-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white text-sm"><i className="fa-brands fa-facebook-f"></i></a>
-                <a href="#" className="h-9 w-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white text-sm"><i className="fa-brands fa-instagram"></i></a>
+                <a href="https://www.facebook.com/people/2Gether-Rewards/61592264844889/#" target="_blank" rel="noopener noreferrer" className="h-9 w-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white text-sm" aria-label="Facebook 2Gether Rewards"><i className="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/2getherrewards/" target="_blank" rel="noopener noreferrer" className="h-9 w-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white text-sm" aria-label="Instagram 2Gether Rewards"><i className="fa-brands fa-instagram"></i></a>
                 <a href="#" className="h-9 w-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white text-sm"><i className="fa-brands fa-linkedin-in"></i></a>
               </div>
             </div>
@@ -2204,7 +2740,7 @@ function App() {
                 <li><a href="#tarjetas" className="hover:text-white" onClick={() => setActiveNav('tarjetas')}>Tipos de Tarjeta</a></li>
                 <li><a href="#quiz" className="hover:text-white" onClick={() => { setActiveNav('quiz'); startQuiz(); }}>Encuentra tu Plan</a></li>
                 <li><a href="#nosotros" className="hover:text-white" onClick={() => setActiveNav('nosotros')}>Sobre Nosotros</a></li>
-                <li><a href="#opiniones" className="hover:text-white" onClick={() => setActiveNav('opiniones')}>Casos de Éxito</a></li>
+                <li><a href="#faq" className="hover:text-white" onClick={() => setActiveNav('faq')}>Preguntas Frecuentes</a></li>
               </ul>
             </div>
             <div className="lg:col-span-3 space-y-4">
@@ -2220,7 +2756,7 @@ function App() {
             <p>&copy; 2026 2GetherRewards. Todos los derechos reservados.</p>
             <div className="flex gap-6">
               <a href="#" className="hover:text-white">Privacidad</a>
-              <a href="#" className="hover:text-white">Términos de Servicio</a>
+              <button type="button" onClick={() => setCurrentPage('dashboard-trial')} className="hover:text-white text-gray-500 bg-transparent border-none p-0 cursor-pointer">Términos de Servicio</button>
             </div>
           </div>
         </div>
