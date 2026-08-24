@@ -2073,9 +2073,9 @@ function App() {
 
               <div className="space-y-1.5 text-center">
                 <h3 className="font-heading font-black text-xl text-gray-900">¡Registro Exitoso!</h3>
-                <p className="text-xs font-bold text-primary">Tu cuenta corporativa ha sido creada</p>
+                <p className="text-xs font-bold text-primary">Acceso de Demostración y Exploración (14 días)</p>
                 <p className="text-gray-500 text-xs leading-relaxed pt-1">
-                  ¡Bienvenido a 2GetherRewards! Tu prueba gratuita de <strong>14 días</strong> está activa y lista para ser utilizada.
+                  ¡Bienvenido a 2GetherRewards! Tu acceso está activo para que puedas <strong>conocer y explorar la plataforma por dentro</strong> (diseño de tarjetas para Wallet, escáner y analíticas).
                 </p>
               </div>
 

@@ -67,80 +67,107 @@ const sendWelcomeEmail = async ({ firstName, lastName, companyName, email, plan,
 
     const emailHtml = `
     <!DOCTYPE html>
-    <html>
+    <html lang="es">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Bienvenido a 2GetherRewards</title>
         <style>
-            body { margin: 0; padding: 0; background-color: #f4f6f8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #2d3748; }
-            .container { max-width: 600px; margin: 30px auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
-            .header { background: linear-gradient(135deg, #FF6F00 0%, #E65100 100%); padding: 36px 30px; text-align: center; color: #ffffff; }
-            .header h1 { margin: 0 0 8px 0; font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
-            .header p { margin: 0; opacity: 0.92; font-size: 15px; }
-            .body-content { padding: 32px 30px; }
-            .greeting { font-size: 18px; font-weight: 700; color: #1a202c; margin-bottom: 16px; }
-            .text { font-size: 15px; line-height: 1.6; color: #4a5568; margin-bottom: 20px; }
-            .card { background-color: #f8fafc; border-left: 4px solid #FF6F00; border-radius: 8px; padding: 18px 20px; margin: 24px 0; }
-            .card-title { font-size: 14px; font-weight: 700; color: #2d3748; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-            .card-item { font-size: 14px; color: #4a5568; margin: 4px 0; }
-            .btn { display: inline-block; background-color: #FF6F00; color: #ffffff !important; text-decoration: none; font-weight: 700; font-size: 14px; padding: 14px 28px; border-radius: 10px; margin: 20px 0; }
-            .divider { height: 1px; background-color: #e2e8f0; margin: 30px 0 20px 0; }
-            .fine-print-box { background-color: #f7fafc; border: 1px solid #edf2f7; border-radius: 8px; padding: 14px 16px; margin-top: 20px; }
-            .fine-print-title { font-size: 11px; font-weight: 700; color: #718096; text-transform: uppercase; margin-bottom: 6px; }
+            body { margin: 0; padding: 0; background-color: #F4F4F4; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #2F2F2F; }
+            .wrapper { width: 100%; table-layout: fixed; background-color: #F4F4F4; padding: 30px 0; }
+            .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.06); border: 1px solid #EAEAEA; }
+            .header { background: #2F2F2F; padding: 32px 30px; text-align: center; color: #ffffff; border-bottom: 3px solid #69BFA1; }
+            .header-logo-table { margin: 0 auto 12px auto; }
+            .brand-title { font-size: 22px; font-weight: 900; letter-spacing: 0.5px; color: #ffffff; margin: 0; font-family: 'Outfit', sans-serif; }
+            .brand-title-accent { color: #69BFA1; }
+            .header p { margin: 6px 0 0 0; color: #A0AEC0; font-size: 13px; font-weight: 500; letter-spacing: 0.2px; }
+            .body-content { padding: 36px 32px; }
+            .greeting { font-size: 19px; font-weight: 800; color: #2F2F2F; margin-bottom: 14px; font-family: 'Outfit', sans-serif; }
+            .text { font-size: 14.5px; line-height: 1.65; color: #4A5568; margin-bottom: 18px; }
+            .demo-badge { background-color: #F0FDF4; border: 1px solid #BBF7D0; border-left: 4px solid #69BFA1; border-radius: 12px; padding: 14px 18px; margin: 20px 0; font-size: 13px; color: #166534; line-height: 1.55; }
+            .card { background-color: #FAFAFA; border: 1px solid #EEEEEE; border-radius: 14px; padding: 20px; margin: 24px 0; }
+            .card-title { font-size: 12px; font-weight: 800; color: #69BFA1; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+            .card-item { font-size: 13.5px; color: #2F2F2F; margin: 6px 0; display: flex; justify-content: space-between; }
+            .card-item strong { color: #4A5568; font-weight: 600; }
+            .btn-wrapper { text-align: center; margin: 28px 0; }
+            .btn { display: inline-block; background-color: #69BFA1; color: #ffffff !important; text-decoration: none; font-weight: 800; font-size: 14px; padding: 14px 32px; border-radius: 12px; box-shadow: 0 4px 14px rgba(105, 191, 161, 0.4); letter-spacing: 0.3px; }
+            .divider { height: 1px; background-color: #EDF2F7; margin: 28px 0 20px 0; }
+            .fine-print-box { background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 14px 16px; margin-top: 20px; text-align: left; }
+            .fine-print-title { font-size: 11px; font-weight: 800; color: #718096; text-transform: uppercase; margin-bottom: 6px; letter-spacing: 0.5px; }
             .fine-print-text { font-size: 10.5px; color: #718096; line-height: 1.5; margin: 0; }
-            .footer { padding: 20px 30px; text-align: center; font-size: 12px; color: #a0aec0; background-color: #f8fafc; }
+            .footer { padding: 22px 30px; text-align: center; font-size: 11.5px; color: #A0AEC0; background-color: #FAFAFA; border-top: 1px solid #EEEEEE; line-height: 1.6; }
         </style>
     </head>
     <body>
-        <div class="container">
-            <div class="header">
-                <h1>2GetherRewards</h1>
-                <p>Plataforma de Fidelización & Marketing Inteligente</p>
-            </div>
-            <div class="body-content">
-                <div class="greeting">¡Hola ${firstName} ${lastName}! 👋</div>
-                <p class="text">
-                    Te damos la más cordial bienvenida a <strong>2GetherRewards</strong>. Tu cuenta para <strong>${companyName || 'tu negocio'}</strong> ha sido registrada con éxito y ya puedes disfrutar de tu <strong>prueba gratuita de 14 días</strong> sin compromiso.
-                </p>
-                
-                <div class="card">
-                    <div class="card-title">Resumen de tu cuenta</div>
-                    <div class="card-item"><strong>Empresa / Negocio:</strong> ${companyName || 'No especificada'}</div>
-                    <div class="card-item"><strong>Plan seleccionado:</strong> ${plan || 'Plan START'}</div>
-                    <div class="card-item"><strong>Correo registrado:</strong> ${email}</div>
-                    <div class="card-item"><strong>Estado:</strong> Prueba activa de 14 días</div>
+        <div class="wrapper">
+            <div class="container">
+                <!-- Header con Logo Oficial y Colores de Marca -->
+                <div class="header">
+                    <table class="header-logo-table" role="presentation" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td style="vertical-align: middle; padding-right: 10px;">
+                                <img src="https://www.2getherrewards.com/logo-handshake-white.png" alt="2GetherRewards" width="34" height="34" style="display: block; border: 0;" />
+                            </td>
+                            <td style="vertical-align: middle;">
+                                <h1 class="brand-title">2GETHER<span class="brand-title-accent">REWARDS</span></h1>
+                            </td>
+                        </tr>
+                    </table>
+                    <p>Fidelización Digital para Apple Wallet & Google Wallet</p>
                 </div>
 
-                <p class="text">
-                    Comienza a digitalizar tus programas de sellos, tarjetas de regalo, cupones y membresías de Wallet hoy mismo.
-                </p>
+                <!-- Body Content -->
+                <div class="body-content">
+                    <div class="greeting">¡Hola ${firstName} ${lastName ? lastName : ''}! 👋</div>
+                    <p class="text">
+                        Te damos la bienvenida a <strong>2GetherRewards</strong>. Tu cuenta de acceso para <strong>${companyName || 'tu negocio'}</strong> ha sido creada correctamente.
+                    </p>
 
-                <div style="text-align: center;">
-                    <a href="https://2getherrewards.com" class="btn">Ir a mi Panel de Control</a>
+                    <!-- Aclaración de la Prueba de Exploración de 14 Días -->
+                    <div class="demo-badge">
+                        <strong>🔍 Acceso de Exploración y Demostración (14 días):</strong><br>
+                        Esta prueba gratuita te permite ingresar al panel para <strong>conocer la plataforma por dentro</strong>, explorar cómo diseñar tarjetas para Apple & Google Wallet, probar el escáner y revisar los módulos de fidelización. 
+                        <div style="margin-top: 6px; font-size: 12px; color: #15803d;">
+                            <em>Nota: La emisión real y operativa de tarjetas activas para tus clientes finales se activará en cuanto decidas contratar y suscribirte formalmente a tu plan.</em>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title">Detalles de tu registro</div>
+                        <div class="card-item"><strong>Empresa / Comercio:</strong> <span>${companyName || 'No especificada'}</span></div>
+                        <div class="card-item"><strong>Plan de interés:</strong> <span>${plan || 'Plan START - $49/mes'}</span></div>
+                        <div class="card-item"><strong>Correo registrado:</strong> <span>${email}</span></div>
+                        <div class="card-item"><strong>Modalidad:</strong> <span>Demostración guiada (14 días)</span></div>
+                    </div>
+
+                    <div class="btn-wrapper">
+                        <a href="https://www.2getherrewards.com" class="btn">Explorar mi Panel de Control</a>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <!-- Apartado con letras pequeñas: Aceptación de Términos y Condiciones -->
+                    <div class="fine-print-box">
+                        <div class="fine-print-title">Información Legal & Términos Aceptados</div>
+                        <p class="fine-print-text">
+                            Al registrarte en 2GetherRewards, has confirmado y aceptado expresamente nuestros <strong>Términos y Condiciones del Servicio para Comercios Afiliados</strong> y nuestra <strong>Política de Privacidad y Tratamiento de Datos</strong>.
+                        </p>
+                        <p class="fine-print-text" style="margin-top: 6px;">
+                            • <strong>Fecha de consentimiento:</strong> ${dateFormatted}<br>
+                            • <strong>Identificador de cuenta:</strong> ${email}<br>
+                            • <strong>Aceptación electrónica:</strong> ${acceptedTerms ? 'Registrada y confirmada en formulario de alta' : 'Confirmada'}.
+                        </p>
+                        <p class="fine-print-text" style="margin-top: 6px;">
+                            Este correo sirve como confirmación de tu registro de prueba. Para consultas o soporte comercial, puedes escribirnos directamente a <a href="mailto:soporte@2getherrewards.com" style="color: #69BFA1; font-weight: bold; text-decoration: underline;">soporte@2getherrewards.com</a>.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="divider"></div>
-
-                <!-- Apartado con letras pequeñas: Aceptación de Términos y Condiciones -->
-                <div class="fine-print-box">
-                    <div class="fine-print-title">Información Legal & Términos Aceptados</div>
-                    <p class="fine-print-text">
-                        Al completar tu registro en 2GetherRewards, has confirmado y aceptado expresamente nuestros <strong>Términos y Condiciones de Servicio</strong>, las <strong>Políticas de Uso Aceptable</strong> y la <strong>Política de Privacidad y Protección de Datos</strong>.
-                    </p>
-                    <p class="fine-print-text" style="margin-top: 6px;">
-                        • <strong>Consentimiento registrado:</strong> ${dateFormatted}<br>
-                        • <strong>Identificador de cuenta:</strong> ${email}<br>
-                        • <strong>Aceptación expresa:</strong> ${acceptedTerms ? 'Sí, aceptado de forma electrónica en el formulario de alta' : 'Sí'}.
-                    </p>
-                    <p class="fine-print-text" style="margin-top: 6px;">
-                        Este correo electrónico sirve como acuse de recibo y comprobante de tu consentimiento. Si no has realizado este registro o deseas ejercer tus derechos de acceso, rectificación, supresión o limitación de datos (RGPD/LOPD), puedes comunicarte con nuestro equipo legal y de soporte en <a href="mailto:soporte@2getherrewards.com" style="color: #718096; text-decoration: underline;">soporte@2getherrewards.com</a>.
-                    </p>
+                <!-- Footer -->
+                <div class="footer">
+                    © ${new Date().getFullYear()} 2GetherRewards Inc. Todos los derechos reservados.<br>
+                    Plataforma inteligente de fidelización de clientes.
                 </div>
-            </div>
-            <div class="footer">
-                © ${new Date().getFullYear()} 2GetherRewards Inc. Todos los derechos reservados.<br>
-                Este es un mensaje automático generado por la plataforma.
             </div>
         </div>
     </body>
