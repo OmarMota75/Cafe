@@ -147,27 +147,62 @@ const sendWelcomeEmail = async ({ firstName, lastName, companyName, email, plan,
     </html>
     `;
 
-    const mailOptions = {
-        from: process.env.SMTP_FROM || `"2GetherRewards" <${process.env.SMTP_USER || 'no-reply@2getherrewards.com'}>`,
-        to: email,
-        subject: `¡Bienvenido a 2GetherRewards! Confirmación de registro para ${companyName || firstName}`,
-        html: emailHtml,
-    };
+    const fromAddress = process.env.SMTP_FROM || `"2GetherRewards" <${process.env.SMTP_USER || 'onboarding@2getherrewards.com'}>`;
+    const emailSubject = `¡Bienvenido a 2GetherRewards! Confirmación de registro para ${companyName || firstName}`;
+    const resendKey = (process.env.RESEND_API_KEY || process.env.SMTP_PASS || '').trim();
 
-    if (transporter) {
+    // 1. Try Resend Direct REST API if key starts with re_
+    if (resendKey && resendKey.startsWith('re_')) {
         try {
-            const info = await transporter.sendMail(mailOptions);
-            console.log(`✅ Correo de bienvenida enviado a ${email}. MessageId: ${info.messageId}`);
-            return { sent: true, messageId: info.messageId };
+            const formattedFrom = fromAddress.includes('<') ? fromAddress : `2GetherRewards <${fromAddress}>`;
+            const apiRes = await fetch('https://api.resend.com/emails', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${resendKey}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    from: formattedFrom,
+                    to: [email],
+                    subject: emailSubject,
+                    html: emailHtml,
+                }),
+            });
+
+            const apiData = await apiRes.json();
+            if (apiRes.ok) {
+                console.log(`✅ Correo de bienvenida enviado a ${email} vía Resend API. ID: ${apiData.id}`);
+                return { sent: true, provider: 'resend-api', id: apiData.id };
+            } else {
+                console.error(`⚠️ Error devuelto por Resend API al enviar a ${email}:`, apiData);
+            }
+        } catch (apiErr) {
+            console.error(`⚠️ Error de conexión con Resend API:`, apiErr.message);
+        }
+    }
+
+    // 2. Try SMTP Transporter
+    const currentTransporter = transporter || createMailTransporter();
+    if (currentTransporter) {
+        try {
+            const info = await currentTransporter.sendMail({
+                from: fromAddress,
+                to: email,
+                subject: emailSubject,
+                html: emailHtml,
+            });
+            console.log(`✅ Correo de bienvenida enviado a ${email} vía SMTP. MessageId: ${info.messageId}`);
+            return { sent: true, provider: 'smtp', messageId: info.messageId };
         } catch (error) {
-            console.error(`⚠️ Error al enviar correo de bienvenida a ${email}:`, error.message);
+            console.error(`⚠️ Error al enviar correo vía SMTP a ${email}:`, error.message);
             return { sent: false, error: error.message };
         }
-    } else {
-        console.log(`📧 [SIMULACIÓN DE CORREO] Para: ${email} | Asunto: ${mailOptions.subject}`);
-        console.log(`📝 [LETRAS PEQUEÑAS]: Usuario ${firstName} ${lastName} (${email}) aceptó Términos y Condiciones en fecha: ${dateFormatted}`);
-        return { sent: false, simulated: true };
     }
+
+    // 3. Fallback simulation
+    console.log(`📧 [SIMULACIÓN DE CORREO] Para: ${email} | Asunto: ${emailSubject}`);
+    console.log(`📝 [LETRAS PEQUEÑAS]: Usuario ${firstName} ${lastName} (${email}) aceptó Términos y Condiciones en fecha: ${dateFormatted}`);
+    return { sent: false, simulated: true };
 };
 
 // Initialize MySQL connection pool if MYSQL_URL (or PGDATABASE style fallback) is available
@@ -232,12 +267,15 @@ const memoryLeads = [];
 
 // API Status endpoint
 app.get('/api/status', (req, res) => {
+    const resendKey = (process.env.RESEND_API_KEY || process.env.SMTP_PASS || '').trim();
+    const isConfigured = Boolean(resendKey || transporter);
     res.json({
         status: 'online',
         message: '2GetherRewards Backend API connected',
         databaseConnected: pool !== null,
         databaseType: 'mysql',
-        smtpConfigured: transporter !== null
+        emailConfigured: isConfigured,
+        emailProvider: (resendKey && resendKey.startsWith('re_')) ? 'resend-api' : (transporter ? 'smtp' : 'none')
     });
 });
 
