@@ -2144,19 +2144,33 @@ function App() {
               </a>
             ))}
             {isMobileMenuOpen && (
-              <button
-                className="w-full mt-2 py-3 bg-primary hover:bg-primary-hover text-white font-bold text-sm rounded-full shadow flex items-center justify-center gap-1.5"
-                onClick={() => { setCurrentPage('dashboard-trial'); setIsMobileMenuOpen(false); }}
-              >
-                <i className="fa-solid fa-gauge-high"></i> Probar Dashboard
-              </button>
+              <div className="w-full flex flex-col gap-2 pt-3 border-t border-gray-100">
+                <button
+                  className="w-full py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs rounded-full shadow-sm flex items-center justify-center gap-2"
+                  onClick={() => { setActiveTab('acceso'); setCurrentPage('dashboard-trial'); setIsMobileMenuOpen(false); }}
+                >
+                  <i className="fa-solid fa-arrow-right-to-bracket text-primary"></i> Acceso / Iniciar Sesión
+                </button>
+                <button
+                  className="w-full py-3 bg-primary hover:bg-primary-hover text-white font-bold text-xs rounded-full shadow flex items-center justify-center gap-1.5"
+                  onClick={() => { setActiveTab('registro'); setCurrentPage('dashboard-trial'); setIsMobileMenuOpen(false); }}
+                >
+                  <i className="fa-solid fa-gauge-high"></i> Probar Dashboard
+                </button>
+              </div>
             )}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             <button
-              className="hidden sm:inline-flex items-center gap-1.5 px-6 py-2.5 bg-primary hover:bg-primary-hover text-white font-bold text-xs rounded-full shadow transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
-              onClick={() => { setCurrentPage('dashboard-trial'); setIsMobileMenuOpen(false); }}
+              className="hidden md:inline-flex items-center gap-1.5 text-xs font-bold text-gray-700 hover:text-primary transition-colors py-2 px-3.5 rounded-full hover:bg-gray-100/80 cursor-pointer"
+              onClick={() => { setActiveTab('acceso'); setCurrentPage('dashboard-trial'); setIsMobileMenuOpen(false); }}
+            >
+              <i className="fa-solid fa-arrow-right-to-bracket text-primary"></i> Acceso
+            </button>
+            <button
+              className="hidden sm:inline-flex items-center gap-1.5 px-6 py-2.5 bg-primary hover:bg-primary-hover text-white font-bold text-xs rounded-full shadow transition-all duration-200 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
+              onClick={() => { setActiveTab('registro'); setCurrentPage('dashboard-trial'); setIsMobileMenuOpen(false); }}
             >
               <i className="fa-solid fa-gauge-high"></i> Probar Dashboard
             </button>
@@ -2187,7 +2201,13 @@ function App() {
               Crea tarjetas de sellos y regalo 100% digitales compatibles con Apple Wallet y Google Wallet. Sin aplicaciones de terceros, sin hardware complejo. Aumenta la recompra y fideliza a tus clientes habituales desde hoy.
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
-              <a href="#menu" className="px-8 py-4 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/25 transition-all duration-200 hover:-translate-y-0.5" onClick={() => setActiveNav('menu')}>Ver Planes</a>
+              <button
+                onClick={() => { setActiveTab('registro'); setCurrentPage('dashboard-trial'); }}
+                className="px-8 py-4 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/25 transition-all duration-200 hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer"
+              >
+                <i className="fa-solid fa-gauge-high"></i> Probar Gratis 14 Días
+              </button>
+              <a href="#menu" className="px-8 py-4 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold rounded-full shadow-sm transition-all duration-200 hover:-translate-y-0.5" onClick={() => setActiveNav('menu')}>Ver Planes</a>
               <a href="#quiz" className="px-8 py-4 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold rounded-full shadow-sm flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5" onClick={() => { setActiveNav('quiz'); startQuiz(); }}>
                 <i className="fa-solid fa-wand-magic-sparkles text-primary"></i> ¿Cuál es mi Plan Ideal?
               </a>
@@ -2195,7 +2215,15 @@ function App() {
           </div>
 
           <div className="lg:col-span-5 flex justify-center">
-            <div className="w-full max-w-[360px] bg-white rounded-[2rem] shadow-2xl border border-gray-100 overflow-hidden flex flex-col justify-between min-h-[520px]">
+            <div 
+              onClick={() => { setActiveTab('registro'); setCurrentPage('dashboard-trial'); }}
+              className="w-full max-w-[360px] bg-white rounded-[2rem] shadow-2xl border border-gray-100 overflow-hidden flex flex-col justify-between min-h-[520px] cursor-pointer hover:shadow-emerald-500/20 hover:scale-[1.02] transition-all duration-300 group relative"
+              title="Haz clic para probar la plataforma y registrarte"
+            >
+              <div className="absolute top-4 right-4 bg-emerald-500/10 text-primary group-hover:bg-primary group-hover:text-white px-2.5 py-1 rounded-full text-[0.65rem] font-black uppercase tracking-wider transition-all duration-200 shadow-sm z-10 flex items-center gap-1">
+                <span>Probar Demo</span>
+                <i className="fa-solid fa-arrow-up-right-from-square text-[0.6rem]"></i>
+              </div>
               <div>
                 {/* Card Header matching Padel Pro layout structure */}
                 <div className="p-5 flex items-center gap-3">
@@ -2322,8 +2350,8 @@ function App() {
                   </div>
                 </div>
                 <button
-                  className="w-full py-4 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95"
-                  onClick={() => { setRegPlan('Plan START - $49/mes'); setCurrentPage('dashboard-trial'); }}
+                  className="w-full py-4 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95 cursor-pointer"
+                  onClick={() => { setActiveTab('registro'); setRegPlan('Plan START - $49/mes'); setCurrentPage('dashboard-trial'); }}
                 >
                   Contratar Plan START
                 </button>
@@ -2367,8 +2395,8 @@ function App() {
                   </div>
                 </div>
                 <button
-                  className="w-full py-4 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/15 transition-transform duration-200 active:scale-95"
-                  onClick={() => { setRegPlan('Plan GROWTH - $69/mes'); setCurrentPage('dashboard-trial'); }}
+                  className="w-full py-4 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/15 transition-transform duration-200 active:scale-95 cursor-pointer"
+                  onClick={() => { setActiveTab('registro'); setRegPlan('Plan GROWTH - $69/mes'); setCurrentPage('dashboard-trial'); }}
                 >
                   Contratar Plan GROWTH
                 </button>
@@ -2409,8 +2437,8 @@ function App() {
                   </div>
                 </div>
                 <button
-                  className="w-full py-4 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95"
-                  onClick={() => { setRegPlan('Plan ENTERPRISE - $99/mes'); setCurrentPage('dashboard-trial'); }}
+                  className="w-full py-4 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95 cursor-pointer"
+                  onClick={() => { setActiveTab('registro'); setRegPlan('Plan ENTERPRISE - $99/mes'); setCurrentPage('dashboard-trial'); }}
                 >
                   Contratar Plan ENTERPRISE
                 </button>
@@ -2459,8 +2487,8 @@ function App() {
                   </div>
                 </div>
                 <button
-                  className="w-full py-4 bg-lime hover:bg-lime/90 text-charcoal font-black rounded-full transition-transform duration-200 active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-lime-500/10"
-                  onClick={() => { setRegPlan('Add-on Redes Sociales - $300/mes'); setCurrentPage('dashboard-trial'); }}
+                  className="w-full py-4 bg-lime hover:bg-lime/90 text-charcoal font-black rounded-full transition-transform duration-200 active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-lime-500/10 cursor-pointer"
+                  onClick={() => { setActiveTab('registro'); setRegPlan('Add-on Redes Sociales - $300/mes'); setCurrentPage('dashboard-trial'); }}
                 >
                   <i className="fa-brands fa-instagram"></i> Añadir Add-on Redes Sociales
                 </button>
@@ -2664,8 +2692,8 @@ function App() {
                   <h4 className="font-heading font-black text-lg text-white">{recommendedPlan.name}</h4>
                   <p className="text-gray-300 text-sm leading-relaxed">{recommendedPlan.desc}</p>
                   <button
-                    className="w-full py-3.5 bg-primary hover:bg-primary-hover text-emerald-950 font-extrabold rounded-full text-sm shadow-lg shadow-emerald-500/20 transition-all hover:scale-102"
-                    onClick={() => { setRegPlan(recommendedPlan.name); setCurrentPage('dashboard-trial'); }}
+                    className="w-full py-3.5 bg-primary hover:bg-primary-hover text-emerald-950 font-extrabold rounded-full text-sm shadow-lg shadow-emerald-500/20 transition-all hover:scale-102 cursor-pointer"
+                    onClick={() => { setActiveTab('registro'); setRegPlan(recommendedPlan.name); setCurrentPage('dashboard-trial'); }}
                   >
                     Contratar este Plan
                   </button>
@@ -2731,13 +2759,13 @@ function App() {
             </p>
             <div className="flex flex-wrap gap-3 pt-2">
               <button
-                className="px-6 py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5 text-xs sm:text-sm"
-                onClick={() => { setRegPlan('Plan START - $49/mes'); setCurrentPage('dashboard-trial'); }}
+                className="px-6 py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5 text-xs sm:text-sm cursor-pointer"
+                onClick={() => { setActiveTab('registro'); setRegPlan('Plan START - $49/mes'); setCurrentPage('dashboard-trial'); }}
               >
                 Prueba GRATIS
               </button>
               <button
-                className="px-6 py-3.5 bg-accent hover:bg-accent/90 text-white font-bold rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5 text-xs sm:text-sm flex items-center gap-2"
+                className="px-6 py-3.5 bg-accent hover:bg-accent/90 text-white font-bold rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5 text-xs sm:text-sm flex items-center gap-2 cursor-pointer"
                 onClick={() => alert('¡Agendador de reuniones! Nos pondremos en contacto contigo para una demostración personalizada.')}
               >
                 <i className="fa-regular fa-calendar-check"></i> Agendar REUNIÓN
@@ -2800,6 +2828,24 @@ function App() {
                 <li><a href="#quiz" className="hover:text-white" onClick={() => { setActiveNav('quiz'); startQuiz(); }}>Encuentra tu Plan</a></li>
                 <li><a href="#nosotros" className="hover:text-white" onClick={() => setActiveNav('nosotros')}>Sobre Nosotros</a></li>
                 <li><a href="#faq" className="hover:text-white" onClick={() => setActiveNav('faq')}>Preguntas Frecuentes</a></li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => { setActiveTab('acceso'); setCurrentPage('dashboard-trial'); }}
+                    className="hover:text-white text-gray-400 bg-transparent border-none p-0 cursor-pointer flex items-center gap-1.5"
+                  >
+                    <i className="fa-solid fa-arrow-right-to-bracket text-xs text-primary"></i> Acceso a Clientes
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => { setActiveTab('registro'); setCurrentPage('dashboard-trial'); }}
+                    className="hover:text-white text-gray-400 bg-transparent border-none p-0 cursor-pointer flex items-center gap-1.5"
+                  >
+                    <i className="fa-solid fa-gauge-high text-xs text-primary"></i> Probar Dashboard / Registro
+                  </button>
+                </li>
               </ul>
             </div>
             <div className="lg:col-span-3 space-y-4">
