@@ -279,12 +279,84 @@ function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
 
-  // Page view state: 'landing' or 'dashboard-trial'
+  // Page view state: 'landing' or 'dashboard-trial' or 'dashboard-active'
   const [currentPage, setCurrentPage] = useState('landing');
   const [activeTab, setActiveTab] = useState('registro'); // 'acceso' or 'registro'
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [selectedBranch, setSelectedBranch] = useState('Todas las sucursales');
+
+  // Navigation & URL Routing Helper
+  const navigateTo = (page, tab = null, url = null, plan = null) => {
+    setCurrentPage(page);
+    if (tab) setActiveTab(tab);
+    if (plan) setRegPlan(plan);
+
+    let targetUrl = url;
+    if (!targetUrl) {
+      if (page === 'dashboard-trial') {
+        targetUrl = tab === 'acceso' ? '/acceso' : '/registro';
+      } else if (page === 'dashboard-active') {
+        targetUrl = '/dashboard';
+      } else {
+        targetUrl = '/';
+      }
+    }
+
+    if (window.location.pathname !== targetUrl) {
+      window.history.pushState({ page, tab }, '', targetUrl);
+    }
+  };
+
+  const syncRouteFromLocation = () => {
+    const rawPath = window.location.pathname.toLowerCase().replace(/\/+$/, '') || '/';
+    const params = new URLSearchParams(window.location.search);
+    const planParam = params.get('plan');
+    const tabParam = params.get('tab');
+
+    if (planParam) {
+      const lowerPlan = planParam.toLowerCase();
+      if (lowerPlan.includes('growth')) setRegPlan('Plan GROWTH - $69/mes');
+      else if (lowerPlan.includes('enterprise')) setRegPlan('Plan ENTERPRISE - $99/mes');
+      else if (lowerPlan.includes('social') || lowerPlan.includes('redes')) setRegPlan('Add-on Redes Sociales - $300/mes');
+      else if (lowerPlan.includes('start')) setRegPlan('Plan START - $49/mes');
+    }
+
+    if (
+      rawPath === '/registro' ||
+      rawPath === '/register' ||
+      rawPath === '/trial' ||
+      rawPath === '/prueba-gratis' ||
+      rawPath === '/prueba' ||
+      rawPath === '/alta' ||
+      rawPath === '/signup'
+    ) {
+      setCurrentPage('dashboard-trial');
+      setActiveTab('registro');
+    } else if (
+      rawPath === '/acceso' ||
+      rawPath === '/login' ||
+      rawPath === '/ingreso' ||
+      rawPath === '/iniciar-sesion' ||
+      rawPath === '/auth' ||
+      rawPath === '/signin'
+    ) {
+      setCurrentPage('dashboard-trial');
+      setActiveTab('acceso');
+    } else if (rawPath === '/dashboard' || rawPath === '/panel' || rawPath === '/admin') {
+      setCurrentPage('dashboard-active');
+    } else {
+      if (tabParam === 'registro' || tabParam === 'register' || tabParam === 'signup') {
+        setCurrentPage('dashboard-trial');
+        setActiveTab('registro');
+      } else if (tabParam === 'acceso' || tabParam === 'login' || tabParam === 'signin') {
+        setCurrentPage('dashboard-trial');
+        setActiveTab('acceso');
+      } else {
+        setCurrentPage('landing');
+      }
+    }
+  };
 
   // Dashboard sub-page view states
   const [dashboardTab, setDashboardTab] = useState('Vista General');
@@ -388,7 +460,7 @@ function App() {
 
   const handleConfirmRegSuccess = () => {
     setShowRegSuccessModal(false);
-    setCurrentPage('dashboard-active');
+    navigateTo('dashboard-active', null, '/dashboard');
     // Clear fields
     setRegFirstName('');
     setRegLastName('');
@@ -403,7 +475,7 @@ function App() {
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     if (loginEmail === 'u3058171184@gmail.com' && loginPassword === '123456') {
-      setCurrentPage('dashboard-active');
+      navigateTo('dashboard-active', null, '/dashboard');
       setLoginEmail('');
       setLoginPassword('');
     } else {
@@ -431,6 +503,17 @@ function App() {
   // ==========================================
   // SIDE EFFECTS
   // ==========================================
+  useEffect(() => {
+    syncRouteFromLocation();
+
+    const handlePopState = () => {
+      syncRouteFromLocation();
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -659,7 +742,7 @@ function App() {
             <a
               href="#inicio"
               className="flex items-center gap-3 font-heading font-black text-xl tracking-tight text-white"
-              onClick={() => setCurrentPage('landing')}
+              onClick={(e) => { e.preventDefault(); navigateTo('landing', null, '/'); }}
             >
               <img src="/logo-handshake-white.png" alt="2Gether Rewards Logo" className="h-7 w-auto" />
               <div className="leading-none text-left">
@@ -791,7 +874,7 @@ function App() {
               {/* Log out */}
               <button
                 className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-xl text-xs font-bold text-gray-500 hover:text-red-500 hover:border-red-200 transition-colors bg-white shadow-sm"
-                onClick={() => setCurrentPage('landing')}
+                onClick={() => navigateTo('landing', null, '/')}
               >
                 <i className="fa-solid fa-right-from-bracket"></i>
                 <span>Cerrar sesión</span>
@@ -1519,7 +1602,7 @@ function App() {
           <div className="absolute top-[-20%] left-[-20%] w-[450px] h-[450px] bg-primary/20 rounded-full blur-[140px] pointer-events-none"></div>
           <div className="absolute bottom-[-15%] right-[-15%] w-[400px] h-[400px] bg-accent/20 rounded-full blur-[120px] pointer-events-none"></div>
 
-          <a href="#inicio" className="flex items-center gap-3 font-heading font-black text-2xl tracking-tight text-white relative z-10" onClick={() => setCurrentPage('landing')}>
+          <a href="#inicio" className="flex items-center gap-3 font-heading font-black text-2xl tracking-tight text-white relative z-10" onClick={(e) => { e.preventDefault(); navigateTo('landing', null, '/'); }}>
             <img src="/logo-handshake-white.png" alt="2Gether Rewards Logo" className="h-8 w-auto" />
             2Gether<span className="text-primary">Rewards</span>
           </a>
@@ -1576,8 +1659,8 @@ function App() {
         <div className="w-full lg:w-1/2 lg:h-full lg:overflow-y-auto bg-graylight flex flex-col justify-start items-center p-4 sm:p-12 py-10 sm:py-24 relative min-h-screen lg:min-h-0">
           {/* Back button */}
           <button
-            className="absolute top-4 sm:top-6 left-4 sm:left-6 text-xs font-bold text-gray-400 hover:text-charcoal flex items-center gap-1.5 z-10"
-            onClick={() => setCurrentPage('landing')}
+            className="absolute top-4 sm:top-6 left-4 sm:left-6 text-xs font-bold text-gray-400 hover:text-charcoal flex items-center gap-1.5 z-10 cursor-pointer"
+            onClick={() => navigateTo('landing', null, '/')}
           >
             <i className="fa-solid fa-arrow-left"></i> Volver a Inicio
           </button>
@@ -1594,14 +1677,20 @@ function App() {
             {/* Tabs */}
             <div className="flex border-b border-gray-100">
               <button
-                className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-colors ${activeTab === 'acceso' ? 'border-primary text-primary' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
-                onClick={() => setActiveTab('acceso')}
+                className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-colors cursor-pointer ${activeTab === 'acceso' ? 'border-primary text-primary' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
+                onClick={() => {
+                  setActiveTab('acceso');
+                  window.history.replaceState({ page: 'dashboard-trial', tab: 'acceso' }, '', '/acceso');
+                }}
               >
                 Acceso
               </button>
               <button
-                className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-colors ${activeTab === 'registro' ? 'border-primary text-primary' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
-                onClick={() => setActiveTab('registro')}
+                className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-colors cursor-pointer ${activeTab === 'registro' ? 'border-primary text-primary' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
+                onClick={() => {
+                  setActiveTab('registro');
+                  window.history.replaceState({ page: 'dashboard-trial', tab: 'registro' }, '', '/registro');
+                }}
               >
                 Registro
               </button>
@@ -2122,7 +2211,7 @@ function App() {
             href="#inicio"
             className="flex items-center gap-3 font-heading font-black text-2xl tracking-tight text-gray-900"
             id="logo-brand"
-            onClick={() => { setCurrentPage('landing'); setActiveNav('inicio'); }}
+            onClick={(e) => { e.preventDefault(); navigateTo('landing', null, '/'); setActiveNav('inicio'); }}
           >
             <img src="/logo-handshake.png" alt="2Gether Rewards Logo" className="brand-handshake-img" />
             2Gether<span>Rewards</span>
@@ -2146,14 +2235,14 @@ function App() {
             {isMobileMenuOpen && (
               <div className="w-full flex flex-col gap-2 pt-3 border-t border-gray-100">
                 <button
-                  className="w-full py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs rounded-full shadow-sm flex items-center justify-center gap-2"
-                  onClick={() => { setActiveTab('acceso'); setCurrentPage('dashboard-trial'); setIsMobileMenuOpen(false); }}
+                  className="w-full py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs rounded-full shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+                  onClick={() => { navigateTo('dashboard-trial', 'acceso', '/acceso'); setIsMobileMenuOpen(false); }}
                 >
                   <i className="fa-solid fa-arrow-right-to-bracket text-primary"></i> Acceso / Iniciar Sesión
                 </button>
                 <button
-                  className="w-full py-3 bg-primary hover:bg-primary-hover text-white font-bold text-xs rounded-full shadow flex items-center justify-center gap-1.5"
-                  onClick={() => { setActiveTab('registro'); setCurrentPage('dashboard-trial'); setIsMobileMenuOpen(false); }}
+                  className="w-full py-3 bg-primary hover:bg-primary-hover text-white font-bold text-xs rounded-full shadow flex items-center justify-center gap-1.5 cursor-pointer"
+                  onClick={() => { navigateTo('dashboard-trial', 'registro', '/registro'); setIsMobileMenuOpen(false); }}
                 >
                   <i className="fa-solid fa-gauge-high"></i> Probar Dashboard
                 </button>
@@ -2164,13 +2253,13 @@ function App() {
           <div className="flex items-center gap-3 sm:gap-4">
             <button
               className="hidden md:inline-flex items-center gap-1.5 text-xs font-bold text-gray-700 hover:text-primary transition-colors py-2 px-3.5 rounded-full hover:bg-gray-100/80 cursor-pointer"
-              onClick={() => { setActiveTab('acceso'); setCurrentPage('dashboard-trial'); setIsMobileMenuOpen(false); }}
+              onClick={() => { navigateTo('dashboard-trial', 'acceso', '/acceso'); setIsMobileMenuOpen(false); }}
             >
               <i className="fa-solid fa-arrow-right-to-bracket text-primary"></i> Acceso
             </button>
             <button
               className="hidden sm:inline-flex items-center gap-1.5 px-6 py-2.5 bg-primary hover:bg-primary-hover text-white font-bold text-xs rounded-full shadow transition-all duration-200 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
-              onClick={() => { setActiveTab('registro'); setCurrentPage('dashboard-trial'); setIsMobileMenuOpen(false); }}
+              onClick={() => { navigateTo('dashboard-trial', 'registro', '/registro'); setIsMobileMenuOpen(false); }}
             >
               <i className="fa-solid fa-gauge-high"></i> Probar Dashboard
             </button>
@@ -2202,7 +2291,7 @@ function App() {
             </p>
             <div className="flex flex-wrap gap-4 pt-2">
               <button
-                onClick={() => { setActiveTab('registro'); setCurrentPage('dashboard-trial'); }}
+                onClick={() => navigateTo('dashboard-trial', 'registro', '/registro')}
                 className="px-8 py-4 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/25 transition-all duration-200 hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer"
               >
                 <i className="fa-solid fa-gauge-high"></i> Probar Gratis 14 Días
@@ -2216,7 +2305,7 @@ function App() {
 
           <div className="lg:col-span-5 flex justify-center">
             <div 
-              onClick={() => { setActiveTab('registro'); setCurrentPage('dashboard-trial'); }}
+              onClick={() => navigateTo('dashboard-trial', 'registro', '/registro')}
               className="w-full max-w-[360px] bg-white rounded-[2rem] shadow-2xl border border-gray-100 overflow-hidden flex flex-col justify-between min-h-[520px] cursor-pointer hover:shadow-emerald-500/20 hover:scale-[1.02] transition-all duration-300 group relative"
               title="Haz clic para probar la plataforma y registrarte"
             >
@@ -2351,7 +2440,7 @@ function App() {
                 </div>
                 <button
                   className="w-full py-4 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95 cursor-pointer"
-                  onClick={() => { setActiveTab('registro'); setRegPlan('Plan START - $49/mes'); setCurrentPage('dashboard-trial'); }}
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan START - $49/mes')}
                 >
                   Contratar Plan START
                 </button>
@@ -2396,7 +2485,7 @@ function App() {
                 </div>
                 <button
                   className="w-full py-4 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/15 transition-transform duration-200 active:scale-95 cursor-pointer"
-                  onClick={() => { setActiveTab('registro'); setRegPlan('Plan GROWTH - $69/mes'); setCurrentPage('dashboard-trial'); }}
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan GROWTH - $69/mes')}
                 >
                   Contratar Plan GROWTH
                 </button>
@@ -2438,7 +2527,7 @@ function App() {
                 </div>
                 <button
                   className="w-full py-4 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95 cursor-pointer"
-                  onClick={() => { setActiveTab('registro'); setRegPlan('Plan ENTERPRISE - $99/mes'); setCurrentPage('dashboard-trial'); }}
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan ENTERPRISE - $99/mes')}
                 >
                   Contratar Plan ENTERPRISE
                 </button>
@@ -2488,7 +2577,7 @@ function App() {
                 </div>
                 <button
                   className="w-full py-4 bg-lime hover:bg-lime/90 text-charcoal font-black rounded-full transition-transform duration-200 active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-lime-500/10 cursor-pointer"
-                  onClick={() => { setActiveTab('registro'); setRegPlan('Add-on Redes Sociales - $300/mes'); setCurrentPage('dashboard-trial'); }}
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Add-on Redes Sociales - $300/mes')}
                 >
                   <i className="fa-brands fa-instagram"></i> Añadir Add-on Redes Sociales
                 </button>
@@ -2693,12 +2782,12 @@ function App() {
                   <p className="text-gray-300 text-sm leading-relaxed">{recommendedPlan.desc}</p>
                   <button
                     className="w-full py-3.5 bg-primary hover:bg-primary-hover text-emerald-950 font-extrabold rounded-full text-sm shadow-lg shadow-emerald-500/20 transition-all hover:scale-102 cursor-pointer"
-                    onClick={() => { setActiveTab('registro'); setRegPlan(recommendedPlan.name); setCurrentPage('dashboard-trial'); }}
+                    onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', recommendedPlan.name)}
                   >
                     Contratar este Plan
                   </button>
                 </div>
-                <button className="text-sm font-bold text-gray-400 hover:text-white flex items-center gap-1.5 mx-auto transition-colors" onClick={restartQuiz}>
+                <button className="text-sm font-bold text-gray-400 hover:text-white flex items-center gap-1.5 mx-auto transition-colors cursor-pointer" onClick={restartQuiz}>
                   <i className="fa-solid fa-rotate-left"></i> Repetir Quiz
                 </button>
               </div>
@@ -2760,7 +2849,7 @@ function App() {
             <div className="flex flex-wrap gap-3 pt-2">
               <button
                 className="px-6 py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5 text-xs sm:text-sm cursor-pointer"
-                onClick={() => { setActiveTab('registro'); setRegPlan('Plan START - $49/mes'); setCurrentPage('dashboard-trial'); }}
+                onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan START - $49/mes')}
               >
                 Prueba GRATIS
               </button>
@@ -2808,7 +2897,7 @@ function App() {
         <div className="max-w-7xl mx-auto px-6 space-y-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
             <div className="lg:col-span-6 space-y-4">
-              <a href="#inicio" className="flex items-center gap-3 font-heading font-black text-xl text-white">
+              <a href="#inicio" className="flex items-center gap-3 font-heading font-black text-xl text-white" onClick={(e) => { e.preventDefault(); navigateTo('landing', null, '/'); }}>
                 <img src="/logo-handshake-white.png" alt="2Gether Rewards Logo" className="h-6 w-auto" />
                 2Gether<span className="text-primary">Rewards</span>
               </a>
@@ -2831,7 +2920,7 @@ function App() {
                 <li>
                   <button
                     type="button"
-                    onClick={() => { setActiveTab('acceso'); setCurrentPage('dashboard-trial'); }}
+                    onClick={() => navigateTo('dashboard-trial', 'acceso', '/acceso')}
                     className="hover:text-white text-gray-400 bg-transparent border-none p-0 cursor-pointer flex items-center gap-1.5"
                   >
                     <i className="fa-solid fa-arrow-right-to-bracket text-xs text-primary"></i> Acceso a Clientes
@@ -2840,7 +2929,7 @@ function App() {
                 <li>
                   <button
                     type="button"
-                    onClick={() => { setActiveTab('registro'); setCurrentPage('dashboard-trial'); }}
+                    onClick={() => navigateTo('dashboard-trial', 'registro', '/registro')}
                     className="hover:text-white text-gray-400 bg-transparent border-none p-0 cursor-pointer flex items-center gap-1.5"
                   >
                     <i className="fa-solid fa-gauge-high text-xs text-primary"></i> Probar Dashboard / Registro
@@ -2861,7 +2950,7 @@ function App() {
             <p>&copy; 2026 2GetherRewards. Todos los derechos reservados.</p>
             <div className="flex gap-6">
               <a href="#" className="hover:text-white">Privacidad</a>
-              <button type="button" onClick={() => setCurrentPage('dashboard-trial')} className="hover:text-white text-gray-500 bg-transparent border-none p-0 cursor-pointer">Términos de Servicio</button>
+              <button type="button" onClick={() => navigateTo('dashboard-trial', 'registro', '/registro')} className="hover:text-white text-gray-500 bg-transparent border-none p-0 cursor-pointer">Términos de Servicio</button>
             </div>
           </div>
         </div>
