@@ -232,6 +232,169 @@ const sendWelcomeEmail = async ({ firstName, lastName, companyName, email, plan,
     return { sent: false, simulated: true };
 };
 
+// Helper to send Admin Notification Email
+const sendAdminNotificationEmail = async ({ firstName, lastName, companyName, email, phone, plan, acceptedTerms = true }) => {
+    const defaultAdmins = ['ojmota@2getherrewards.com', 'bracadaniel07@outlook.com', 'barbaramc05@gmail.com'];
+    const adminRecipients = process.env.ADMIN_NOTIFICATION_EMAILS
+        ? process.env.ADMIN_NOTIFICATION_EMAILS.split(',').map(e => e.trim()).filter(Boolean)
+        : defaultAdmins;
+
+    if (!adminRecipients || adminRecipients.length === 0) {
+        return;
+    }
+
+    const dateFormatted = new Date().toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+
+    const fullName = `${firstName || ''} ${lastName || ''}`.trim() || 'No especificado';
+    const emailSubject = `🔔 [Nuevo Registro] ${companyName || fullName} (${email})`;
+
+    const emailHtml = `
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Nuevo Registro en 2GetherRewards</title>
+        <style>
+            body { margin: 0; padding: 0; background-color: #F4F4F4; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #2F2F2F; }
+            .wrapper { width: 100%; table-layout: fixed; background-color: #F4F4F4; padding: 30px 0; }
+            .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.06); border: 1px solid #EAEAEA; }
+            .header { background: #1E293B; padding: 28px 30px; text-align: center; color: #ffffff; border-bottom: 3px solid #69BFA1; }
+            .brand-title { font-size: 20px; font-weight: 900; letter-spacing: 0.5px; color: #ffffff; margin: 0; font-family: 'Outfit', sans-serif; }
+            .brand-title-accent { color: #69BFA1; }
+            .header p { margin: 6px 0 0 0; color: #94A3B8; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+            .body-content { padding: 32px 30px; }
+            .badge { display: inline-block; background-color: #ECFDF5; border: 1px solid #A7F3D0; color: #065F46; font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 20px; margin-bottom: 18px; }
+            .title { font-size: 18px; font-weight: 800; color: #0F172A; margin-bottom: 8px; }
+            .subtitle { font-size: 14px; color: #64748B; margin-bottom: 22px; line-height: 1.5; }
+            .table-box { width: 100%; border-collapse: collapse; margin-bottom: 24px; background: #F8FAFC; border-radius: 12px; overflow: hidden; border: 1px solid #E2E8F0; }
+            .table-box td { padding: 12px 16px; font-size: 13.5px; border-bottom: 1px solid #E2E8F0; }
+            .table-box tr:last-child td { border-bottom: none; }
+            .label { font-weight: 700; color: #475569; width: 38%; }
+            .value { color: #0F172A; font-weight: 500; }
+            .btn-contact { display: inline-block; background-color: #69BFA1; color: #ffffff !important; text-decoration: none; font-weight: 700; font-size: 13.5px; padding: 12px 24px; border-radius: 10px; margin-top: 10px; }
+            .footer { padding: 18px 30px; text-align: center; font-size: 11.5px; color: #94A3B8; background-color: #F8FAFC; border-top: 1px solid #E2E8F0; }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="container">
+                <div class="header">
+                    <h1 class="brand-title">2GETHER<span class="brand-title-accent">REWARDS</span></h1>
+                    <p>Notificación Interna de Nuevo Registro</p>
+                </div>
+                <div class="body-content">
+                    <span class="badge">🚀 Nuevo Lead Registrado</span>
+                    <div class="title">¡Se ha registrado un nuevo usuario!</div>
+                    <div class="subtitle">A continuación tienes todos los datos del registro recibido a través de la plataforma web:</div>
+
+                    <table class="table-box" role="presentation">
+                        <tr>
+                            <td class="label">👤 Nombre:</td>
+                            <td class="value"><strong>${fullName}</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="label">🏢 Comercio / Empresa:</td>
+                            <td class="value"><strong>${companyName || 'No especificada'}</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="label">📧 Correo:</td>
+                            <td class="value"><a href="mailto:${email}" style="color: #0284C7; text-decoration: none; font-weight: 600;">${email}</a></td>
+                        </tr>
+                        <tr>
+                            <td class="label">📱 Teléfono / Móvil:</td>
+                            <td class="value"><strong>${phone || 'No especificado'}</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="label">📦 Plan Seleccionado:</td>
+                            <td class="value"><span style="background: #E0F2FE; color: #0369A1; padding: 3px 8px; border-radius: 6px; font-weight: 700; font-size: 12.5px;">${plan || 'Plan START'}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="label">📜 Términos y Condiciones:</td>
+                            <td class="value">${acceptedTerms ? '✅ Aceptados electrónicamente' : '❌ No aceptados'}</td>
+                        </tr>
+                        <tr>
+                            <td class="label">🕒 Fecha y Hora:</td>
+                            <td class="value">${dateFormatted}</td>
+                        </tr>
+                    </table>
+
+                    <div style="text-align: center; margin-top: 20px;">
+                        <a href="mailto:${email}?subject=Bienvenido%20a%202GetherRewards%20-%20Soporte%20y%20Activaci%C3%B3n" class="btn-contact">Contactar al cliente por correo</a>
+                    </div>
+                </div>
+                <div class="footer">
+                    Este mensaje se envía de forma automática a los administradores de 2GetherRewards.<br>
+                    Destinatarios: ${adminRecipients.join(', ')}
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
+    `;
+
+    const fromAddress = process.env.SMTP_FROM || `"2GetherRewards" <${process.env.SMTP_USER || 'onboarding@2getherrewards.com'}>`;
+    const resendKey = (process.env.RESEND_API_KEY || process.env.SMTP_PASS || '').trim();
+
+    // 1. Try Resend Direct REST API
+    if (resendKey && resendKey.startsWith('re_')) {
+        try {
+            const formattedFrom = fromAddress.includes('<') ? fromAddress : `2GetherRewards <${fromAddress}>`;
+            const apiRes = await fetch('https://api.resend.com/emails', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${resendKey}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    from: formattedFrom,
+                    to: adminRecipients,
+                    subject: emailSubject,
+                    html: emailHtml,
+                }),
+            });
+
+            const apiData = await apiRes.json();
+            if (apiRes.ok) {
+                console.log(`✅ Notificación de nuevo lead enviada a administradores (${adminRecipients.join(', ')}) vía Resend API. ID: ${apiData.id}`);
+                return { sent: true, provider: 'resend-api', id: apiData.id };
+            } else {
+                console.error(`⚠️ Error devuelto por Resend API al enviar notificación a administradores:`, apiData);
+            }
+        } catch (apiErr) {
+            console.error(`⚠️ Error de conexión con Resend API para notificación admin:`, apiErr.message);
+        }
+    }
+
+    // 2. Try SMTP Transporter
+    const currentTransporter = transporter || createMailTransporter();
+    if (currentTransporter) {
+        try {
+            const info = await currentTransporter.sendMail({
+                from: fromAddress,
+                to: adminRecipients.join(', '),
+                subject: emailSubject,
+                html: emailHtml,
+            });
+            console.log(`✅ Notificación de nuevo lead enviada a administradores (${adminRecipients.join(', ')}) vía SMTP. MessageId: ${info.messageId}`);
+            return { sent: true, provider: 'smtp', messageId: info.messageId };
+        } catch (error) {
+            console.error(`⚠️ Error al enviar notificación de administrador vía SMTP:`, error.message);
+            return { sent: false, error: error.message };
+        }
+    }
+
+    // 3. Fallback simulation
+    console.log(`📧 [SIMULACIÓN NOTIFICACIÓN ADMIN] Para: ${adminRecipients.join(', ')} | Asunto: ${emailSubject}`);
+    return { sent: false, simulated: true };
+};
+
 // Initialize MySQL connection pool if MYSQL_URL (or PGDATABASE style fallback) is available
 let pool = null;
 const dbUrl = process.env.MYSQL_URL || process.env.MYSQL_PUBLIC_URL || process.env.DATABASE_URL;
@@ -372,7 +535,20 @@ app.post('/api/register', async (req, res) => {
             plan: plan || 'Plan START',
             acceptedTerms: acceptedTerms !== false
         }).catch(mailErr => {
-            console.error("Error no bloqueante en envío de correo:", mailErr);
+            console.error("Error no bloqueante en envío de correo de bienvenida:", mailErr);
+        });
+
+        // Send Notification Email to team/admins asynchronously
+        sendAdminNotificationEmail({
+            firstName: firstName || 'Cliente',
+            lastName: lastName || '',
+            companyName: companyName || '',
+            email,
+            phone: phone || '',
+            plan: plan || 'Plan START',
+            acceptedTerms: acceptedTerms !== false
+        }).catch(adminMailErr => {
+            console.error("Error no bloqueante en envío de correo a administradores:", adminMailErr);
         });
 
         return res.status(201).json({ 
