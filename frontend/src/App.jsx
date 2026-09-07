@@ -5,24 +5,30 @@ import './App.css';
 const productsData = {
   1: {
     id: 1,
+    name: 'Plan LITE',
+    price: 29.00,
+    img: 'https://images.unsplash.com/photo-1556742049-0a67e5572263?q=80&w=350&auto=format&fit=crop'
+  },
+  2: {
+    id: 2,
     name: 'Plan START',
     price: 49.00,
     img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=350&auto=format&fit=crop'
   },
-  2: {
-    id: 2,
-    name: 'Plan GROWTH',
-    price: 69.00,
-    img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=350&auto=format&fit=crop'
-  },
   3: {
     id: 3,
-    name: 'Plan ENTERPRISE',
-    price: 99.00,
-    img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=350&auto=format&fit=crop'
+    name: 'Plan GROWTH',
+    price: 79.00,
+    img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=350&auto=format&fit=crop'
   },
   4: {
     id: 4,
+    name: 'Plan ENTERPRISE',
+    price: 129.00,
+    img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=350&auto=format&fit=crop'
+  },
+  5: {
+    id: 5,
     name: 'Add-on Redes Sociales',
     price: 300.00,
     img: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=350&auto=format&fit=crop'
@@ -290,7 +296,15 @@ function App() {
   const navigateTo = (page, tab = null, url = null, plan = null) => {
     setCurrentPage(page);
     if (tab) setActiveTab(tab);
-    if (plan) setRegPlan(plan);
+    if (plan) {
+      const lower = plan.toLowerCase();
+      if (lower.includes('enterprise')) setRegPlan('Plan ENTERPRISE - $129/mes');
+      else if (lower.includes('growth')) setRegPlan('Plan GROWTH - $79/mes');
+      else if (lower.includes('start')) setRegPlan('Plan START - $49/mes');
+      else if (lower.includes('lite')) setRegPlan('Plan LITE - $29/mes');
+      else if (lower.includes('social') || lower.includes('redes')) setRegPlan('Add-on Redes Sociales - $300/mes');
+      else setRegPlan(plan);
+    }
 
     let targetUrl = url;
     if (!targetUrl) {
@@ -316,10 +330,11 @@ function App() {
 
     if (planParam) {
       const lowerPlan = planParam.toLowerCase();
-      if (lowerPlan.includes('growth')) setRegPlan('Plan GROWTH - $69/mes');
-      else if (lowerPlan.includes('enterprise')) setRegPlan('Plan ENTERPRISE - $99/mes');
-      else if (lowerPlan.includes('social') || lowerPlan.includes('redes')) setRegPlan('Add-on Redes Sociales - $300/mes');
+      if (lowerPlan.includes('enterprise')) setRegPlan('Plan ENTERPRISE - $129/mes');
+      else if (lowerPlan.includes('growth')) setRegPlan('Plan GROWTH - $79/mes');
       else if (lowerPlan.includes('start')) setRegPlan('Plan START - $49/mes');
+      else if (lowerPlan.includes('lite')) setRegPlan('Plan LITE - $29/mes');
+      else if (lowerPlan.includes('social') || lowerPlan.includes('redes')) setRegPlan('Add-on Redes Sociales - $300/mes');
     }
 
     if (
@@ -626,27 +641,39 @@ function App() {
     let recommendation = {};
     if (answers.type === 'grains' || answers.flavor === 'strong') {
       recommendation = {
-        id: 3,
-        name: 'Plan ENTERPRISE',
-        desc: 'La solución definitiva para franquicias y multi-sucursales. Sucursales y clientes ilimitados, geo localización global y control corporativo total.',
-        price: '99.00',
+        id: 4,
+        name: 'Plan ENTERPRISE - $129/mes',
+        displayName: 'Plan ENTERPRISE',
+        desc: 'La solución definitiva para franquicias y redes multi-sucursales. Todo ilimitado: sucursales, clientes, sellos, cupones, notificaciones push ilimitadas y soporte VIP.',
+        price: '129.00',
         img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=350&auto=format&fit=crop'
       };
     } else if (answers.flavor === 'acid') {
       recommendation = {
-        id: 2,
-        name: 'Plan GROWTH',
-        desc: 'El más popular. Hasta 5 sucursales y 5,000 clientes. Incluye envío de ofertas, cupones y geo localización por sucursal. Perfecto para negocios en expansión.',
-        price: '69.00',
+        id: 3,
+        name: 'Plan GROWTH - $79/mes',
+        displayName: 'Plan GROWTH',
+        desc: 'El más popular. Hasta 10 sucursales, clientes ilimitados, notificaciones push ilimitadas y 5 usuarios admin/staff. Perfecto para negocios en expansión.',
+        price: '79.00',
         img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=350&auto=format&fit=crop'
+      };
+    } else if (answers.type === 'ground') {
+      recommendation = {
+        id: 2,
+        name: 'Plan START - $49/mes',
+        displayName: 'Plan START',
+        desc: 'Hasta 3 sucursales, clientes ilimitados, tarjetas de regalo, cupones y 20 notificaciones push semanales. Ideal para negocios multisede activos.',
+        price: '49.00',
+        img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=350&auto=format&fit=crop'
       };
     } else {
       recommendation = {
         id: 1,
-        name: 'Plan START',
-        desc: 'El impulso inicial para digitalizar tu negocio. 1 sucursal, hasta 500 clientes, tarjetas de sellos y regalo, notificaciones push y dashboard en tiempo real.',
-        price: '49.00',
-        img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=350&auto=format&fit=crop'
+        name: 'Plan LITE - $29/mes',
+        displayName: 'Plan LITE',
+        desc: 'El impulso inicial para digitalizar tu negocio. 1 sucursal, clientes ilimitados, tarjeta de sellos o membresía, 7 push semanales y dashboard en tiempo real.',
+        price: '29.00',
+        img: 'https://images.unsplash.com/photo-1556742049-0a67e5572263?q=80&w=350&auto=format&fit=crop'
       };
     }
     setRecommendedPlan(recommendation);
@@ -1809,9 +1836,10 @@ function App() {
                     value={regPlan}
                     onChange={(e) => setRegPlan(e.target.value)}
                   >
+                    <option value="Plan LITE - $29/mes">Plan LITE - $29/mes</option>
                     <option value="Plan START - $49/mes">Plan START - $49/mes</option>
-                    <option value="Plan GROWTH - $69/mes">Plan GROWTH - $69/mes</option>
-                    <option value="Plan ENTERPRISE - $99/mes">Plan ENTERPRISE - $99/mes</option>
+                    <option value="Plan GROWTH - $79/mes">Plan GROWTH - $79/mes</option>
+                    <option value="Plan ENTERPRISE - $129/mes">Plan ENTERPRISE - $129/mes</option>
                   </select>
                 </div>
 
@@ -2404,42 +2432,83 @@ function App() {
           </div>
 
           {/* Grid de Planes */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-stretch mb-16">
+
+            {/* Plan LITE */}
+            <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 sm:p-7 flex flex-col justify-between hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div className="space-y-6">
+                <div className="text-left space-y-2">
+                  <h3 className="font-heading font-black text-2xl text-gray-800">LITE</h3>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-4xl font-black text-gray-900">$29</span>
+                    <span className="text-gray-500 font-semibold text-sm">/ mes</span>
+                  </div>
+                  <p className="text-gray-500 text-xs sm:text-sm">Digitalización esencial para tu negocio local</p>
+                </div>
+                <hr className="border-gray-100" />
+                <ul className="space-y-2.5 text-left text-[0.84rem] text-gray-600">
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>1 SUCURSAL</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>CLIENTES ILIMITADOS</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE SELLOS O MEMBRESÍA <em>(Apple/Google Wallet)</em></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>7 NOTIFICACIONES PUSH</strong> SEMANALES</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>DASHBOARD EN TIEMPO REAL</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>1 GEO LOCALIZACIÓN</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>1 USUARIO ADMIN</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>1 USUARIO STAFF</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>SOPORTE POR CORREO</span></li>
+                </ul>
+              </div>
+              <div className="space-y-5 mt-8">
+                <div className="bg-gray-50 rounded-2xl p-3.5 flex gap-3 text-left text-xs text-gray-600">
+                  <i className="fa-solid fa-store text-primary text-base shrink-0 mt-0.5"></i>
+                  <div>
+                    <strong>Ideal para:</strong> Emprendedores, cafeterías, barberías y comercios individuales.
+                  </div>
+                </div>
+                <button
+                  className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95 cursor-pointer text-sm"
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan LITE - $29/mes')}
+                >
+                  Contratar Plan LITE
+                </button>
+              </div>
+            </div>
 
             {/* Plan START */}
-            <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 flex flex-col justify-between hover:shadow-xl transition-shadow duration-300">
+            <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 sm:p-7 flex flex-col justify-between hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="space-y-6">
                 <div className="text-left space-y-2">
                   <h3 className="font-heading font-black text-2xl text-gray-800">START</h3>
                   <div className="flex items-baseline gap-1">
                     <span className="text-4xl font-black text-gray-900">$49</span>
-                    <span className="text-gray-500 font-semibold">/ mes</span>
+                    <span className="text-gray-500 font-semibold text-sm">/ mes</span>
                   </div>
-                  <p className="text-gray-500 text-sm">El impulso inicial para digitalizar tu negocio</p>
+                  <p className="text-gray-500 text-xs sm:text-sm">Multisede, cupones y tarjetas de regalo</p>
                 </div>
                 <hr className="border-gray-100" />
-                <ul className="space-y-2.5 text-left text-[0.88rem] text-gray-600">
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span><strong>1 SUCURSAL</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>HASTA <strong>500 CLIENTES</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>TARJETAS DE SELLOS <em>(Apple/Google Wallet)</em></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>TARJETAS DE REGALO <em>(Apple/Google Wallet)</em></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>NOTIFICACIONES PUSH</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>DASHBOARD EN TIEMPO REAL</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>GEO UBICACIÓN</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>USUARIO ADMIN</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>USUARIO EMPLEADO</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>SOPORTE POR CORREO</span></li>
+                <ul className="space-y-2.5 text-left text-[0.84rem] text-gray-600">
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>3 SUCURSALES</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>CLIENTES ILIMITADOS</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE SELLOS O MEMBRESÍA <em>(Apple/Google Wallet)</em></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE REGALO O BONOS <em>(Apple/Google Wallet)</em></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE CUPONES</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>20 NOTIFICACIONES PUSH</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>3 GEO LOCALIZACIONES</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>2 USUARIOS ADMIN</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>3 USUARIOS STAFF</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>DASHBOARD EN TIEMPO REAL</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>SOPORTE POR CORREO</span></li>
                 </ul>
               </div>
-              <div className="space-y-6 mt-8">
-                <div className="bg-gray-50 rounded-2xl p-4 flex gap-3 text-left text-xs text-gray-600">
-                  <i className="fa-solid fa-store text-primary text-base"></i>
+              <div className="space-y-5 mt-8">
+                <div className="bg-gray-50 rounded-2xl p-3.5 flex gap-3 text-left text-xs text-gray-600">
+                  <i className="fa-solid fa-shop text-primary text-base shrink-0 mt-0.5"></i>
                   <div>
-                    <strong>Ideal para:</strong> Emprendedores, cafeterías, barberías, restaurantes y pequeños comercios.
+                    <strong>Ideal para:</strong> Negocios con hasta 3 sucursales que buscan fidelización avanzada.
                   </div>
                 </div>
                 <button
-                  className="w-full py-4 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95 cursor-pointer"
+                  className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95 cursor-pointer text-sm"
                   onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan START - $49/mes')}
                 >
                   Contratar Plan START
@@ -2448,44 +2517,44 @@ function App() {
             </div>
 
             {/* Plan GROWTH (Más Popular) */}
-            <div className="bg-white rounded-3xl border-2 border-primary shadow-xl p-8 flex flex-col justify-between relative hover:shadow-2xl transition-shadow duration-300">
-              <span className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-white font-bold text-xs px-4 py-1.5 rounded-full uppercase tracking-wider">
+            <div className="bg-white rounded-3xl border-2 border-primary shadow-xl p-6 sm:p-7 flex flex-col justify-between relative hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+              <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-primary text-white font-black text-[0.65rem] tracking-wider px-3.5 py-1 rounded-full uppercase shadow-md">
                 ★ MÁS POPULAR
               </span>
               <div className="space-y-6">
                 <div className="text-left space-y-2">
                   <h3 className="font-heading font-black text-2xl text-gray-800">GROWTH</h3>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-black text-gray-900">$69</span>
-                    <span className="text-gray-500 font-semibold">/ mes</span>
+                    <span className="text-4xl font-black text-gray-900">$79</span>
+                    <span className="text-gray-500 font-semibold text-sm">/ mes</span>
                   </div>
-                  <p className="text-gray-500 text-sm">Aumenta la frecuencia de compra y segmenta como los grandes</p>
+                  <p className="text-gray-500 text-xs sm:text-sm">Expansión acelerada con push ilimitado</p>
                 </div>
                 <hr className="border-gray-100" />
-                <ul className="space-y-2.5 text-left text-[0.88rem] text-gray-600">
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>HASTA <strong>5 SUCURSALES</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>HASTA <strong>5,000 CLIENTES</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>TARJETAS DE SELLOS <em>(Apple/Google Wallet)</em></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>TARJETAS DE REGALO <em>(Apple/Google Wallet)</em></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>NOTIFICACIONES PUSH</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>ENVÍO DE OFERTAS Y CUPONES</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>DASHBOARD EN TIEMPO REAL</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>GEO LOCALIZACIÓN PARA TODAS LAS SUCURSALES</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>USUARIO ADMIN</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>USUARIO EMPLEADO</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>SOPORTE POR CORREO</span></li>
+                <ul className="space-y-2.5 text-left text-[0.84rem] text-gray-600">
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>HASTA <strong>10 SUCURSALES</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>CLIENTES ILIMITADOS</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE SELLOS O MEMBRESÍA <em>(Apple/Google Wallet)</em></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE REGALO O BONOS <em>(Apple/Google Wallet)</em></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE CUPONES Y OFERTAS</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>NOTIFICACIONES PUSH ILIMITADAS</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>GEO LOCALIZACIÓN (HASTA 10 SUCURSALES)</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>5 USUARIOS ADMIN</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>5 USUARIOS STAFF</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>DASHBOARD EN TIEMPO REAL</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>SOPORTE PRIORITARIO POR CORREO</span></li>
                 </ul>
               </div>
-              <div className="space-y-6 mt-8">
-                <div className="bg-emerald-50/50 rounded-2xl p-4 flex gap-3 text-left text-xs text-gray-600">
-                  <i className="fa-solid fa-building text-primary text-base"></i>
+              <div className="space-y-5 mt-8">
+                <div className="bg-emerald-50/50 rounded-2xl p-3.5 flex gap-3 text-left text-xs text-gray-600">
+                  <i className="fa-solid fa-building text-primary text-base shrink-0 mt-0.5"></i>
                   <div>
-                    <strong>Ideal para:</strong> Negocios en expansión, cadenas locales y franquicias pequeñas.
+                    <strong>Ideal para:</strong> Cadenas locales, franquicias en crecimiento y marcas en expansión.
                   </div>
                 </div>
                 <button
-                  className="w-full py-4 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/15 transition-transform duration-200 active:scale-95 cursor-pointer"
-                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan GROWTH - $69/mes')}
+                  className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/20 transition-transform duration-200 active:scale-95 cursor-pointer text-sm"
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan GROWTH - $79/mes')}
                 >
                   Contratar Plan GROWTH
                 </button>
@@ -2493,41 +2562,41 @@ function App() {
             </div>
 
             {/* Plan ENTERPRISE */}
-            <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 flex flex-col justify-between hover:shadow-xl transition-shadow duration-300">
+            <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 sm:p-7 flex flex-col justify-between hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="space-y-6">
                 <div className="text-left space-y-2">
                   <h3 className="font-heading font-black text-2xl text-gray-800">ENTERPRISE</h3>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-black text-gray-900">$99</span>
-                    <span className="text-gray-500 font-semibold">/ mes</span>
+                    <span className="text-4xl font-black text-gray-900">$129</span>
+                    <span className="text-gray-500 font-semibold text-sm">/ mes</span>
                   </div>
-                  <p className="text-gray-500 text-sm">Conectividad total, control corporativo y marketing integral</p>
+                  <p className="text-gray-500 text-xs sm:text-sm">Todo ilimitado y control corporativo integral</p>
                 </div>
                 <hr className="border-gray-100" />
-                <ul className="space-y-2.5 text-left text-[0.88rem] text-gray-600">
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span><strong>SUCURSALES ILIMITADAS</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span><strong>CLIENTES ILIMITADOS</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>TARJETAS DE SELLOS <em>(Apple/Google Wallet)</em></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>TARJETAS DE REGALO <em>(Apple/Google Wallet)</em></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>NOTIFICACIONES PUSH</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>ENVÍO DE OFERTAS Y CUPONES</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>DASHBOARD EN TIEMPO REAL</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>GEO LOCALIZACIÓN ILIMITADA</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>USUARIO ADMIN</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>USUARIO EMPLEADO</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-1"></i> <span>SOPORTE POR CORREO</span></li>
+                <ul className="space-y-2.5 text-left text-[0.84rem] text-gray-600">
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>SUCURSALES ILIMITADAS</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>CLIENTES ILIMITADOS</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>TODO LO DE LOS PLANES ANTERIORES</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETAS DE SELLOS O MEMBRESÍA ILIMITADAS</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETAS DE REGALO O BONOS ILIMITADAS</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETAS DE CUPONES Y PROMOCIONES ILIMITADAS</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>NOTIFICACIONES PUSH ILIMITADAS</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>GEO LOCALIZACIÓN ILIMITADA</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>USUARIOS ADMIN Y STAFF ILIMITADOS</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>DASHBOARD EN TIEMPO REAL Y ANALÍTICA AVANZADA</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>SOPORTE PRIORITARIO VIP 24/7</span></li>
                 </ul>
               </div>
-              <div className="space-y-6 mt-8">
-                <div className="bg-gray-50 rounded-2xl p-4 flex gap-3 text-left text-xs text-gray-600">
-                  <i className="fa-solid fa-city text-primary text-base"></i>
+              <div className="space-y-5 mt-8">
+                <div className="bg-gray-50 rounded-2xl p-3.5 flex gap-3 text-left text-xs text-gray-600">
+                  <i className="fa-solid fa-city text-primary text-base shrink-0 mt-0.5"></i>
                   <div>
-                    <strong>Ideal para:</strong> Franquicias, cadenas comerciales y empresas con múltiples sedes.
+                    <strong>Ideal para:</strong> Grandes franquicias, cadenas comerciales y corporaciones multi-sede.
                   </div>
                 </div>
                 <button
-                  className="w-full py-4 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95 cursor-pointer"
-                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan ENTERPRISE - $99/mes')}
+                  className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95 cursor-pointer text-sm"
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan ENTERPRISE - $129/mes')}
                 >
                   Contratar Plan ENTERPRISE
                 </button>
