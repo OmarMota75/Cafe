@@ -2451,10 +2451,10 @@ function App() {
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>CLIENTES ILIMITADOS</strong></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE SELLOS O MEMBRESÍA <em>(Apple/Google Wallet)</em></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>7 NOTIFICACIONES PUSH</strong> SEMANALES</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>DASHBOARD EN TIEMPO REAL</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>1 GEO LOCALIZACIÓN</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>1 USUARIO ADMIN</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>1 USUARIO STAFF</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>DASHBOARD EN TIEMPO REAL</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>SOPORTE POR CORREO</span></li>
                 </ul>
               </div>
@@ -2492,7 +2492,7 @@ function App() {
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE SELLOS O MEMBRESÍA <em>(Apple/Google Wallet)</em></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE REGALO O BONOS <em>(Apple/Google Wallet)</em></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE CUPONES</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>20 NOTIFICACIONES PUSH</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>20 NOTIFICACIONES PUSH</strong> SEMANALES</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>3 GEO LOCALIZACIONES</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>2 USUARIOS ADMIN</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>3 USUARIOS STAFF</span></li>
@@ -2532,13 +2532,13 @@ function App() {
                 </div>
                 <hr className="border-gray-100" />
                 <ul className="space-y-2.5 text-left text-[0.84rem] text-gray-600">
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>HASTA <strong>10 SUCURSALES</strong></span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>10 SUCURSALES</strong></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>CLIENTES ILIMITADOS</strong></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE SELLOS O MEMBRESÍA <em>(Apple/Google Wallet)</em></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE REGALO O BONOS <em>(Apple/Google Wallet)</em></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE CUPONES Y OFERTAS</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE CUPONES</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>NOTIFICACIONES PUSH ILIMITADAS</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>GEO LOCALIZACIÓN (HASTA 10 SUCURSALES)</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>10 GEO LOCALIZACIONES </span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>5 USUARIOS ADMIN</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>5 USUARIOS STAFF</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>DASHBOARD EN TIEMPO REAL</span></li>
@@ -2567,7 +2567,7 @@ function App() {
                 <div className="text-left space-y-2">
                   <h3 className="font-heading font-black text-2xl text-gray-800">ENTERPRISE</h3>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-black text-gray-900">$129</span>
+                    <span className="text-4xl font-black text-gray-900">$99</span>
                     <span className="text-gray-500 font-semibold text-sm">/ mes</span>
                   </div>
                   <p className="text-gray-500 text-xs sm:text-sm">Todo ilimitado y control corporativo integral</p>
@@ -2576,15 +2576,14 @@ function App() {
                 <ul className="space-y-2.5 text-left text-[0.84rem] text-gray-600">
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>SUCURSALES ILIMITADAS</strong></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>CLIENTES ILIMITADOS</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>TODO LO DE LOS PLANES ANTERIORES</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETAS DE SELLOS O MEMBRESÍA ILIMITADAS</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETAS DE REGALO O BONOS ILIMITADAS</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETAS DE CUPONES Y PROMOCIONES ILIMITADAS</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETAS DE SELLOS O MEMBRESÍA</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETAS DE REGALO Y BONOS</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETAS DE CUPONES</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>NOTIFICACIONES PUSH ILIMITADAS</strong></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>GEO LOCALIZACIÓN ILIMITADA</strong></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>USUARIOS ADMIN Y STAFF ILIMITADOS</strong></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>DASHBOARD EN TIEMPO REAL Y ANALÍTICA AVANZADA</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>SOPORTE PRIORITARIO VIP 24/7</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>DASHBOARD EN TIEMPO REAL</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>SOPORTE PRIORITARIO 24/7</span></li>
                 </ul>
               </div>
               <div className="space-y-5 mt-8">
@@ -2596,7 +2595,7 @@ function App() {
                 </div>
                 <button
                   className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95 cursor-pointer text-sm"
-                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan ENTERPRISE - $129/mes')}
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan ENTERPRISE - $99/mes')}
                 >
                   Contratar Plan ENTERPRISE
                 </button>
