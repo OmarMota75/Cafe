@@ -512,14 +512,10 @@ function App() {
   };
 
   const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    if (loginEmail === 'u3058171184@gmail.com' && loginPassword === '123456') {
-      navigateTo('dashboard-active', null, '/dashboard');
-      setLoginEmail('');
-      setLoginPassword('');
-    } else {
-      alert('Credenciales incorrectas. Por favor, utiliza u3058171184@gmail.com y 123456.');
-    }
+    if (e) e.preventDefault();
+    navigateTo('dashboard-active', null, '/dashboard');
+    setLoginEmail('');
+    setLoginPassword('');
   };
 
   // Cart state persisted in localStorage
@@ -1931,7 +1927,6 @@ function App() {
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Correo electrónico</label>
                   <input
                     type="email"
-                    required
                     className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                     placeholder="juan@correo.com"
                     value={loginEmail}
@@ -1942,7 +1937,6 @@ function App() {
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Contraseña</label>
                   <input
                     type="password"
-                    required
                     className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
                     placeholder="••••••••"
                     value={loginPassword}
