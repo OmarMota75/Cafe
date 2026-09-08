@@ -2507,20 +2507,13 @@ function App() {
                   </div>
                 </div>
                 <a
-                  href={STRIPE_PLAN_LINKS.LITE}
+                  href="https://buy.stripe.com/14AaEX0Px0WNaNRbazdfG0t"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-all duration-200 active:scale-95 cursor-pointer text-sm block text-center shadow-md hover:shadow-lg"
                 >
                   Contratar Plan LITE
                 </a>
-                <button
-                  type="button"
-                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan LITE - $29/mes')}
-                  className="w-full text-center text-xs text-gray-500 hover:text-primary font-medium transition-colors cursor-pointer"
-                >
-                  O empezar prueba gratis 14 días →
-                </button>
               </div>
             </div>
 
@@ -2558,20 +2551,13 @@ function App() {
                   </div>
                 </div>
                 <a
-                  href={STRIPE_PLAN_LINKS.START}
+                  href="https://buy.stripe.com/4gM4gzeGn9tj09d92rdfG0u"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-all duration-200 active:scale-95 cursor-pointer text-sm block text-center shadow-md hover:shadow-lg"
                 >
                   Contratar Plan START
                 </a>
-                <button
-                  type="button"
-                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan START - $49/mes')}
-                  className="w-full text-center text-xs text-gray-500 hover:text-primary font-medium transition-colors cursor-pointer"
-                >
-                  O empezar prueba gratis 14 días →
-                </button>
               </div>
             </div>
 
@@ -2612,20 +2598,13 @@ function App() {
                   </div>
                 </div>
                 <a
-                  href={STRIPE_PLAN_LINKS.GROWTH}
+                  href="https://buy.stripe.com/7sY9AT55Naxn9JNguTdfG0v"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/20 transition-all duration-200 active:scale-95 cursor-pointer text-sm block text-center"
                 >
                   Contratar Plan GROWTH
                 </a>
-                <button
-                  type="button"
-                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan GROWTH - $79/mes')}
-                  className="w-full text-center text-xs text-gray-500 hover:text-primary font-medium transition-colors cursor-pointer"
-                >
-                  O empezar prueba gratis 14 días →
-                </button>
               </div>
             </div>
 
@@ -2662,20 +2641,13 @@ function App() {
                   </div>
                 </div>
                 <a
-                  href={STRIPE_PLAN_LINKS.ENTERPRISE}
+                  href="https://buy.stripe.com/8x28wP8hZ0WNcVZ3I7dfG0w"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-all duration-200 active:scale-95 cursor-pointer text-sm block text-center shadow-md hover:shadow-lg"
                 >
                   Contratar Plan ENTERPRISE
                 </a>
-                <button
-                  type="button"
-                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan ENTERPRISE - $99/mes')}
-                  className="w-full text-center text-xs text-gray-500 hover:text-primary font-medium transition-colors cursor-pointer"
-                >
-                  O empezar prueba gratis 14 días →
-                </button>
               </div>
             </div>
           </div>
