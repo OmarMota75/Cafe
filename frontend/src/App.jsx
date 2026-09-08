@@ -9,6 +9,15 @@ export const STRIPE_PLAN_LINKS = {
   ENTERPRISE: 'https://buy.stripe.com/8x28wP8hZ0WNcVZ3I7dfG0w',
 };
 
+export const getStripeUrlForPlan = (planName) => {
+  const lower = (planName || '').toLowerCase();
+  if (lower.includes('lite')) return STRIPE_PLAN_LINKS.LITE;
+  if (lower.includes('growth')) return STRIPE_PLAN_LINKS.GROWTH;
+  if (lower.includes('enterprise')) return STRIPE_PLAN_LINKS.ENTERPRISE;
+  if (lower.includes('start')) return STRIPE_PLAN_LINKS.START;
+  return STRIPE_PLAN_LINKS.START;
+};
+
 // Product list matching data-id attributes in HTML
 const productsData = {
   1: {
@@ -310,7 +319,7 @@ function App() {
     if (tab) setActiveTab(tab);
     if (plan) {
       const lower = plan.toLowerCase();
-      if (lower.includes('enterprise')) setRegPlan('Plan ENTERPRISE - $129/mes');
+      if (lower.includes('enterprise')) setRegPlan('Plan ENTERPRISE - $99/mes');
       else if (lower.includes('growth')) setRegPlan('Plan GROWTH - $79/mes');
       else if (lower.includes('start')) setRegPlan('Plan START - $49/mes');
       else if (lower.includes('lite')) setRegPlan('Plan LITE - $29/mes');
@@ -342,7 +351,7 @@ function App() {
 
     if (planParam) {
       const lowerPlan = planParam.toLowerCase();
-      if (lowerPlan.includes('enterprise')) setRegPlan('Plan ENTERPRISE - $129/mes');
+      if (lowerPlan.includes('enterprise')) setRegPlan('Plan ENTERPRISE - $99/mes');
       else if (lowerPlan.includes('growth')) setRegPlan('Plan GROWTH - $79/mes');
       else if (lowerPlan.includes('start')) setRegPlan('Plan START - $49/mes');
       else if (lowerPlan.includes('lite')) setRegPlan('Plan LITE - $29/mes');
@@ -427,6 +436,8 @@ function App() {
   const [isSubmittingReg, setIsSubmittingReg] = useState(false);
   const [showRegSuccessModal, setShowRegSuccessModal] = useState(false);
   const [regSuccessDetails, setRegSuccessDetails] = useState({ company: '', name: '', email: '', plan: '' });
+  const [stripeRedirectUrl, setStripeRedirectUrl] = useState('');
+  const [isRedirectingToStripe, setIsRedirectingToStripe] = useState(false);
 
   const handleRegistrationSubmit = async (e) => {
     e.preventDefault();
@@ -448,7 +459,10 @@ function App() {
       plan: regPlan,
     };
 
+    const targetStripeUrl = getStripeUrlForPlan(regPlan);
+    setStripeRedirectUrl(targetStripeUrl);
     setIsSubmittingReg(true);
+
     try {
       const response = await fetch('/api/register', {
         method: 'POST',
@@ -468,20 +482,18 @@ function App() {
       });
 
       const data = await response.json();
-      if (response.ok && data.success) {
-        setRegSuccessDetails(details);
-        setShowRegSuccessModal(true);
-        setRegErrorMsg('');
-      } else {
-        setRegErrorMsg(data.error || 'Error al registrar. Intente de nuevo.');
-      }
     } catch (err) {
-      console.error("Database registration error, showing confirmation modal:", err);
-      setRegSuccessDetails(details);
-      setShowRegSuccessModal(true);
-      setRegErrorMsg('');
+      console.error("Database registration error, proceeding to Stripe payment:", err);
     } finally {
       setIsSubmittingReg(false);
+      setRegSuccessDetails(details);
+      setIsRedirectingToStripe(true);
+      setShowRegSuccessModal(true);
+
+      // Redirigir al link de Stripe del paquete elegido
+      setTimeout(() => {
+        window.location.href = targetStripeUrl;
+      }, 1200);
     }
   };
 
@@ -1851,17 +1863,20 @@ function App() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Plan</label>
+                  <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Paquete / Plan</label>
                   <select
-                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary bg-white text-xs"
+                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary bg-white text-xs font-semibold"
                     value={regPlan}
                     onChange={(e) => setRegPlan(e.target.value)}
                   >
                     <option value="Plan LITE - $29/mes">Plan LITE - $29/mes</option>
                     <option value="Plan START - $49/mes">Plan START - $49/mes</option>
                     <option value="Plan GROWTH - $79/mes">Plan GROWTH - $79/mes</option>
-                    <option value="Plan ENTERPRISE - $129/mes">Plan ENTERPRISE - $129/mes</option>
+                    <option value="Plan ENTERPRISE - $99/mes">Plan ENTERPRISE - $99/mes</option>
                   </select>
+                  <p className="text-[0.7rem] text-emerald-600 mt-1 text-left flex items-center gap-1.5 font-medium">
+                    <i className="fa-brands fa-stripe text-base"></i> Redirección automática a Stripe para este paquete al registrarte.
+                  </p>
                 </div>
 
                 {/* Checkbox Términos y Condiciones */}
@@ -1897,9 +1912,17 @@ function App() {
                 <button 
                   type="submit" 
                   disabled={isSubmittingReg || !regTerms}
-                  className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-lg mt-2 transition-all duration-200 active:scale-95 text-xs uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-lg mt-2 transition-all duration-200 active:scale-95 text-xs uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-2"
                 >
-                  {isSubmittingReg ? 'Registrando...' : 'Registro'}
+                  {isSubmittingReg ? (
+                    <>
+                      <i className="fa-solid fa-spinner fa-spin"></i> Guardando datos y conectando a Stripe...
+                    </>
+                  ) : (
+                    <>
+                      <i className="fa-brands fa-stripe text-base"></i> Registrarse y Continuar a Stripe <i className="fa-solid fa-arrow-right"></i>
+                    </>
+                  )}
                 </button>
               </form>
             ) : (
@@ -2237,33 +2260,22 @@ function App() {
                 </div>
               </div>
 
-              {(() => {
-                const lower = (regSuccessDetails.plan || '').toLowerCase();
-                const matchedUrl =
-                  lower.includes('lite') ? STRIPE_PLAN_LINKS.LITE :
-                  lower.includes('start') ? STRIPE_PLAN_LINKS.START :
-                  lower.includes('growth') ? STRIPE_PLAN_LINKS.GROWTH :
-                  lower.includes('enterprise') ? STRIPE_PLAN_LINKS.ENTERPRISE : null;
-                if (!matchedUrl) return null;
-                return (
-                  <a
-                    href={matchedUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow-md transition-all duration-200 block text-center"
-                  >
-                    <i className="fa-brands fa-stripe text-lg mr-1.5 align-middle"></i> Activar y Pagar Plan en Stripe
-                  </a>
-                );
-              })()}
+              <div className="space-y-2.5">
+                <a
+                  href={stripeRedirectUrl || getStripeUrlForPlan(regSuccessDetails.plan)}
+                  className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-emerald-500/20 transition-all duration-200 block text-center cursor-pointer"
+                >
+                  <i className="fa-brands fa-stripe text-base mr-1.5 align-middle"></i> Pagar en Stripe Ahora <i className="fa-solid fa-arrow-right ml-1"></i>
+                </a>
 
-              <button
-                type="button"
-                onClick={handleConfirmRegSuccess}
-                className="w-full py-3.5 bg-gray-900 hover:bg-gray-800 text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow-md transition-all duration-200 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
-              >
-                Acceder a mi Panel de Prueba <i className="fa-solid fa-arrow-right"></i>
-              </button>
+                <button
+                  type="button"
+                  onClick={handleConfirmRegSuccess}
+                  className="w-full py-2.5 bg-transparent text-gray-400 hover:text-gray-600 text-xs font-medium cursor-pointer transition-colors"
+                >
+                  O acceder al panel de demostración →
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -2506,14 +2518,13 @@ function App() {
                     <strong>Ideal para:</strong> Emprendedores, cafeterías, barberías y comercios individuales.
                   </div>
                 </div>
-                <a
-                  href="https://buy.stripe.com/14AaEX0Px0WNaNRbazdfG0t"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan LITE - $29/mes')}
                   className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-all duration-200 active:scale-95 cursor-pointer text-sm block text-center shadow-md hover:shadow-lg"
                 >
                   Contratar Plan LITE
-                </a>
+                </button>
               </div>
             </div>
 
@@ -2550,14 +2561,13 @@ function App() {
                     <strong>Ideal para:</strong> Negocios con hasta 3 sucursales que buscan fidelización avanzada.
                   </div>
                 </div>
-                <a
-                  href="https://buy.stripe.com/4gM4gzeGn9tj09d92rdfG0u"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan START - $49/mes')}
                   className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-all duration-200 active:scale-95 cursor-pointer text-sm block text-center shadow-md hover:shadow-lg"
                 >
                   Contratar Plan START
-                </a>
+                </button>
               </div>
             </div>
 
@@ -2597,14 +2607,13 @@ function App() {
                     <strong>Ideal para:</strong> Cadenas locales, franquicias en crecimiento y marcas en expansión.
                   </div>
                 </div>
-                <a
-                  href="https://buy.stripe.com/7sY9AT55Naxn9JNguTdfG0v"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan GROWTH - $79/mes')}
                   className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/20 transition-all duration-200 active:scale-95 cursor-pointer text-sm block text-center"
                 >
                   Contratar Plan GROWTH
-                </a>
+                </button>
               </div>
             </div>
 
@@ -2640,14 +2649,13 @@ function App() {
                     <strong>Ideal para:</strong> Grandes franquicias, cadenas comerciales y corporaciones multi-sede.
                   </div>
                 </div>
-                <a
-                  href="https://buy.stripe.com/8x28wP8hZ0WNcVZ3I7dfG0w"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  type="button"
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan ENTERPRISE - $99/mes')}
                   className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-all duration-200 active:scale-95 cursor-pointer text-sm block text-center shadow-md hover:shadow-lg"
                 >
                   Contratar Plan ENTERPRISE
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -2896,20 +2904,12 @@ function App() {
                     <span className="text-xl font-black text-white">${recommendedPlan.price}/mes</span>
                   </div>
                   <h4 className="font-heading font-black text-lg text-white">{recommendedPlan.name}</h4>
-                  <a
-                    href={recommendedPlan.stripeUrl || STRIPE_PLAN_LINKS.LITE}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-3.5 bg-primary hover:bg-primary-hover text-emerald-950 font-extrabold rounded-full text-sm shadow-lg shadow-emerald-500/20 transition-all hover:scale-102 cursor-pointer block text-center"
-                  >
-                    Contratar este Plan en Stripe
-                  </a>
                   <button
                     type="button"
                     onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', recommendedPlan.name)}
-                    className="w-full text-center text-xs text-emerald-300 hover:text-white font-medium transition-colors cursor-pointer"
+                    className="w-full py-3.5 bg-primary hover:bg-primary-hover text-emerald-950 font-extrabold rounded-full text-sm shadow-lg shadow-emerald-500/20 transition-all hover:scale-102 cursor-pointer block text-center"
                   >
-                    O probar gratis 14 días →
+                    Contratar este Plan
                   </button>
                 </div>
                 <button className="text-sm font-bold text-gray-400 hover:text-white flex items-center gap-1.5 mx-auto transition-colors cursor-pointer" onClick={restartQuiz}>
