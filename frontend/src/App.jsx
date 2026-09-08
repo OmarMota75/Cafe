@@ -341,6 +341,7 @@ function App() {
     if (window.location.pathname !== targetUrl) {
       window.history.pushState({ page, tab }, '', targetUrl);
     }
+    window.scrollTo(0, 0);
   };
 
   const syncRouteFromLocation = () => {
@@ -375,19 +376,18 @@ function App() {
       rawPath === '/ingreso' ||
       rawPath === '/iniciar-sesion' ||
       rawPath === '/auth' ||
-      rawPath === '/signin'
+      rawPath === '/signin' ||
+      rawPath === '/dashboard' ||
+      rawPath === '/panel' ||
+      rawPath === '/admin'
     ) {
-      setCurrentPage('dashboard-trial');
-      setActiveTab('acceso');
-    } else if (rawPath === '/dashboard' || rawPath === '/panel' || rawPath === '/admin') {
       setCurrentPage('dashboard-active');
     } else {
       if (tabParam === 'registro' || tabParam === 'register' || tabParam === 'signup') {
         setCurrentPage('dashboard-trial');
         setActiveTab('registro');
       } else if (tabParam === 'acceso' || tabParam === 'login' || tabParam === 'signin') {
-        setCurrentPage('dashboard-trial');
-        setActiveTab('acceso');
+        setCurrentPage('dashboard-active');
       } else {
         setCurrentPage('landing');
       }
@@ -1733,13 +1733,13 @@ function App() {
             {/* Tabs */}
             <div className="flex border-b border-gray-100">
               <button
+                type="button"
                 className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-colors cursor-pointer ${activeTab === 'acceso' ? 'border-primary text-primary' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
                 onClick={() => {
-                  setActiveTab('acceso');
-                  window.history.replaceState({ page: 'dashboard-trial', tab: 'acceso' }, '', '/acceso');
+                  navigateTo('dashboard-active', null, '/dashboard');
                 }}
               >
-                Acceso
+                Acceso (Ir al Dashboard)
               </button>
               <button
                 className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-colors cursor-pointer ${activeTab === 'registro' ? 'border-primary text-primary' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
@@ -1943,8 +1943,12 @@ function App() {
                     onChange={(e) => setLoginPassword(e.target.value)}
                   />
                 </div>
-                <button type="submit" className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-lg mt-4 transition-all duration-200 active:scale-95 text-xs uppercase tracking-wider">
-                  Acceso
+                <button
+                  type="button"
+                  onClick={handleLoginSubmit}
+                  className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-lg mt-4 transition-all duration-200 active:scale-95 text-xs uppercase tracking-wider cursor-pointer"
+                >
+                  Acceso al Dashboard
                 </button>
               </form>
             )}
@@ -2311,9 +2315,9 @@ function App() {
               <div className="w-full flex flex-col gap-2 pt-3 border-t border-gray-100">
                 <button
                   className="w-full py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold text-xs rounded-full shadow-sm flex items-center justify-center gap-2 cursor-pointer"
-                  onClick={() => { navigateTo('dashboard-trial', 'acceso', '/acceso'); setIsMobileMenuOpen(false); }}
+                  onClick={() => { navigateTo('dashboard-active', null, '/dashboard'); setIsMobileMenuOpen(false); }}
                 >
-                  <i className="fa-solid fa-arrow-right-to-bracket text-primary"></i> Acceso / Iniciar Sesión
+                  <i className="fa-solid fa-arrow-right-to-bracket text-primary"></i> Acceso al Dashboard
                 </button>
                 <button
                   className="w-full py-3 bg-primary hover:bg-primary-hover text-white font-bold text-xs rounded-full shadow flex items-center justify-center gap-1.5 cursor-pointer"
@@ -2328,7 +2332,7 @@ function App() {
           <div className="flex items-center gap-3 sm:gap-4">
             <button
               className="hidden md:inline-flex items-center gap-1.5 text-xs font-bold text-gray-700 hover:text-primary transition-colors py-2 px-3.5 rounded-full hover:bg-gray-100/80 cursor-pointer"
-              onClick={() => { navigateTo('dashboard-trial', 'acceso', '/acceso'); setIsMobileMenuOpen(false); }}
+              onClick={() => { navigateTo('dashboard-active', null, '/dashboard'); setIsMobileMenuOpen(false); }}
             >
               <i className="fa-solid fa-arrow-right-to-bracket text-primary"></i> Acceso
             </button>
@@ -3039,7 +3043,7 @@ function App() {
                 <li>
                   <button
                     type="button"
-                    onClick={() => navigateTo('dashboard-trial', 'acceso', '/acceso')}
+                    onClick={() => navigateTo('dashboard-active', null, '/dashboard')}
                     className="hover:text-white text-gray-400 bg-transparent border-none p-0 cursor-pointer flex items-center gap-1.5"
                   >
                     <i className="fa-solid fa-arrow-right-to-bracket text-xs text-primary"></i> Acceso a Clientes
