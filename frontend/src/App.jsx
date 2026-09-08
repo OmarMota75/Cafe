@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 // Stripe Checkout Links
-export const STRIPE_PLAN_LINKS = {
+const STRIPE_PLAN_LINKS = {
   LITE: 'https://buy.stripe.com/14AaEX0Px0WNaNRbazdfG0t',
   START: 'https://buy.stripe.com/4gM4gzeGn9tj09d92rdfG0u',
   GROWTH: 'https://buy.stripe.com/7sY9AT55Naxn9JNguTdfG0v',
   ENTERPRISE: 'https://buy.stripe.com/8x28wP8hZ0WNcVZ3I7dfG0w',
 };
 
-export const getStripeUrlForPlan = (planName) => {
+const getStripeUrlForPlan = (planName) => {
   const lower = (planName || '').toLowerCase();
   if (lower.includes('lite')) return STRIPE_PLAN_LINKS.LITE;
   if (lower.includes('growth')) return STRIPE_PLAN_LINKS.GROWTH;
@@ -1734,14 +1734,6 @@ function App() {
             <div className="flex border-b border-gray-100">
               <button
                 type="button"
-                className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-colors cursor-pointer ${activeTab === 'acceso' ? 'border-primary text-primary' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
-                onClick={() => {
-                  navigateTo('dashboard-active', null, '/dashboard');
-                }}
-              >
-                Acceso (Ir al Dashboard)
-              </button>
-              <button
                 className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-colors cursor-pointer ${activeTab === 'registro' ? 'border-primary text-primary' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
                 onClick={() => {
                   setActiveTab('registro');
@@ -1749,6 +1741,15 @@ function App() {
                 }}
               >
                 Registro
+              </button>
+              <button
+                type="button"
+                className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-colors cursor-pointer ${activeTab === 'acceso' ? 'border-primary text-primary' : 'border-transparent text-gray-400 hover:text-gray-600'}`}
+                onClick={() => {
+                  navigateTo('dashboard-active', null, '/dashboard');
+                }}
+              >
+                Acceso
               </button>
             </div>
 
@@ -1922,35 +1923,24 @@ function App() {
                 </button>
               </form>
             ) : (
-              <form className="space-y-4" onSubmit={handleLoginSubmit}>
-                <div>
-                  <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Correo electrónico</label>
-                  <input
-                    type="email"
-                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
-                    placeholder="juan@correo.com"
-                    value={loginEmail}
-                    onChange={(e) => setLoginEmail(e.target.value)}
-                  />
+              <div className="space-y-4 py-3 text-center animate-fadeIn">
+                <div className="h-14 w-14 bg-primary/10 text-primary rounded-full flex items-center justify-center text-xl mx-auto border border-primary/20 shadow-sm">
+                  <i className="fa-solid fa-gauge-high"></i>
                 </div>
-                <div>
-                  <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Contraseña</label>
-                  <input
-                    type="password"
-                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
-                    placeholder="••••••••"
-                    value={loginPassword}
-                    onChange={(e) => setLoginPassword(e.target.value)}
-                  />
+                <div className="space-y-1">
+                  <h4 className="font-heading font-black text-base text-gray-900">Acceso al Dashboard</h4>
+                  <p className="text-gray-500 text-xs leading-relaxed max-w-xs mx-auto">
+                    Haz clic en el botón inferior para ingresar directamente a la plataforma.
+                  </p>
                 </div>
                 <button
                   type="button"
-                  onClick={handleLoginSubmit}
-                  className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-lg mt-4 transition-all duration-200 active:scale-95 text-xs uppercase tracking-wider cursor-pointer"
+                  onClick={() => navigateTo('dashboard-active', null, '/dashboard')}
+                  className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-lg transition-all duration-200 active:scale-95 text-xs uppercase tracking-wider cursor-pointer flex items-center justify-center gap-2"
                 >
-                  Acceso al Dashboard
+                  <i className="fa-solid fa-arrow-right-to-bracket text-sm"></i> Acceder al Dashboard
                 </button>
-              </form>
+              </div>
             )}
           </div>
         </div>
