@@ -1,30 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
+// Stripe Checkout Links
+export const STRIPE_PLAN_LINKS = {
+  LITE: 'https://buy.stripe.com/14AaEX0Px0WNaNRbazdfG0t',
+  START: 'https://buy.stripe.com/4gM4gzeGn9tj09d92rdfG0u',
+  GROWTH: 'https://buy.stripe.com/7sY9AT55Naxn9JNguTdfG0v',
+  ENTERPRISE: 'https://buy.stripe.com/8x28wP8hZ0WNcVZ3I7dfG0w',
+};
+
 // Product list matching data-id attributes in HTML
 const productsData = {
   1: {
     id: 1,
     name: 'Plan LITE',
     price: 29.00,
+    stripeUrl: 'https://buy.stripe.com/14AaEX0Px0WNaNRbazdfG0t',
     img: 'https://images.unsplash.com/photo-1556742049-0a67e5572263?q=80&w=350&auto=format&fit=crop'
   },
   2: {
     id: 2,
     name: 'Plan START',
     price: 49.00,
+    stripeUrl: 'https://buy.stripe.com/4gM4gzeGn9tj09d92rdfG0u',
     img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=350&auto=format&fit=crop'
   },
   3: {
     id: 3,
     name: 'Plan GROWTH',
     price: 79.00,
+    stripeUrl: 'https://buy.stripe.com/7sY9AT55Naxn9JNguTdfG0v',
     img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=350&auto=format&fit=crop'
   },
   4: {
     id: 4,
     name: 'Plan ENTERPRISE',
-    price: 129.00,
+    price: 99.00,
+    stripeUrl: 'https://buy.stripe.com/8x28wP8hZ0WNcVZ3I7dfG0w',
     img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=350&auto=format&fit=crop'
   },
   5: {
@@ -601,6 +613,11 @@ function App() {
       return;
     }
 
+    const itemWithStripe = cart.find(item => item.stripeUrl);
+    if (itemWithStripe && itemWithStripe.stripeUrl) {
+      window.open(itemWithStripe.stripeUrl, '_blank', 'noopener,noreferrer');
+    }
+
     const randomOrderId = '#2GR-' + Math.floor(1000 + Math.random() * 9000);
     const itemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -642,10 +659,11 @@ function App() {
     if (answers.type === 'grains' || answers.flavor === 'strong') {
       recommendation = {
         id: 4,
-        name: 'Plan ENTERPRISE - $129/mes',
+        name: 'Plan ENTERPRISE - $99/mes',
         displayName: 'Plan ENTERPRISE',
         desc: 'La solución definitiva para franquicias y redes multi-sucursales. Todo ilimitado: sucursales, clientes, sellos, cupones, notificaciones push ilimitadas y soporte VIP.',
-        price: '129.00',
+        price: '99.00',
+        stripeUrl: STRIPE_PLAN_LINKS.ENTERPRISE,
         img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=350&auto=format&fit=crop'
       };
     } else if (answers.flavor === 'acid') {
@@ -655,6 +673,7 @@ function App() {
         displayName: 'Plan GROWTH',
         desc: 'El más popular. Hasta 10 sucursales, clientes ilimitados, notificaciones push ilimitadas y 5 usuarios admin/staff. Perfecto para negocios en expansión.',
         price: '79.00',
+        stripeUrl: STRIPE_PLAN_LINKS.GROWTH,
         img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=350&auto=format&fit=crop'
       };
     } else if (answers.type === 'ground') {
@@ -664,6 +683,7 @@ function App() {
         displayName: 'Plan START',
         desc: 'Hasta 3 sucursales, clientes ilimitados, tarjetas de regalo, cupones y 20 notificaciones push semanales. Ideal para negocios multisede activos.',
         price: '49.00',
+        stripeUrl: STRIPE_PLAN_LINKS.START,
         img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=350&auto=format&fit=crop'
       };
     } else {
@@ -673,6 +693,7 @@ function App() {
         displayName: 'Plan LITE',
         desc: 'El impulso inicial para digitalizar tu negocio. 1 sucursal, clientes ilimitados, tarjeta de sellos o membresía, 7 push semanales y dashboard en tiempo real.',
         price: '29.00',
+        stripeUrl: STRIPE_PLAN_LINKS.LITE,
         img: 'https://images.unsplash.com/photo-1556742049-0a67e5572263?q=80&w=350&auto=format&fit=crop'
       };
     }
@@ -2216,12 +2237,32 @@ function App() {
                 </div>
               </div>
 
+              {(() => {
+                const lower = (regSuccessDetails.plan || '').toLowerCase();
+                const matchedUrl =
+                  lower.includes('lite') ? STRIPE_PLAN_LINKS.LITE :
+                  lower.includes('start') ? STRIPE_PLAN_LINKS.START :
+                  lower.includes('growth') ? STRIPE_PLAN_LINKS.GROWTH :
+                  lower.includes('enterprise') ? STRIPE_PLAN_LINKS.ENTERPRISE : null;
+                if (!matchedUrl) return null;
+                return (
+                  <a
+                    href={matchedUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow-md transition-all duration-200 block text-center"
+                  >
+                    <i className="fa-brands fa-stripe text-lg mr-1.5 align-middle"></i> Activar y Pagar Plan en Stripe
+                  </a>
+                );
+              })()}
+
               <button
                 type="button"
                 onClick={handleConfirmRegSuccess}
-                className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow-lg shadow-emerald-500/20 transition-all duration-200 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+                className="w-full py-3.5 bg-gray-900 hover:bg-gray-800 text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow-md transition-all duration-200 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
               >
-                Acceder a mi Panel <i className="fa-solid fa-arrow-right"></i>
+                Acceder a mi Panel de Prueba <i className="fa-solid fa-arrow-right"></i>
               </button>
             </div>
           </div>
@@ -2465,11 +2506,20 @@ function App() {
                     <strong>Ideal para:</strong> Emprendedores, cafeterías, barberías y comercios individuales.
                   </div>
                 </div>
-                <button
-                  className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95 cursor-pointer text-sm"
-                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan LITE - $29/mes')}
+                <a
+                  href={STRIPE_PLAN_LINKS.LITE}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-all duration-200 active:scale-95 cursor-pointer text-sm block text-center shadow-md hover:shadow-lg"
                 >
                   Contratar Plan LITE
+                </a>
+                <button
+                  type="button"
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan LITE - $29/mes')}
+                  className="w-full text-center text-xs text-gray-500 hover:text-primary font-medium transition-colors cursor-pointer"
+                >
+                  O empezar prueba gratis 14 días →
                 </button>
               </div>
             </div>
@@ -2507,11 +2557,20 @@ function App() {
                     <strong>Ideal para:</strong> Negocios con hasta 3 sucursales que buscan fidelización avanzada.
                   </div>
                 </div>
-                <button
-                  className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95 cursor-pointer text-sm"
-                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan START - $49/mes')}
+                <a
+                  href={STRIPE_PLAN_LINKS.START}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-all duration-200 active:scale-95 cursor-pointer text-sm block text-center shadow-md hover:shadow-lg"
                 >
                   Contratar Plan START
+                </a>
+                <button
+                  type="button"
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan START - $49/mes')}
+                  className="w-full text-center text-xs text-gray-500 hover:text-primary font-medium transition-colors cursor-pointer"
+                >
+                  O empezar prueba gratis 14 días →
                 </button>
               </div>
             </div>
@@ -2552,11 +2611,20 @@ function App() {
                     <strong>Ideal para:</strong> Cadenas locales, franquicias en crecimiento y marcas en expansión.
                   </div>
                 </div>
-                <button
-                  className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/20 transition-transform duration-200 active:scale-95 cursor-pointer text-sm"
-                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan GROWTH - $79/mes')}
+                <a
+                  href={STRIPE_PLAN_LINKS.GROWTH}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3.5 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/20 transition-all duration-200 active:scale-95 cursor-pointer text-sm block text-center"
                 >
                   Contratar Plan GROWTH
+                </a>
+                <button
+                  type="button"
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan GROWTH - $79/mes')}
+                  className="w-full text-center text-xs text-gray-500 hover:text-primary font-medium transition-colors cursor-pointer"
+                >
+                  O empezar prueba gratis 14 días →
                 </button>
               </div>
             </div>
@@ -2593,11 +2661,20 @@ function App() {
                     <strong>Ideal para:</strong> Grandes franquicias, cadenas comerciales y corporaciones multi-sede.
                   </div>
                 </div>
-                <button
-                  className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-transform duration-200 active:scale-95 cursor-pointer text-sm"
-                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan ENTERPRISE - $99/mes')}
+                <a
+                  href={STRIPE_PLAN_LINKS.ENTERPRISE}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3.5 bg-gray-900 hover:bg-gray-850 text-white font-bold rounded-full transition-all duration-200 active:scale-95 cursor-pointer text-sm block text-center shadow-md hover:shadow-lg"
                 >
                   Contratar Plan ENTERPRISE
+                </a>
+                <button
+                  type="button"
+                  onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', 'Plan ENTERPRISE - $99/mes')}
+                  className="w-full text-center text-xs text-gray-500 hover:text-primary font-medium transition-colors cursor-pointer"
+                >
+                  O empezar prueba gratis 14 días →
                 </button>
               </div>
             </div>
@@ -2847,12 +2924,20 @@ function App() {
                     <span className="text-xl font-black text-white">${recommendedPlan.price}/mes</span>
                   </div>
                   <h4 className="font-heading font-black text-lg text-white">{recommendedPlan.name}</h4>
-                  <p className="text-gray-300 text-sm leading-relaxed">{recommendedPlan.desc}</p>
-                  <button
-                    className="w-full py-3.5 bg-primary hover:bg-primary-hover text-emerald-950 font-extrabold rounded-full text-sm shadow-lg shadow-emerald-500/20 transition-all hover:scale-102 cursor-pointer"
-                    onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', recommendedPlan.name)}
+                  <a
+                    href={recommendedPlan.stripeUrl || STRIPE_PLAN_LINKS.LITE}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-3.5 bg-primary hover:bg-primary-hover text-emerald-950 font-extrabold rounded-full text-sm shadow-lg shadow-emerald-500/20 transition-all hover:scale-102 cursor-pointer block text-center"
                   >
-                    Contratar este Plan
+                    Contratar este Plan en Stripe
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => navigateTo('dashboard-trial', 'registro', '/registro', recommendedPlan.name)}
+                    className="w-full text-center text-xs text-emerald-300 hover:text-white font-medium transition-colors cursor-pointer"
+                  >
+                    O probar gratis 14 días →
                   </button>
                 </div>
                 <button className="text-sm font-bold text-gray-400 hover:text-white flex items-center gap-1.5 mx-auto transition-colors cursor-pointer" onClick={restartQuiz}>
