@@ -2492,7 +2492,6 @@ function App() {
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>CLIENTES ILIMITADOS</strong></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE SELLOS O MEMBRESÍA <em>(Apple/Google Wallet)</em></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>7 NOTIFICACIONES PUSH</strong> SEMANALES</span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>1 GEO LOCALIZACIÓN</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>1 USUARIO ADMIN</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>1 USUARIO STAFF</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>DASHBOARD EN TIEMPO REAL</span></li>
