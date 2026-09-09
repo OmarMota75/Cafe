@@ -292,7 +292,7 @@ const faqList = [
   },
   {
     q: '¿Cuánto dura la prueba gratis?',
-    a: 'Ofrecemos una prueba gratuita de 14 días con acceso completo a todas las funcionalidades del Plan START, sin compromiso y sin requerir tarjeta de crédito para comenzar.'
+    a: 'Ofrecemos una prueba gratuita de 30 días con acceso completo a todas las funcionalidades del Plan START, sin compromiso y sin requerir tarjeta de crédito para comenzar.'
   }
 ];
 
@@ -1755,7 +1755,7 @@ function App() {
 
             {/* Subtitle */}
             <p className="text-xs font-bold text-primary tracking-wide text-center">
-              {activeTab === 'registro' ? '¡Comience hoy su prueba gratuita de 14 días!' : '¡Bienvenido de vuelta! Ingresa tus credenciales'}
+              {activeTab === 'registro' ? '¡Comience hoy su prueba gratuita de 30 días!' : '¡Bienvenido de vuelta! Ingresa tus credenciales'}
             </p>
 
             {/* Form */}
@@ -2222,7 +2222,7 @@ function App() {
 
               <div className="space-y-1.5 text-center">
                 <h3 className="font-heading font-black text-xl text-gray-900">¡Registro Exitoso!</h3>
-                <p className="text-xs font-bold text-primary">Acceso de Demostración y Exploración (14 días)</p>
+                <p className="text-xs font-bold text-primary">Acceso de Demostración y Exploración (30 días)</p>
                 <p className="text-gray-500 text-xs leading-relaxed pt-1">
                   ¡Bienvenido a 2GetherRewards! Tu acceso está activo para que puedas <strong>conocer y explorar la plataforma por dentro</strong> (diseño de tarjetas para Wallet, escáner y analíticas).
                 </p>
@@ -2363,7 +2363,7 @@ function App() {
                 onClick={() => navigateTo('dashboard-trial', 'registro', '/registro')}
                 className="px-8 py-4 bg-primary hover:bg-primary-hover text-white font-bold rounded-full shadow-lg shadow-emerald-500/25 transition-all duration-200 hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer"
               >
-                <i className="fa-solid fa-gauge-high"></i> Probar Gratis 14 Días
+                <i className="fa-solid fa-gauge-high"></i> Probar Gratis 30 Días
               </button>
               <a href="#menu" className="px-8 py-4 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold rounded-full shadow-sm transition-all duration-200 hover:-translate-y-0.5" onClick={() => setActiveNav('menu')}>Ver Planes</a>
               <a href="#quiz" className="px-8 py-4 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold rounded-full shadow-sm flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5" onClick={() => { setActiveNav('quiz'); startQuiz(); }}>

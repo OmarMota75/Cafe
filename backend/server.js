@@ -123,9 +123,9 @@ const sendWelcomeEmail = async ({ firstName, lastName, companyName, email, plan,
                         Te damos la bienvenida a <strong>2GetherRewards</strong>. Tu cuenta de acceso para <strong>${companyName || 'tu negocio'}</strong> ha sido creada correctamente.
                     </p>
 
-                    <!-- Aclaración de la Prueba de Exploración de 14 Días -->
+                    <!-- Aclaración de la Prueba de Exploración de 30 Días -->
                     <div class="demo-badge">
-                        <strong>Acceso de Exploración y Demostración (14 días):</strong><br>
+                        <strong>Acceso de Exploración y Demostración (30 días):</strong><br>
                         Esta prueba gratuita te permite ingresar al panel para <strong>conocer la plataforma por dentro</strong>, explorar cómo diseñar tarjetas para Apple & Google Wallet, probar el escáner y revisar los módulos de fidelización. 
                         <div style="margin-top: 6px; font-size: 12px; color: #15803d;">
                             <em>Nota: La emisión real y operativa de tarjetas activas para tus clientes finales se activará en cuanto decidas contratar y suscribirte formalmente a tu plan.</em>
@@ -137,7 +137,7 @@ const sendWelcomeEmail = async ({ firstName, lastName, companyName, email, plan,
                         <div class="card-item"><strong>Empresa / Comercio:</strong> <span>${companyName || 'No especificada'}</span></div>
                         <div class="card-item"><strong>Plan de interés:</strong> <span>${plan || 'Plan START - $49/mes'}</span></div>
                         <div class="card-item"><strong>Correo registrado:</strong> <span>${email}</span></div>
-                        <div class="card-item"><strong>Modalidad:</strong> <span>Demostración guiada (14 días)</span></div>
+                        <div class="card-item"><strong>Modalidad:</strong> <span>Demostración guiada (30 días)</span></div>
                     </div>
 
                     <div class="btn-wrapper">
