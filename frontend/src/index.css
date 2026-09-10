@@ -2403,3 +2403,11 @@ a {
     .hero-wallets { justify-content: center; }
 }
 
+@keyframes shimmerLoader {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.animate-shimmer {
+  animation: shimmerLoader 1.4s infinite ease-in-out;
+}

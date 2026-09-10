@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
+import DashboardLoadingScreen from './components/DashboardLoadingScreen';
 
 // Stripe Checkout Links
 const STRIPE_PLAN_LINKS = {
@@ -57,6 +58,7 @@ const productsData = {
 };
 
 const countryCodes = [
+  { code: 'CR', dial: '+506', name: 'Costa Rica' },
   { code: 'AF', dial: '+93', name: 'Afganistán' },
   { code: 'AL', dial: '+355', name: 'Albania' },
   { code: 'DE', dial: '+49', name: 'Alemania' },
@@ -106,7 +108,6 @@ const countryCodes = [
   { code: 'KR', dial: '+82', name: 'Corea del Sur' },
   { code: 'KP', dial: '+850', name: 'Corea del Norte' },
   { code: 'CI', dial: '+225', name: 'Costa de Marfil' },
-  { code: 'CR', dial: '+506', name: 'Costa Rica' },
   { code: 'HR', dial: '+385', name: 'Croacia' },
   { code: 'CU', dial: '+53', name: 'Cuba' },
   { code: 'CW', dial: '+599', name: 'Curazao' },
@@ -313,8 +314,62 @@ function App() {
   const [loginPassword, setLoginPassword] = useState('');
   const [selectedBranch, setSelectedBranch] = useState('Todas las sucursales');
 
+  // Dashboard loading splash state
+  const [isDashboardLoading, setIsDashboardLoading] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [loadingStatus, setLoadingStatus] = useState('Iniciando sesión segura...');
+  const [isFadeOut, setIsFadeOut] = useState(false);
+  const loadingTimeoutsRef = useRef([]);
+
+  const clearLoadingTimeouts = () => {
+    loadingTimeoutsRef.current.forEach((t) => clearTimeout(t));
+    loadingTimeoutsRef.current = [];
+  };
+
+  const triggerDashboardLoading = () => {
+    clearLoadingTimeouts();
+    setIsDashboardLoading(true);
+    setIsFadeOut(false);
+    setLoadingProgress(14);
+    setLoadingStatus('Iniciando sesión segura...');
+
+    const t1 = setTimeout(() => {
+      setLoadingProgress(46);
+      setLoadingStatus('Sincronizando tarjetas y recompensas...');
+    }, 280);
+
+    const t2 = setTimeout(() => {
+      setLoadingProgress(82);
+      setLoadingStatus('Cargando métricas en tiempo real...');
+    }, 650);
+
+    const t3 = setTimeout(() => {
+      setLoadingProgress(100);
+      setLoadingStatus('¡Bienvenido a 2GetherRewards!');
+    }, 1050);
+
+    const t4 = setTimeout(() => {
+      setIsFadeOut(true);
+    }, 1250);
+
+    const t5 = setTimeout(() => {
+      setIsDashboardLoading(false);
+      setIsFadeOut(false);
+    }, 1450);
+
+    loadingTimeoutsRef.current = [t1, t2, t3, t4, t5];
+  };
+
+  useEffect(() => {
+    return () => clearLoadingTimeouts();
+  }, []);
+
   // Navigation & URL Routing Helper
   const navigateTo = (page, tab = null, url = null, plan = null) => {
+    if (page === 'dashboard-active') {
+      triggerDashboardLoading();
+    }
+
     setCurrentPage(page);
     if (tab) setActiveTab(tab);
     if (plan) {
@@ -381,12 +436,14 @@ function App() {
       rawPath === '/panel' ||
       rawPath === '/admin'
     ) {
+      triggerDashboardLoading();
       setCurrentPage('dashboard-active');
     } else {
       if (tabParam === 'registro' || tabParam === 'register' || tabParam === 'signup') {
         setCurrentPage('dashboard-trial');
         setActiveTab('registro');
       } else if (tabParam === 'acceso' || tabParam === 'login' || tabParam === 'signin') {
+        triggerDashboardLoading();
         setCurrentPage('dashboard-active');
       } else {
         setCurrentPage('landing');
@@ -425,10 +482,8 @@ function App() {
   const [regLastName, setRegLastName] = useState('');
   const [regCompany, setRegCompany] = useState('');
   const [regEmail, setRegEmail] = useState('');
-  const [regPhoneCode, setRegPhoneCode] = useState('+34');
+  const [regPhoneCode, setRegPhoneCode] = useState('+506');
   const [regPhone, setRegPhone] = useState('');
-  const [regPassword, setRegPassword] = useState('');
-  const [regPasswordConfirm, setRegPasswordConfirm] = useState('');
   const [regPlan, setRegPlan] = useState('Plan START - $49/mes');
   const [regTerms, setRegTerms] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
@@ -445,10 +500,6 @@ function App() {
 
     if (!regTerms) {
       setRegErrorMsg('Debes aceptar los Términos y Condiciones del Servicio para poder registrarte.');
-      return;
-    }
-    if (regPassword !== regPasswordConfirm) {
-      setRegErrorMsg('Las contraseñas no coinciden. Por favor verifícalas.');
       return;
     }
 
@@ -476,7 +527,7 @@ function App() {
           email: regEmail,
           phone: `${regPhoneCode} ${regPhone}`,
           plan: regPlan,
-          password: regPassword,
+          password: '',
           acceptedTerms: true,
         }),
       });
@@ -506,8 +557,6 @@ function App() {
     setRegCompany('');
     setRegEmail('');
     setRegPhone('');
-    setRegPassword('');
-    setRegPasswordConfirm('');
     setRegTerms(false);
   };
 
@@ -791,6 +840,14 @@ function App() {
 
     return (
       <div className="min-h-screen flex bg-graylight text-charcoal font-body text-left">
+        {/* Cool Branded Loading Screen before Dashboard */}
+        {isDashboardLoading && (
+          <DashboardLoadingScreen
+            progress={loadingProgress}
+            status={loadingStatus}
+            isFadeOut={isFadeOut}
+          />
+        )}
         {/* SIDEBAR */}
         <aside className="w-64 bg-primary shrink-0 flex flex-col justify-between p-6 text-white min-h-screen">
           <div className="space-y-8 text-left">
@@ -1652,6 +1709,14 @@ function App() {
   if (currentPage === 'dashboard-trial') {
     return (
       <div className="min-h-screen lg:h-screen lg:overflow-hidden flex flex-col lg:flex-row font-body bg-graylight text-charcoal">
+        {/* Cool Branded Loading Screen before Dashboard */}
+        {isDashboardLoading && (
+          <DashboardLoadingScreen
+            progress={loadingProgress}
+            status={loadingStatus}
+            isFadeOut={isFadeOut}
+          />
+        )}
         {/* Left Column (Showcase) */}
         <div className="hidden lg:flex lg:w-1/2 lg:h-full bg-black flex-col justify-between p-12 text-white relative text-left overflow-hidden">
           {/* Glowing blur background effects */}
@@ -1831,33 +1896,11 @@ function App() {
                       type="tel"
                       required
                       className="min-w-0 flex-1 px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
-                      placeholder="600 000 000"
+                      placeholder="8888 8888"
                       value={regPhone}
                       onChange={(e) => setRegPhone(e.target.value)}
                     />
                   </div>
-                </div>
-                <div>
-                  <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Contraseña</label>
-                  <input
-                    type="password"
-                    required
-                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
-                    placeholder="••••••••"
-                    value={regPassword}
-                    onChange={(e) => setRegPassword(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Repita la contraseña</label>
-                  <input
-                    type="password"
-                    required
-                    className="w-full px-3.5 sm:px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:border-primary text-xs"
-                    placeholder="••••••••"
-                    value={regPasswordConfirm}
-                    onChange={(e) => setRegPasswordConfirm(e.target.value)}
-                  />
                 </div>
                 <div>
                   <label className="block text-[0.65rem] font-bold text-gray-400 uppercase tracking-wider mb-1 text-left">Paquete / Plan</label>
@@ -2273,6 +2316,14 @@ function App() {
 
   return (
     <div className="min-h-screen bg-graylight text-charcoal font-body">
+      {/* Cool Branded Loading Screen before Dashboard */}
+      {isDashboardLoading && (
+        <DashboardLoadingScreen
+          progress={loadingProgress}
+          status={loadingStatus}
+          isFadeOut={isFadeOut}
+        />
+      )}
       {/* CABECERA (Header) */}
       <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isHeaderScrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-5'}`} id="main-header">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
