@@ -22,13 +22,8 @@ const DashboardLoadingScreen = ({ progress, status, isFadeOut }) => {
       />
 
       <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-sm sm:max-w-md w-full animate-fadeIn">
-        {/* Animated Brand Logo Icon with Orbital Rings */}
-        <div className="relative mb-6 flex items-center justify-center">
-          {/* Outer rotating dashed ring */}
-          <div className="absolute -inset-4 sm:-inset-5 rounded-full border-2 border-dashed border-[#69BFA1]/35 animate-spin [animation-duration:8s] pointer-events-none"></div>
-          {/* Counter-rotating accent ring */}
-          <div className="absolute -inset-2.5 sm:-inset-3 rounded-full border border-dotted border-[#A6D65B]/40 animate-spin [animation-duration:12s] [animation-direction:reverse] pointer-events-none"></div>
-
+        {/* Brand Logo Icon */}
+        <div className="relative mb-5 flex items-center justify-center">
           {/* Central Glassmorphic Badge */}
           <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-gradient-to-br from-[#121B2A]/95 to-[#0A101C]/95 border border-[#69BFA1]/40 shadow-[0_0_50px_rgba(105,191,161,0.28)] flex items-center justify-center backdrop-blur-xl relative group">
             {/* Handshake Logo rendered in 2GetherRewards Brand Green (#69BFA1) */}
@@ -50,17 +45,10 @@ const DashboardLoadingScreen = ({ progress, status, isFadeOut }) => {
         </div>
 
         {/* Brand Typography in Signature Green */}
-        <div className="space-y-1.5 mb-8">
+        <div className="mb-7">
           <div className="flex items-center justify-center gap-1 font-heading font-black text-3xl sm:text-4xl text-white tracking-tight">
             <span>2Gether</span>
             <span className="text-[#69BFA1] drop-shadow-[0_0_14px_rgba(105,191,161,0.55)]">Rewards</span>
-          </div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#69BFA1]/10 border border-[#69BFA1]/25 text-[#69BFA1] text-[11px] font-bold tracking-widest uppercase shadow-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#69BFA1] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#69BFA1]"></span>
-            </span>
-            <span>Dashboard & Plataforma</span>
           </div>
         </div>
 
