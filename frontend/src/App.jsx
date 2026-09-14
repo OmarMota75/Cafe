@@ -1990,7 +1990,7 @@ function App() {
 
         {/* MODAL POPUP TÉRMINOS Y CONDICIONES */}
         {showTermsModal && (
-          <div className="fixed inset-0 bg-black/60 z-[9999] flex items-center justify-center p-3 sm:p-4 backdrop-blur-sm" onClick={() => setShowTermsModal(false)}>
+          <div className="fixed inset-0 bg-black/60 z-[9999] flex items-center justify-center p-3 sm:p-4" onClick={() => setShowTermsModal(false)}>
             <div className="bg-white rounded-2xl sm:rounded-3xl max-w-3xl w-full max-h-[90dvh] sm:max-h-[85vh] shadow-2xl border border-gray-100 flex flex-col overflow-hidden text-left animate-scaleUp" onClick={(e) => e.stopPropagation()}>
               {/* Header */}
               <div className="p-4 sm:p-6 border-b border-gray-100 flex items-start justify-between gap-3 bg-white sticky top-0 z-10">
