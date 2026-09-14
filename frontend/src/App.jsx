@@ -2399,9 +2399,6 @@ function App() {
       <section className="pt-32 pb-20 lg:pt-40 lg:pb-28 bg-gradient-to-b from-emerald-50/40 via-white to-gray-50" id="inicio">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           <div className="lg:col-span-7 text-left space-y-6">
-            <span className="inline-block text-[0.8rem] tracking-wider uppercase font-black text-primary bg-emerald-50 px-4 py-1.5 rounded-full border border-emerald-100">
-              Plataforma de Fidelización Digital
-            </span>
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight">
               Fideliza. Conecta. <br />
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Haz crecer tu negocio.</span>
