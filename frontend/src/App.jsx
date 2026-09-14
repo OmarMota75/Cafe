@@ -2044,10 +2044,10 @@ function App() {
 
                 <section className="space-y-1 pt-1">
                   <h4 className="font-bold text-gray-900 text-sm">4. Planes y Facturación</h4>
-                  <p>El servicio será prestado conforme al plan contratado.</p>
-                  <p>Las tarifas podrán actualizarse notificándolo previamente.</p>
+                  <p>Las tarifas podrán actualizarse, previa notificación.</p>
                   <p>La suspensión del pago podrá ocasionar la suspensión temporal del servicio.</p>
                   <p>Los impuestos aplicables serán responsabilidad de la empresa afiliada.</p>
+                  <p>En caso de no renovación o finalización del contrato, la empresa afiliada deberá notificarlo con un mínimo de 10 días de anticipación a la fecha de finalización del contrato.</p>
                 </section>
 
                 <section className="space-y-1 pt-1">
