@@ -2577,7 +2577,7 @@ function App() {
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>CLIENTES ILIMITADOS</strong></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE SELLOS O MEMBRESÍA <em>(Apple/Google Wallet)</em></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE REGALO O BONOS <em>(Apple/Google Wallet)</em></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETAS CUPONES/OFERTA</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETAS CUPONES O OFERTA</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>20 NOTIFICACIONES PUSH</strong> SEMANALES</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>3 GEO LOCALIZACIONES</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>2 USUARIOS ADMIN</span></li>
@@ -2623,7 +2623,7 @@ function App() {
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>CLIENTES ILIMITADOS</strong></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE SELLOS O MEMBRESÍA <em>(Apple/Google Wallet)</em></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETA DE REGALO O BONOS <em>(Apple/Google Wallet)</em></span></li>
-                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETAS CUPONES/OFERTA</span></li>
+                  <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>TARJETAS CUPONES O OFERTA</span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span><strong>NOTIFICACIONES PUSH ILIMITADAS</strong></span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>10 GEO LOCALIZACIONES </span></li>
                   <li className="flex items-start gap-2.5"><i className="fa-solid fa-check text-primary mt-0.5 shrink-0"></i> <span>5 USUARIOS ADMIN</span></li>
