@@ -2328,7 +2328,7 @@ function App() {
         />
       )}
       {/* CABECERA (Header) */}
-      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 transform-gpu ${isHeaderScrolled ? 'bg-white/98 shadow-md py-3' : 'bg-transparent py-5'}`} id="main-header">
+      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md border-b border-gray-100 ${isHeaderScrolled ? 'shadow-md py-3' : 'shadow-sm py-4'}`} id="main-header">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <a
             href="#inicio"
