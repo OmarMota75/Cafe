@@ -2426,7 +2426,7 @@ function App() {
                 rel="noopener noreferrer"
                 className="px-8 py-4 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold rounded-full shadow-sm flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5"
               >
-                <i className="fa-regular fa-calendar-check text-primary"></i> Agendar Cita
+                <i className="fa-regular fa-calendar-check text-primary"></i> Agendar Reunión
               </a>
             </div>
           </div>
