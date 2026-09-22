@@ -599,14 +599,17 @@ function App() {
   }, []);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsHeaderScrolled(true);
-      } else {
-        setIsHeaderScrolled(false);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsHeaderScrolled(window.scrollY > 50);
+          ticking = false;
+        });
+        ticking = true;
       }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -2325,7 +2328,7 @@ function App() {
         />
       )}
       {/* CABECERA (Header) */}
-      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isHeaderScrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-5'}`} id="main-header">
+      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 transform-gpu ${isHeaderScrolled ? 'bg-white/98 shadow-md py-3' : 'bg-transparent py-5'}`} id="main-header">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <a
             href="#inicio"
@@ -2417,6 +2420,14 @@ function App() {
               <a href="#quiz" className="px-8 py-4 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold rounded-full shadow-sm flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5" onClick={() => { setActiveNav('quiz'); startQuiz(); }}>
                 <i className="fa-solid fa-wand-magic-sparkles text-primary"></i> ¿Cuál es mi Plan Ideal?
               </a>
+              <a
+                href="https://calendly.com/2getherrewards-info/30min?month=2026-09"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-4 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold rounded-full shadow-sm flex items-center gap-2 transition-all duration-200 hover:-translate-y-0.5"
+              >
+                <i className="fa-regular fa-calendar-check text-primary"></i> Agendar Cita
+              </a>
             </div>
           </div>
 
@@ -2480,12 +2491,12 @@ function App() {
       {/* SECCIÓN BENEFICIOS (Features) */}
       <section className="py-24 bg-gradient-to-br from-[#0F1A17] via-[#142620] to-[#0D1614] border-y border-emerald-900/40 relative overflow-hidden text-white" id="beneficios">
         {/* Ambient brand glows */}
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none transform-gpu"></div>
+        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl pointer-events-none transform-gpu"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 rounded-3xl border border-emerald-500/20 bg-[#162520]/80 backdrop-blur-md text-left space-y-4 shadow-xl hover:shadow-2xl hover:shadow-emerald-950/50 hover:border-emerald-400/60 hover:-translate-y-1.5 transition-all duration-300 group">
+            <div className="p-8 rounded-3xl border border-emerald-500/20 bg-[#162520]/95 text-left space-y-4 shadow-xl hover:shadow-2xl hover:shadow-emerald-950/50 hover:border-emerald-400/60 hover:-translate-y-1.5 transition-all duration-300 group">
               <div className="h-14 w-14 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-2xl border border-emerald-500/30 group-hover:scale-110 group-hover:bg-primary group-hover:text-emerald-950 group-hover:border-primary transition-all duration-300 shadow-md">
                 <i className="fa-solid fa-wallet"></i>
               </div>
@@ -2493,7 +2504,7 @@ function App() {
               <p className="text-gray-300 text-[0.95rem] leading-relaxed">Tarjetas de sellos, cashback, regalo, descuento y membresías 100% digitales, sin apps. Compatible con Apple y Google Wallet.</p>
             </div>
 
-            <div className="p-8 rounded-3xl border border-emerald-500/20 bg-[#162520]/80 backdrop-blur-md text-left space-y-4 shadow-xl hover:shadow-2xl hover:shadow-emerald-950/50 hover:border-emerald-400/60 hover:-translate-y-1.5 transition-all duration-300 group">
+            <div className="p-8 rounded-3xl border border-emerald-500/20 bg-[#162520]/95 text-left space-y-4 shadow-xl hover:shadow-2xl hover:shadow-emerald-950/50 hover:border-emerald-400/60 hover:-translate-y-1.5 transition-all duration-300 group">
               <div className="h-14 w-14 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-2xl border border-emerald-500/30 group-hover:scale-110 group-hover:bg-primary group-hover:text-emerald-950 group-hover:border-primary transition-all duration-300 shadow-md">
                 <i className="fa-solid fa-bell"></i>
               </div>
@@ -2501,7 +2512,7 @@ function App() {
               <p className="text-gray-300 text-[0.95rem] leading-relaxed">Envía alertas, ofertas, cupones y recordatorios directamente al móvil de tus clientes sin que tengan que abrir ninguna aplicación.</p>
             </div>
 
-            <div className="p-8 rounded-3xl border border-emerald-500/20 bg-[#162520]/80 backdrop-blur-md text-left space-y-4 shadow-xl hover:shadow-2xl hover:shadow-emerald-950/50 hover:border-emerald-400/60 hover:-translate-y-1.5 transition-all duration-300 group">
+            <div className="p-8 rounded-3xl border border-emerald-500/20 bg-[#162520]/95 text-left space-y-4 shadow-xl hover:shadow-2xl hover:shadow-emerald-950/50 hover:border-emerald-400/60 hover:-translate-y-1.5 transition-all duration-300 group">
               <div className="h-14 w-14 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-2xl border border-emerald-500/30 group-hover:scale-110 group-hover:bg-primary group-hover:text-emerald-950 group-hover:border-primary transition-all duration-300 shadow-md">
                 <i className="fa-solid fa-chart-line"></i>
               </div>
@@ -2817,8 +2828,8 @@ function App() {
       {/* SECCIÓN QUIZ */}
       <section className="py-24 bg-gradient-to-br from-[#0F1A17] via-[#142620] to-[#0D1614] border-t border-b border-emerald-900/40 relative overflow-hidden text-white" id="quiz">
         {/* Ambient brand glows */}
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none transform-gpu"></div>
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl pointer-events-none transform-gpu"></div>
 
         <div className="max-w-7xl mx-auto px-6 text-center space-y-16 relative z-10">
           <div className="max-w-2xl mx-auto space-y-3">
@@ -2826,7 +2837,7 @@ function App() {
             <p className="text-gray-300">Responde 3 preguntas rápidas y te recomendamos el plan 2GetherRewards perfecto para tu negocio.</p>
           </div>
 
-          <div className="max-w-xl mx-auto bg-[#162520]/90 backdrop-blur-md rounded-3xl border border-emerald-500/20 p-8 shadow-2xl min-h-[300px] flex items-center justify-center">
+          <div className="max-w-xl mx-auto bg-[#162520]/95 rounded-3xl border border-emerald-500/20 p-8 shadow-2xl min-h-[300px] flex items-center justify-center">
             {/* Pantalla Inicial */}
             {quizStep === 0 && (
               <div className="space-y-6 w-full text-center">
@@ -2933,7 +2944,7 @@ function App() {
             {quizStep === 4 && recommendedPlan && (
               <div className="w-full text-center space-y-6">
                 <h3 className="font-heading font-black text-xl text-white">¡Recomendación Lista!</h3>
-                <div className="p-6 rounded-2xl border-2 border-primary/40 bg-emerald-950/50 text-left space-y-4 shadow-xl backdrop-blur-md">
+                <div className="p-6 rounded-2xl border-2 border-primary/40 bg-emerald-950/90 text-left space-y-4 shadow-xl">
                   <div className="flex justify-between items-start">
                     <span className="text-xs uppercase font-extrabold tracking-widest text-primary">PLAN PERFECTO</span>
                     <span className="text-xl font-black text-white">${recommendedPlan.price}/mes</span>
