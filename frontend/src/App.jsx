@@ -301,7 +301,6 @@ function App() {
   // ==========================================
   // STATE DEFINITIONS
   // ==========================================
-  const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeNav, setActiveNav] = useState('inicio');
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -598,20 +597,7 @@ function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setIsHeaderScrolled(window.scrollY > 50);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+
 
   useEffect(() => {
     localStorage.setItem('2gr_cart', JSON.stringify(cart));
@@ -2328,7 +2314,7 @@ function App() {
         />
       )}
       {/* CABECERA (Header) */}
-      <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md border-b border-gray-100 ${isHeaderScrolled ? 'shadow-md py-3' : 'shadow-sm py-4'}`} id="main-header">
+      <header className="fixed top-0 left-0 w-full z-50 bg-white border-b border-gray-150 shadow-sm py-3.5" id="main-header">
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           <a
             href="#inicio"
@@ -2491,8 +2477,8 @@ function App() {
       {/* SECCIÓN BENEFICIOS (Features) */}
       <section className="py-24 bg-gradient-to-br from-[#0F1A17] via-[#142620] to-[#0D1614] border-y border-emerald-900/40 relative overflow-hidden text-white" id="beneficios">
         {/* Ambient brand glows */}
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none transform-gpu"></div>
-        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl pointer-events-none transform-gpu"></div>
+        <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[radial-gradient(circle,rgba(105,191,161,0.22)_0%,transparent_70%)] pointer-events-none"></div>
+        <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[radial-gradient(circle,rgba(79,166,176,0.22)_0%,transparent_70%)] pointer-events-none"></div>
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -2828,8 +2814,8 @@ function App() {
       {/* SECCIÓN QUIZ */}
       <section className="py-24 bg-gradient-to-br from-[#0F1A17] via-[#142620] to-[#0D1614] border-t border-b border-emerald-900/40 relative overflow-hidden text-white" id="quiz">
         {/* Ambient brand glows */}
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none transform-gpu"></div>
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl pointer-events-none transform-gpu"></div>
+        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-[radial-gradient(circle,rgba(105,191,161,0.22)_0%,transparent_70%)] pointer-events-none"></div>
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-[radial-gradient(circle,rgba(79,166,176,0.22)_0%,transparent_70%)] pointer-events-none"></div>
 
         <div className="max-w-7xl mx-auto px-6 text-center space-y-16 relative z-10">
           <div className="max-w-2xl mx-auto space-y-3">

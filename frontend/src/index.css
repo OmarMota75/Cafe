@@ -51,7 +51,6 @@
 }
 
 html {
-    scroll-behavior: smooth;
     font-size: 16px;
 }
 
@@ -61,23 +60,6 @@ body {
     font-family: var(--font-body);
     line-height: 1.6;
     overflow-x: hidden;
-    position: relative;
-}
-
-/* Capa de fondo fija acelerada por GPU: elimina el repaint pesado en cada scroll */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image: radial-gradient(circle at 15% 15%, rgba(105, 191, 161, 0.22) 0%, transparent 40%),
-                      radial-gradient(circle at 85% 45%, rgba(79, 166, 176, 0.22) 0%, transparent 45%),
-                      radial-gradient(circle at 25% 85%, rgba(166, 214, 91, 0.18) 0%, transparent 40%);
-    transform: translateZ(0);
 }
 
 /* Barra de Desplazamiento Customizada */
