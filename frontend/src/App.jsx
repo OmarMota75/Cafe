@@ -3013,12 +3013,14 @@ function App() {
               >
                 Prueba GRATIS
               </button>
-              <button
+              <a
+                href="https://calendly.com/2getherrewards-info/30min?month=2026-09"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-6 py-3.5 bg-accent hover:bg-accent/90 text-white font-bold rounded-xl shadow-md transition-all duration-200 hover:-translate-y-0.5 text-xs sm:text-sm flex items-center gap-2 cursor-pointer"
-                onClick={() => alert('¡Agendador de reuniones! Nos pondremos en contacto contigo para una demostración personalizada.')}
               >
                 <i className="fa-regular fa-calendar-check"></i> Agendar REUNIÓN
-              </button>
+              </a>
             </div>
           </div>
 
