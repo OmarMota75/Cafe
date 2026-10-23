@@ -3064,9 +3064,10 @@ function App() {
                 Fideliza. Conecta. Haz crecer tu negocio. La plataforma de fidelización digital más completa del mercado, sin apps y compatible con Apple y Google Wallet.
               </p>
               <div className="flex gap-3">
-                <a href="https://www.facebook.com/people/2Gether-Rewards/61592264844889/#" target="_blank" rel="noopener noreferrer" className="h-9 w-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white text-sm" aria-label="Facebook 2Gether Rewards"><i className="fa-brands fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/2getherrewards/" target="_blank" rel="noopener noreferrer" className="h-9 w-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white text-sm" aria-label="Instagram 2Gether Rewards"><i className="fa-brands fa-instagram"></i></a>
-                <a href="#" className="h-9 w-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white text-sm"><i className="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://wa.me/50685024284" target="_blank" rel="noopener noreferrer" className="h-9 w-9 bg-gray-800 hover:bg-[#25D366] rounded-full flex items-center justify-center text-white text-base transition-colors" aria-label="WhatsApp 2Gether Rewards"><i className="fa-brands fa-whatsapp"></i></a>
+                <a href="https://www.facebook.com/people/2Gether-Rewards/61592264844889/#" target="_blank" rel="noopener noreferrer" className="h-9 w-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white text-sm transition-colors" aria-label="Facebook 2Gether Rewards"><i className="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/2getherrewards/" target="_blank" rel="noopener noreferrer" className="h-9 w-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white text-sm transition-colors" aria-label="Instagram 2Gether Rewards"><i className="fa-brands fa-instagram"></i></a>
+                <a href="#" className="h-9 w-9 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-white text-sm transition-colors"><i className="fa-brands fa-linkedin-in"></i></a>
               </div>
             </div>
             <div className="lg:col-span-3 space-y-4">
@@ -3099,6 +3100,11 @@ function App() {
             <div className="lg:col-span-3 space-y-4">
               <h4 className="font-bold text-white text-sm">Contacto</h4>
               <ul className="space-y-2.5 text-sm text-gray-400">
+                <li>
+                  <a href="https://wa.me/50685024284" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-gray-400 hover:text-[#25D366] transition-colors">
+                    <i className="fa-brands fa-whatsapp text-[#25D366] text-base"></i> +506 8502 4284
+                  </a>
+                </li>
                 <li className="flex gap-2"><i className="fa-solid fa-envelope text-gray-500 mt-1"></i> info@2getherrewards.com</li>
                 <li className="flex gap-2"><i className="fa-solid fa-globe text-gray-500 mt-1"></i> www.2getherrewards.com</li>
               </ul>
@@ -3213,6 +3219,23 @@ function App() {
           </div>
         </div>
       )}
+
+      {/* BURBUJA FLOTANTE DE WHATSAPP */}
+      <aside aria-label="Contacto por WhatsApp" className="fixed bottom-6 right-6 z-50 flex items-center group">
+        <a
+          href="https://wa.me/50685024284?text=Hola%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%202Gether%20Rewards"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Contactar por WhatsApp (+506 8502 4284)"
+          className="flex items-center gap-3 bg-[#25D366] hover:bg-[#20ba59] text-white px-4 py-3 rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-[0_10px_25px_rgba(37,211,102,0.45)] focus:outline-none focus:ring-4 focus:ring-emerald-300"
+        >
+          <i className="fa-brands fa-whatsapp text-2xl animate-pulse"></i>
+          <div className="hidden sm:flex flex-col text-left leading-tight pr-1">
+            <span className="text-[11px] font-medium opacity-90">¿Tienes dudas? Escríbenos</span>
+            <span className="text-sm font-bold tracking-wide">+506 8502 4284</span>
+          </div>
+        </a>
+      </aside>
     </div>
   );
 }
