@@ -2440,7 +2440,7 @@ function App() {
                 {/* Card Banner Image (Cloudinary layout with stamps) */}
                 <div className="w-full">
                   <img
-                    src="https://res.cloudinary.com/dvmrbrrba/image/upload/v1781316175/LOGO_2GETHER_REWARDS-13_rlmvfq.png"
+                    src="https://res.cloudinary.com/p7zendpk/image/upload/v1787851485/fidecard/3/stamps/qceyku6jdylv41lel1bu.png"
                     alt="2Gether Rewards Banner"
                     className="w-full h-auto object-cover"
                   />
